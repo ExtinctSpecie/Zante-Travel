@@ -15,18 +15,18 @@
         app:cardBackgroundColor="@color/Aqua"
         app:cardCornerRadius="4dp">
 
-   <ImageView
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:background="@drawable/accommodation_icon"
-       android:layout_margin="20dp"/>
+        <ImageView
+            android:id="@+id/ivMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            app:srcCompat="@drawable/beach_icon" />
 
         <TextView
             android:id="@+id/tvMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="b"
             android:text="Hello world"
             android:textSize="20sp"
             android:textColor="@color/Black"/>

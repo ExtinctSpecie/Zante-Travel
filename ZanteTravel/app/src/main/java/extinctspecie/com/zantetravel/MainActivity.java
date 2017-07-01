@@ -11,8 +11,11 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 import java.util.logging.Handler;
+
+import extinctspecie.com.zantetravel.adapters.LVAdapterMainMenu;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -23,6 +26,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initToolbarAndDrawer();
+        initListVieeMenu();
+
+
+    }
+
+
+
+    private void initToolbarAndDrawer() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -34,6 +46,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+    private void initListVieeMenu() {
+
+        ListView listView = (ListView) findViewById(R.id.lvMainMenu);
+        listView.setAdapter(new LVAdapterMainMenu(this));
 
     }
     @Override

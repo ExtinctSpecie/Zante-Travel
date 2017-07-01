@@ -1,13 +1,20 @@
 package extinctspecie.com.zantetravel.adapters;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import extinctspecie.com.zantetravel.R;
 
 /**
  * Created by WorkSpace on 02-Jul-17.
@@ -17,10 +24,14 @@ public class LVAdapterMainMenu extends BaseAdapter {
 
 
     List<String> menu;
-    List<String> menuIcons;
+    List<Integer> menuIcons;
+    private LayoutInflater layoutInflater;
+    private Context context;
 
-    public LVAdapterMainMenu()
+    public LVAdapterMainMenu(Context context)
     {
+        this.context = context;
+        this.layoutInflater = LayoutInflater.from(context);
         menu = new ArrayList<>();
         menuIcons = new ArrayList<>();
         populateLists();
@@ -29,15 +40,15 @@ public class LVAdapterMainMenu extends BaseAdapter {
 
     private void populateLists() {
 
-        menuIcons.add("info_icon");
-        menuIcons.add("attraction_icon");
-        menuIcons.add("accommodation_icon");
-        menuIcons.add("food_icon");
-        menuIcons.add("entertainment_icon");
-        menuIcons.add("shopping_icon");
-        menuIcons.add("activities_icon");
-        menuIcons.add("beach_icon");
-        menuIcons.add("car_rentals_icon");
+        menuIcons.add(R.drawable.info_icon);
+        menuIcons.add(R.drawable.attraction_icon);
+        menuIcons.add(R.drawable.accommodation_icon);
+        menuIcons.add(R.drawable.food_icon);
+        menuIcons.add(R.drawable.entertainment_icon);
+        menuIcons.add(R.drawable.shopping_icon);
+        menuIcons.add(R.drawable.activities_icon);
+        menuIcons.add(R.drawable.beach_icon);
+        menuIcons.add(R.drawable.car_rentals_icon);
 
 
         menu.add("About Zante");
@@ -74,6 +85,9 @@ public class LVAdapterMainMenu extends BaseAdapter {
         {
             viewHolder = new ViewHolder();
 
+            convertView = layoutInflater.inflate(R.layout.lv_main_menu,null);
+            viewHolder.tvMenu = (TextView) convertView.findViewById(R.id.tvMenu);
+            viewHolder.ivMenu = (ImageView) convertView.findViewById(R.id.ivMenu);
 
             convertView.setTag(viewHolder);
         }
@@ -82,13 +96,15 @@ public class LVAdapterMainMenu extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
+        viewHolder.tvMenu.setText(menu.get(position));
+        viewHolder.ivMenu.setImageResource(menuIcons.get(position));
 
-        return null;
+        return convertView;
 
     }
     static class ViewHolder
     {
-        ImageView ivMenuIcon;
+        ImageView ivMenu;
         TextView tvMenu;
     }
 }
