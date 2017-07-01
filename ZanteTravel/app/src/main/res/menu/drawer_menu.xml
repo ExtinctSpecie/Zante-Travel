@@ -3,28 +3,45 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:title="Import" />
+            android:id="@+id/aboutZante"
+            android:title="About Zante"
+            android:icon="@drawable/info_icon"/>
         <item
-            android:id="@+id/nav_gallery"
-            android:title="Gallery" />
+            android:id="@+id/attractions"
+            android:title="Attractions"
+            android:icon="@drawable/attraction_icon"/>
         <item
             android:id="@+id/nav_slideshow"
-            android:title="Slideshow" />
+            android:title="Accommodation" />
         <item
-            android:id="@+id/nav_manage"
-            android:title="Tools" />
+            android:id="@+id/activities"
+            android:title="Food" />
+        <item
+            android:id="@+id/entertainment"
+            android:title="Entertainment" />
+        <item
+            android:id="@+id/shopping"
+            android:title="Shopping" />
+        <item
+            android:id="@+id/accommodation"
+            android:title="Activities" />
+        <item
+            android:id="@+id/food"
+            android:title="Beaches" />
+        <item
+            android:id="@+id/rentals"
+            android:title="Rentals" />
     </group>
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:title="Send" />
-        </menu>
-    </item>
+    <!--<item android:title="Communicate">-->
+        <!--<menu>-->
+            <!--<item-->
+                <!--android:id="@+id/nav_share"-->
+                <!--android:title="Share" />-->
+            <!--<item-->
+                <!--android:id="@+id/nav_send"-->
+                <!--android:title="Send" />-->
+        <!--</menu>-->
+    <!--</item>-->
 
 </menu>
