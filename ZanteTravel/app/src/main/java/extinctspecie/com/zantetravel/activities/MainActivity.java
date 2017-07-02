@@ -22,6 +22,7 @@ import java.util.Objects;
 import extinctspecie.com.zantetravel.R;
 import extinctspecie.com.zantetravel.adapters.LVAdapterMainMenu;
 import extinctspecie.com.zantetravel.helpers.TypeFaces;
+import extinctspecie.com.zantetravel.models.Business;
 
 import static android.R.attr.value;
 
@@ -40,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initTypeFaces();
         initToolbarAndDrawer();
         initListViewMenu();
-
 
     }
 
