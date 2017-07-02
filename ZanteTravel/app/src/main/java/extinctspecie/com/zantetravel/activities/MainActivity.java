@@ -1,6 +1,7 @@
 package extinctspecie.com.zantetravel.activities;
 
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -107,22 +108,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     {
         try {
 
-            Integer id = null;
+            int menuID = -1;
 
             if(menuItems.containsKey(item))
             {
-                id = item;
+                menuID = item;
             }
             else if(menuItems.containsValue(item))
             {
                 for (Map.Entry<Integer, Integer> entry : menuItems.entrySet()) {
                     if (entry.getValue().equals(item))
                     {
-                        id = entry.getKey();
+                        menuID = entry.getKey();
                     }
                 }
             }
-            Log.v(TAG,String.valueOf(id));
+
+            if(menuID > -1)
+            {
+                Intent intent = new Intent(getBaseContext(), BusinessActivity.class);
+                intent.putExtra("menuID",menuID);
+                startActivity(intent);
+            }
         }
         catch (NullPointerException e)
         {
