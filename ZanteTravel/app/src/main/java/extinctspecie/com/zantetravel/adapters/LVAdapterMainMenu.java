@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import extinctspecie.com.zantetravel.R;
+import extinctspecie.com.zantetravel.helpers.TypeFaces;
 
 /**
  * Created by WorkSpace on 02-Jul-17.
@@ -88,6 +89,8 @@ public class LVAdapterMainMenu extends BaseAdapter {
             convertView = layoutInflater.inflate(R.layout.lv_main_menu,null);
             viewHolder.tvMenu = (TextView) convertView.findViewById(R.id.tvMenu);
             viewHolder.ivMenu = (ImageView) convertView.findViewById(R.id.ivMenu);
+
+            viewHolder.tvMenu.setTypeface(TypeFaces.getAppleButter());
 
             convertView.setTag(viewHolder);
         }

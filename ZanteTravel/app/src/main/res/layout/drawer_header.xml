@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="160dp"
     android:background="@drawable/drawer_header_background"
@@ -24,12 +25,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:paddingTop="26dp"
         android:paddingBottom="16dp"
+        android:paddingTop="26dp"
+        android:text="Zante Travel"
         android:textColor="@color/BlueViolet"
-        android:textStyle="bold"
         android:textSize="16sp"
-        android:text="Zante Travel"/>
+        android:textStyle="bold" />
 
 
 </LinearLayout>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="extinctspecie.com.zantetravel.MainActivity"
+    tools:context="extinctspecie.com.zantetravel.activities.MainActivity"
     tools:showIn="@layout/activity_main_app_bar">
 
     <ImageView
