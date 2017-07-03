@@ -123,19 +123,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                 }
             }
-
-            if(menuID > -1)
-            {
-                Intent intent = new Intent(getBaseContext(), BusinessActivity.class);
-                intent.putExtra("menuID",menuID);
-                startActivity(intent);
-            }
+            goToNextActivity(menuID);
         }
         catch (NullPointerException e)
         {
             e.printStackTrace();
         }
     }
+
+    private void goToNextActivity(int menuID) {
+        if(menuID > -1)
+        {
+            Intent intent = new Intent(getBaseContext(), AllBusinessesActivity.class);
+            intent.putExtra("menuID",menuID);
+            startActivity(intent);
+        }
+    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.

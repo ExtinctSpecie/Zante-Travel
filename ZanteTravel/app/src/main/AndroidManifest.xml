@@ -34,7 +34,8 @@
         <activity
             android:name=".activities.BusinessActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".activities.AllBusinessesActivity"></activity>
+        <activity android:name=".activities.AllBusinessesActivity"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>
