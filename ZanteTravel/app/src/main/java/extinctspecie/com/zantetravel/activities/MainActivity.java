@@ -57,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         menuItems.put(6,R.id.activities);
         menuItems.put(7,R.id.beaches);
         menuItems.put(8,R.id.rentals);
+        menuItems.put(9,R.id.other);
+        menuItems.put(10,R.id.emergencyHelp);
 
     }
 

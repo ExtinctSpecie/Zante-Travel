@@ -4,8 +4,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
 
 import extinctspecie.com.zantetravel.R;
+import extinctspecie.com.zantetravel.adapters.LVAdapterAllBusinesses;
 
 public class AllBusinessesActivity extends AppCompatActivity {
 
@@ -18,12 +21,17 @@ public class AllBusinessesActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+
         populateViewsWithData();
 
     }
-    
+
 
     private void populateViewsWithData() {
+
+        ListView lvAllBusinesses = (ListView) findViewById(R.id.lvAllBusinesses);
+
+        lvAllBusinesses.setAdapter(new LVAdapterAllBusinesses(getIntent().getIntExtra("menuID" , -1), getApplicationContext()));
 
     }
 

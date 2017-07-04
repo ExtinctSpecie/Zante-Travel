@@ -31,7 +31,7 @@ public class LVAdapterMainMenu extends BaseAdapter {
 
     public LVAdapterMainMenu(Context context)
     {
-        this.context = context;
+        //this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
         menu = new ArrayList<>();
         menuIcons = new ArrayList<>();
@@ -61,6 +61,8 @@ public class LVAdapterMainMenu extends BaseAdapter {
         menu.add("Activities");
         menu.add("Beaches");
         menu.add("Car Rentals");
+        menu.add("Other");
+        menu.add("Emergency Help");
     }
 
     @Override

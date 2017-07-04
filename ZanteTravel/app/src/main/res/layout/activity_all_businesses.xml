@@ -1,9 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="extinctspecie.com.zantetravel.activities.AllBusinessesActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <ImageView
+        android:id="@+id/ivMainTopLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:background="@drawable/navagio_beach" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lvAllBusinesses"
+        android:layout_above="@+id/adView"
+        android:layout_below="@id/ivMainTopLogo"
+        android:background="@drawable/drawer_header_background"
+        android:padding="10dp"
+        android:scrollbars="none"
+        android:divider="@null"
+        android:dividerHeight="0dp" />
+
+    <ImageView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorAccent"
+        android:baselineAlignBottom="true" />
+
+
+</RelativeLayout>

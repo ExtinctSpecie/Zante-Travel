@@ -38,6 +38,13 @@
             android:id="@+id/rentals"
             android:title="Car Rentals"
             android:icon="@drawable/car_rentals_icon"/>
+        <item
+            android:id="@+id/other"
+            android:title="Other"/>
+        <item
+            android:id="@+id/emergencyHelp"
+            android:title="Emergency Help"/>
+
     </group>
 
     <!--<item android:title="Communicate">-->

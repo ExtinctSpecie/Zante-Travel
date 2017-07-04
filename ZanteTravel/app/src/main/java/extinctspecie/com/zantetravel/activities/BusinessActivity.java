@@ -13,8 +13,7 @@ public class BusinessActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business);
-        int s = getIntent().getIntExtra("menuID" , -1);
-        ((TextView) findViewById(R.id.tvGroupID)).append(" " +s);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
