@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:elevation="5dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:padding="10dp"
+    app:cardBackgroundColor="@color/Aquamarine"
+    app:cardCornerRadius="4dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/tvBusinessThumbnail"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="10dp"
+            android:layout_weight="0.5"
+            app:srcCompat="@drawable/beach_icon" />
+
+        <TextView
+            android:id="@+id/tvBusinessTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="To Steki"
+            android:textColor="@color/Black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tvBusinessTypeHelper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvBusinessTitle"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/tvBusinessThumbnail"
+            android:layout_toRightOf="@id/tvBusinessThumbnail"
+            android:text="Type : "
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tvBusinessType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvBusinessTitle"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toEndOf="@+id/tvBusinessTypeHelper"
+            android:layout_toRightOf="@id/tvBusinessTypeHelper"
+            android:maxLength="64"
+            android:text="Mediteterian Cousine/Fish/whatever/som ething elsecsadfs ad fsdf asdafasdfasd "
+            android:textSize="12sp" />
+        <TextView
+            android:id="@+id/tvBusinessLocationHelper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/tvBusinessThumbnail"
+            android:layout_toRightOf="@id/tvBusinessThumbnail"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@id/tvBusinessType"
+            android:layout_centerHorizontal="true"
+            android:text="Location : "
+            android:textSize="12sp"
+            />
+        <TextView
+            android:id="@+id/tvBusinessLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvBusinessType"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toEndOf="@+id/tvBusinessLocationHelper"
+            android:layout_toRightOf="@id/tvBusinessLocationHelper"
+            android:maxLength="32"
+            android:text="Kalamaki"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>

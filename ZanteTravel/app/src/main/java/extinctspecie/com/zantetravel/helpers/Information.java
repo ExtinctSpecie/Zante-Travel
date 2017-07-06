@@ -7,6 +7,6 @@ package extinctspecie.com.zantetravel.helpers;
 //// TODO: 02-Jul-17 ADD BASE URL OF SERVER AND SO ON
 public class Information
 {
-    public static String BaseURL = "http://192.168.1.2:8000/api/";
+    public static String BaseURL = "https://zante-travel.herokuapp.com/api/";
 
 }

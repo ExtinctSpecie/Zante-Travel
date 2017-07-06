@@ -6,6 +6,8 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import extinctspecie.com.zantetravel.R;
+import extinctspecie.com.zantetravel.data.AllBusinesses;
+import extinctspecie.com.zantetravel.services.API;
 
 public class BusinessActivity extends AppCompatActivity {
 
@@ -16,6 +18,7 @@ public class BusinessActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
     }
 
     @Override

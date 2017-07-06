@@ -8,18 +8,22 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 /**
  * Created by WorkSpace on 03-Jul-17.
  */
 
 public interface API {
+
     @GET("businesses/")
-    Call<List<Business>> getBusinesses();
+    Call<List<Business>> getAllBusinesses();
 
+    @GET("businesses/")
+    Call<List<Business>> getBusinessesWithGroupID(@Query("businessGroupID") int businessGroupID);
     public class Factory {
-        private static API service;
 
+        private static API service;
         public static API getInstance() {
             if (service == null) {
 

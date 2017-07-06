@@ -17,15 +17,18 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import extinctspecie.com.zantetravel.R;
 import extinctspecie.com.zantetravel.adapters.LVAdapterMainMenu;
+import extinctspecie.com.zantetravel.data.AllBusinesses;
 import extinctspecie.com.zantetravel.helpers.TypeFaces;
 import extinctspecie.com.zantetravel.models.Business;
-
-import static android.R.attr.value;
+import extinctspecie.com.zantetravel.services.API;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -38,10 +41,44 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        getDataFromServer();
         createMenuMap();
         initTypeFaces();
         initToolbarAndDrawer();
         initListViewMenu();
+
+    }
+
+    private void getDataFromServer() {
+
+
+        API.Factory.getInstance().getAllBusinesses().enqueue(new Callback<List<Business>>() {
+            @Override
+            public void onResponse(Call<List<Business>> call, Response<List<Business>> response) {
+
+                try
+                {
+                    if(!response.body().isEmpty())
+                    {
+                        AllBusinesses.setAllBusinesses(response.body());
+                        Log.v(TAG,AllBusinesses.getAllBusinesses().get(0).getName());
+                    }
+                }
+                catch (NullPointerException e)
+                {
+                    e.printStackTrace();
+                }
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Business>> call, Throwable t) {
+                Log.v(TAG, "Error While Getting Data" + t);
+            }
+        });
 
     }
 
