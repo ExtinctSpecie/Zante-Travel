@@ -64,9 +64,18 @@ public class AllBusinessesActivity extends AppCompatActivity {
 
                         AllBusinesses.addBusinessesWithGID(response.body() , groupID);
 
-                        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvAllBusinesses);
+                        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvAllBusinesses);
                         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                        recyclerView.setAdapter(new RVAdapterBusinessesID(AllBusinesses.getAllBusinesses(),getApplicationContext()));
+                        final RVAdapterBusinessesID rvAdapterBusinessesID = new RVAdapterBusinessesID(AllBusinesses.getAllBusinesses(),getApplicationContext());
+                        rvAdapterBusinessesID.setClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                int pos = recyclerView.indexOfChild(v);
+                                Log.v("MAIN: ",String.valueOf(pos));
+                            }
+                        });
+
+                        recyclerView.setAdapter(rvAdapterBusinessesID);
 
                     }
                 }
@@ -97,6 +106,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
     }
 
     private void initSpinner() {
+
         Spinner spinner = (Spinner) findViewById(R.id.spinnerSortByList);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.sortByList, android.R.layout.simple_spinner_item);

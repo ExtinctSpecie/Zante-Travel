@@ -2,6 +2,7 @@ package extinctspecie.com.zantetravel.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusines
 
     private List<Business> businessList;
     Context context;
+    View.OnClickListener mClickListener;
 
     public RVAdapterBusinessesID(List<Business> businessList , Context context) {
         this.businessList = businessList;
@@ -33,10 +35,20 @@ public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusines
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.business_rv_row, parent, false);
+        MyViewHolder viewHolder = new MyViewHolder(itemView);
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v("Item Clicked: ",((TextView)v.findViewById(R.id.tvBusinessName)).getText().toString());
+                mClickListener.onClick(v);
+            }
+        });
         return new MyViewHolder(itemView);
 
     }
-
+    public void setClickListener(View.OnClickListener callback) {
+        mClickListener = callback;
+    }
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 

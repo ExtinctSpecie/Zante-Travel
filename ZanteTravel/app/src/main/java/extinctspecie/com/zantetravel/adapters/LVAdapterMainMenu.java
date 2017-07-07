@@ -50,6 +50,8 @@ public class LVAdapterMainMenu extends BaseAdapter {
         menuIcons.add(R.drawable.activities_icon);
         menuIcons.add(R.drawable.beach_icon);
         menuIcons.add(R.drawable.car_rentals_icon);
+        menuIcons.add(R.drawable.car_rentals_icon);
+        menuIcons.add(R.drawable.car_rentals_icon);
 
 
         menu.add("About Zante");
