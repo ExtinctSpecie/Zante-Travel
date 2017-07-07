@@ -9,7 +9,7 @@
     android:elevation="5dp"
     android:foreground="?android:attr/selectableItemBackground"
     android:padding="10dp"
-    app:cardBackgroundColor="@color/Aquamarine"
+
     app:cardCornerRadius="4dp">
 
     <RelativeLayout
@@ -17,7 +17,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/tvBusinessThumbnail"
+            android:id="@+id/ivBusinessThumbnail"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_margin="10dp"
@@ -25,7 +25,7 @@
             app:srcCompat="@drawable/beach_icon" />
 
         <TextView
-            android:id="@+id/tvBusinessTitle"
+            android:id="@+id/tvBusinessName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -38,13 +38,13 @@
             android:id="@+id/tvBusinessTypeHelper"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvBusinessTitle"
+            android:layout_below="@+id/tvBusinessName"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            android:layout_toEndOf="@+id/tvBusinessThumbnail"
-            android:layout_toRightOf="@id/tvBusinessThumbnail"
+            android:layout_toEndOf="@+id/ivBusinessThumbnail"
+            android:layout_toRightOf="@id/ivBusinessThumbnail"
             android:text="Type : "
             android:textSize="12sp" />
 
@@ -52,7 +52,7 @@
             android:id="@+id/tvBusinessType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvBusinessTitle"
+            android:layout_below="@+id/tvBusinessName"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
@@ -66,8 +66,8 @@
             android:id="@+id/tvBusinessLocationHelper"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/tvBusinessThumbnail"
-            android:layout_toRightOf="@id/tvBusinessThumbnail"
+            android:layout_toEndOf="@+id/ivBusinessThumbnail"
+            android:layout_toRightOf="@id/ivBusinessThumbnail"
             android:layout_marginBottom="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"

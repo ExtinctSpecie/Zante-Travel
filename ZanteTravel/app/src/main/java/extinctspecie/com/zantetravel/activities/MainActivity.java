@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
 
-        getDataFromServer();
         createMenuMap();
         initTypeFaces();
         initToolbarAndDrawer();
@@ -53,32 +52,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void getDataFromServer() {
 
 
-        API.Factory.getInstance().getAllBusinesses().enqueue(new Callback<List<Business>>() {
-            @Override
-            public void onResponse(Call<List<Business>> call, Response<List<Business>> response) {
-
-                try
-                {
-                    if(!response.body().isEmpty())
-                    {
-                        AllBusinesses.setAllBusinesses(response.body());
-                        Log.v(TAG,AllBusinesses.getAllBusinesses().get(0).getName());
-                    }
-                }
-                catch (NullPointerException e)
-                {
-                    e.printStackTrace();
-                }
-
-
-
-            }
-
-            @Override
-            public void onFailure(Call<List<Business>> call, Throwable t) {
-                Log.v(TAG, "Error While Getting Data" + t);
-            }
-        });
 
     }
 

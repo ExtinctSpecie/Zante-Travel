@@ -8,6 +8,7 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -19,8 +20,8 @@ public interface API {
     @GET("businesses/")
     Call<List<Business>> getAllBusinesses();
 
-    @GET("businesses/")
-    Call<List<Business>> getBusinessesWithGroupID(@Query("businessGroupID") int businessGroupID);
+    @GET("businesses/{ID}")
+    Call<List<Business>> getBusinessesWithGroupID(@Path("ID") int businessGroupID);
     public class Factory {
 
         private static API service;
