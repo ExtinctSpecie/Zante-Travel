@@ -4,4 +4,13 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <string-array name="sortByList">
+        <item>Default</item>
+        <item>Name</item>
+        <item>Location</item>
+        <item>Type</item>
+        <item>Distance</item>
+    </string-array>
+
 </resources>

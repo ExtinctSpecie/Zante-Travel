@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(menuID > -1)
         {
             Intent intent = new Intent(getBaseContext(), AllBusinessesActivity.class);
-            intent.putExtra("menuID",menuID);
+            intent.putExtra("groupID",menuID);
             startActivity(intent);
         }
     }

@@ -8,7 +8,7 @@
     tools:context="extinctspecie.com.zantetravel.activities.AllBusinessesActivity">
 
     <android.support.v7.widget.SearchView
-        android:id="@+id/etSearch"
+        android:id="@+id/svSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -25,10 +25,41 @@
         android:scrollbars="none"
         android:divider="@null"
         android:dividerHeight="0dp"
-        android:layout_below="@+id/etSearch"
+        android:layout_below="@+id/searchRelativeLayout"
         android:layout_above="@+id/ivAd"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <RelativeLayout
+        android:id="@+id/searchRelativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/AntiqueWhite"
+        android:padding="5dp"
+        android:layout_below="@+id/svSearch">
+        <TextView
+            android:id="@+id/tvSpinnerHelper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sort By : "
+            android:textColor="@color/Gray"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"/>
+        <Spinner
+            android:id="@+id/spinnerSortByList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            />
+    </RelativeLayout>
+
+
 
     <ImageView
         android:id="@+id/ivAd"
@@ -36,7 +67,6 @@
         android:layout_height="80dp"
         android:background="@color/BlueViolet"
         android:layout_alignParentBottom="true"/>
-
 
     <LinearLayout
         android:id="@+id/rvDataLoadingProgress"

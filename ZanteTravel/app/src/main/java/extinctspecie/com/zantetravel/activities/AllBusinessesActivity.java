@@ -8,8 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -35,17 +39,20 @@ public class AllBusinessesActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 
-        populateViewsWithData();
+        populateViewsWithData(getIntent().getIntExtra("groupID",-1));
+        initSpinner();
 
     }
 
 
-    private void populateViewsWithData() {
+
+
+    private void populateViewsWithData(final int groupID) {
 
         final LinearLayout tvTodayProgress = (LinearLayout) findViewById(R.id.rvDataLoadingProgress);
         tvTodayProgress.setVisibility(View.VISIBLE);
 
-        API.Factory.getInstance().getBusinessesWithGroupID(0).enqueue(new Callback<List<Business>>() {
+        API.Factory.getInstance().getBusinessesWithGroupID(groupID).enqueue(new Callback<List<Business>>() {
             @Override
             public void onResponse(Call<List<Business>> call, Response<List<Business>> response) {
 
@@ -55,19 +62,20 @@ public class AllBusinessesActivity extends AppCompatActivity {
                     {
                         AllBusinesses.setAllBusinesses(response.body());
 
+                        AllBusinesses.addBusinessesWithGID(response.body() , groupID);
+
                         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvAllBusinesses);
                         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                         recyclerView.setAdapter(new RVAdapterBusinessesID(AllBusinesses.getAllBusinesses(),getApplicationContext()));
-                        tvTodayProgress.setVisibility(View.GONE);
+
                     }
                 }
                 catch (NullPointerException e)
                 {
                     e.printStackTrace();
-                    tvTodayProgress.setVisibility(View.GONE);
+
                 }
-
-
+                tvTodayProgress.setVisibility(View.GONE);
 
             }
 
@@ -87,9 +95,32 @@ public class AllBusinessesActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private void initSpinner() {
+        Spinner spinner = (Spinner) findViewById(R.id.spinnerSortByList);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.sortByList, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setPrompt("Choose");
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getApplicationContext(),parent.getItemAtPosition(position).toString(),Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
         finish();
     }
+
 }
