@@ -38,8 +38,10 @@
         <activity
             android:name=".activities.BusinessActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".activities.AllBusinessesActivity"
+        <activity
+            android:name=".activities.AllBusinessesActivity"
             android:theme="@style/AppTheme" />
+        <activity android:name=".activities.AboutTownActivity"></activity>
     </application>
 
 </manifest>

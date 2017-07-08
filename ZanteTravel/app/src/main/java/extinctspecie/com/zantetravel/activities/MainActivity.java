@@ -144,11 +144,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void goToNextActivity(int menuID) {
-        if(menuID > -1)
+        //if menu = 0
+        //that means we need to start another activity ( for info )
+        //static data for info activity is fine since it won't get any update
+        if(menuID > 0)
         {
             Intent intent = new Intent(getBaseContext(), AllBusinessesActivity.class);
             intent.putExtra("groupID",menuID);
             startActivity(intent);
+        }
+        else
+        {
+            startActivity(new Intent(getBaseContext(),AboutTownActivity.class));
         }
     }
 

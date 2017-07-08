@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/AliceBlue"
+    tools:context="extinctspecie.com.zantetravel.activities.AboutTownActivity">
+
+    <ImageView
+        android:id="@+id/ivTopImage"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@color/BlueViolet"
+        />
+    <WebView
+        android:id="@+id/wvAboutTown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ivTopImage"
+        android:layout_alignParentBottom="true"
+        android:scrollbars="none"
+        />
+</RelativeLayout>
