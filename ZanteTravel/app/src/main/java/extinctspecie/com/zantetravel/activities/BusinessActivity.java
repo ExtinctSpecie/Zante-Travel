@@ -19,6 +19,15 @@ public class BusinessActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        int groupID = getIntent().getIntExtra("groupID" , -1);
+        getIntent().getStringExtra("businessName");
+        int pos = getIntent().getIntExtra("position" , -1);
+        if(pos > -1)
+        {
+            ((TextView)findViewById(R.id.tvGroupID)).setText(AllBusinesses.getBusinessesWithGID(groupID).get(pos).getLongDescription());
+        }
+
+
     }
 
     @Override

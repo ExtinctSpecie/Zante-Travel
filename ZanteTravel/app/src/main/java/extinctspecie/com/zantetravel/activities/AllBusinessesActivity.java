@@ -1,5 +1,6 @@
 package extinctspecie.com.zantetravel.activities;
 
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -70,8 +72,12 @@ public class AllBusinessesActivity extends AppCompatActivity {
                         rvAdapterBusinessesID.setClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                int pos = recyclerView.indexOfChild(v);
-                                Log.v("MAIN: ",String.valueOf(pos));
+                                int position = recyclerView.indexOfChild(v);
+                                Intent intent = new Intent(getBaseContext(), BusinessActivity.class);
+                                intent.putExtra("businessName",((TextView)v.findViewById(R.id.tvBusinessName)).getText());
+                                intent.putExtra("position",position);
+                                intent.putExtra("groupID",groupID);
+                                startActivity(intent);
                             }
                         });
 
