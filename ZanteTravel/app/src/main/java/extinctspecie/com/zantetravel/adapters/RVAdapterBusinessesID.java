@@ -77,4 +77,9 @@ public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusines
             location = (TextView) view.findViewById(R.id.tvBusinessLocation);
         }
     }
+    public void changeDataSet(List<Business> newItems)
+    {
+        businessList = newItems;
+        notifyDataSetChanged();
+    }
 }

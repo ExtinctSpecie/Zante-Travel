@@ -1,6 +1,7 @@
 package extinctspecie.com.zantetravel.activities;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import extinctspecie.com.zantetravel.R;
@@ -31,6 +34,8 @@ import retrofit2.Response;
 
 public class AllBusinessesActivity extends AppCompatActivity {
 
+    private RVAdapterBusinessesID rvAdapterBusinessesID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +48,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
 
         populateViewsWithData(getIntent().getIntExtra("groupID",-1));
         initSpinner();
+
 
     }
 
@@ -68,7 +74,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
 
                         final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvAllBusinesses);
                         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                        final RVAdapterBusinessesID rvAdapterBusinessesID = new RVAdapterBusinessesID(AllBusinesses.getAllBusinesses(),getApplicationContext());
+                        rvAdapterBusinessesID = new RVAdapterBusinessesID(AllBusinesses.getAllBusinesses(),getApplicationContext());
                         rvAdapterBusinessesID.setClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -124,6 +130,8 @@ public class AllBusinessesActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getApplicationContext(),parent.getItemAtPosition(position).toString(),Toast.LENGTH_SHORT).show();
+                if(!parent.getItemAtPosition(position).toString().equals("Default"))
+                    sortListItems(AllBusinesses.getBusinessesWithGID(getIntent().getIntExtra("groupID",-1)) ,"name");
             }
 
             @Override
@@ -133,10 +141,26 @@ public class AllBusinessesActivity extends AppCompatActivity {
         });
 
     }
+    private void sortListItems(List<Business> businesses ,String sortBy)
+    {
+        Collections.sort(businesses, new Comparator<Business>(){
+            public int compare(Business obj1, Business obj2) {
+                // ## Ascending order
+                return obj1.getName().compareToIgnoreCase(obj2.getName()); // To compare string values
+                // return Integer.valueOf(obj1.empId).compareTo(obj2.empId); // To compare integer values
+
+                // ## Descending order
+                // return obj2.firstName.compareToIgnoreCase(obj1.firstName); // To compare string values
+                // return Integer.valueOf(obj2.empId).compareTo(obj1.empId); // To compare integer values
+            }
+        });
+        if(rvAdapterBusinessesID!=null)
+            rvAdapterBusinessesID.changeDataSet(businesses);
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        finish();
+        //finish();
     }
 
 }
