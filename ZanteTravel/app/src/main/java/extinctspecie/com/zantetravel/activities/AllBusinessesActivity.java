@@ -18,6 +18,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -123,15 +125,16 @@ public class AllBusinessesActivity extends AppCompatActivity {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.sortByList, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setPrompt("Choose");
         spinner.setAdapter(adapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getApplicationContext(),parent.getItemAtPosition(position).toString(),Toast.LENGTH_SHORT).show();
+
+                String methodName = "get"+parent.getItemAtPosition(position).toString();
                 if(!parent.getItemAtPosition(position).toString().equals("Default"))
-                    sortListItems(AllBusinesses.getBusinessesWithGID(getIntent().getIntExtra("groupID",-1)) ,"name");
+                    sortListItems(AllBusinesses.getBusinessesWithGID(getIntent().getIntExtra("groupID",-1)) ,methodName);
             }
 
             @Override
@@ -141,21 +144,37 @@ public class AllBusinessesActivity extends AppCompatActivity {
         });
 
     }
-    private void sortListItems(List<Business> businesses ,String sortBy)
+    private void sortListItems(List<Business> businesses ,String methodName)
     {
-        Collections.sort(businesses, new Comparator<Business>(){
-            public int compare(Business obj1, Business obj2) {
-                // ## Ascending order
-                return obj1.getName().compareToIgnoreCase(obj2.getName()); // To compare string values
-                // return Integer.valueOf(obj1.empId).compareTo(obj2.empId); // To compare integer values
+        final Method method;
+        try {
+            method = businesses.get(0).getClass().getMethod(methodName);
+            //use reflections to call the method by the given sortBy String
+            Collections.sort(businesses, new Comparator<Business>(){
+                public int compare(Business obj1, Business obj2) {
+                    // ## Ascending order
+                    try {
+                        return ((String) method.invoke(obj1)).compareToIgnoreCase((String) method.invoke(obj2));
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
+                    }
+                    // To compare string values
+                    // return Integer.valueOf(obj1.empId).compareTo(obj2.empId); // To compare integer values
 
-                // ## Descending order
-                // return obj2.firstName.compareToIgnoreCase(obj1.firstName); // To compare string values
-                // return Integer.valueOf(obj2.empId).compareTo(obj1.empId); // To compare integer values
-            }
-        });
-        if(rvAdapterBusinessesID!=null)
-            rvAdapterBusinessesID.changeDataSet(businesses);
+                    // ## Descending order
+                    // return obj2.firstName.compareToIgnoreCase(obj1.firstName); // To compare string values
+                    // return Integer.valueOf(obj2.empId).compareTo(obj1.empId); // To compare integer values
+                    return 0;
+                }
+            });
+            if(rvAdapterBusinessesID!=null)
+                rvAdapterBusinessesID.changeDataSet(businesses);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+
     }
     @Override
     protected void onDestroy() {
