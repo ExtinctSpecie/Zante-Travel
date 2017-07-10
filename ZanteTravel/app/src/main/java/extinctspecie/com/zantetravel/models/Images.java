@@ -6,24 +6,24 @@ package extinctspecie.com.zantetravel.models;
 
 public class Images
 {
-    private Business business;
+    private int businessID;
     private int position;
     private String image;
 
     public Images() {}
 
-    public Images(Business business, int position, String image) {
-        this.business = business;
+    public Images(int businessID, int position, String image) {
+        this.businessID = businessID;
         this.position = position;
         this.image = image;
     }
 
-    public Business getBusiness() {
-        return business;
+    public int getBusinessID() {
+        return businessID;
     }
 
-    public void setBusiness(Business business) {
-        this.business = business;
+    public void setBusinessID(int businessID) {
+        this.businessID = businessID;
     }
 
     public int getPosition() {

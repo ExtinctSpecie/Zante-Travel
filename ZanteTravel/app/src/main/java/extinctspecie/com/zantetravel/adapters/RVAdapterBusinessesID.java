@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import extinctspecie.com.zantetravel.R;
@@ -23,11 +24,13 @@ import extinctspecie.com.zantetravel.models.Business;
 public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusinessesID.MyViewHolder>{
 
     private List<Business> businessList;
+    private List<Business> businessListCopy;
     Context context;
     View.OnClickListener mClickListener;
 
     public RVAdapterBusinessesID(List<Business> businessList , Context context) {
         this.businessList = businessList;
+        this.businessListCopy = new ArrayList<>(businessList);
         this.context = context;
     }
 
@@ -80,6 +83,23 @@ public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusines
     public void changeDataSet(List<Business> newItems)
     {
         businessList = newItems;
+        notifyDataSetChanged();
+    }
+    public void filter(String text) {
+        //Clear first
+        businessList.clear();
+
+        if(text.isEmpty()){
+            businessList.addAll(businessListCopy);
+        } else{
+            text = text.toLowerCase();
+            if(businessListCopy.isEmpty()) ;
+            for(Business business: businessListCopy){
+                if(business.getName().toLowerCase().contains(text) || business.getType().toLowerCase().contains(text) || business.getLocation().toLowerCase().contains(text)){
+                    businessList.add(business);
+                }
+            }
+        }
         notifyDataSetChanged();
     }
 }

@@ -3,11 +3,17 @@ package extinctspecie.com.zantetravel.activities;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.view.MenuItemCompat;
+import android.app.SearchManager;
+import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -46,6 +52,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        //getSupportActionBar().setTitle("");
 
 
         populateViewsWithData(getIntent().getIntExtra("groupID",-1));
@@ -111,11 +118,42 @@ public class AllBusinessesActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search_menu , menu);
+        MenuItem item = menu.findItem(R.id.searchMenu);
+        SearchView searchView = (SearchView) item.getActionView();
+
+        searchView.setOnQueryTextListener(onQueryTextListener);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    //Search text Listener
+    SearchView.OnQueryTextListener onQueryTextListener = new SearchView.OnQueryTextListener() {
+        @Override
+        public boolean onQueryTextSubmit(String query) {
+            rvAdapterBusinessesID.filter(query);
+            return false;
+        }
+
+        @Override
+        public boolean onQueryTextChange(String newText) {
+            rvAdapterBusinessesID.filter(newText);
+            return false;
+        }
+    };
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == android.R.id.home)
         {
             onBackPressed();
         }
+
+
+
         return super.onOptionsItemSelected(item);
     }
 

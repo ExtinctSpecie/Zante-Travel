@@ -40,7 +40,8 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".activities.AllBusinessesActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustNothing"/>
         <activity android:name=".activities.AboutTownActivity"
             android:theme="@style/AppTheme"/>
     </application>
