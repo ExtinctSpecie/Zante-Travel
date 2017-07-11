@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
 import android.app.SearchManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,7 @@ import android.widget.Toast;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -43,25 +45,38 @@ import retrofit2.Response;
 public class AllBusinessesActivity extends AppCompatActivity {
 
     private RVAdapterBusinessesID rvAdapterBusinessesID;
+    private int businessGroupID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_businesses);
 
+        businessGroupID = getIntent().getIntExtra("groupID",-1);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         //getSupportActionBar().setTitle("");
 
 
-        populateViewsWithData(getIntent().getIntExtra("groupID",-1));
+        populateViewsWithData(businessGroupID);
         initSpinner();
+        
 
 
     }
 
-
+//    private void initSwipeRefresh() {
+//        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.srlActivityAllBusinesses);
+//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//
+//                populateViewsWithData(businessGroupID);
+//                swipeRefreshLayout.setRefreshing(false);
+//            }
+//        });
+//    }
 
 
     private void populateViewsWithData(final int groupID) {
@@ -171,8 +186,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),parent.getItemAtPosition(position).toString(),Toast.LENGTH_SHORT).show();
 
                 String methodName = "get"+parent.getItemAtPosition(position).toString();
-                if(!parent.getItemAtPosition(position).toString().equals("Default"))
-                    sortListItems(AllBusinesses.getBusinessesWithGID(getIntent().getIntExtra("groupID",-1)) ,methodName);
+                sortListItems(AllBusinesses.getBusinessesWithGID(businessGroupID) ,methodName);
             }
 
             @Override
@@ -184,34 +198,51 @@ public class AllBusinessesActivity extends AppCompatActivity {
     }
     private void sortListItems(List<Business> businesses ,String methodName)
     {
-        final Method method;
-        try {
-            method = businesses.get(0).getClass().getMethod(methodName);
-            //use reflections to call the method by the given sortBy String
-            Collections.sort(businesses, new Comparator<Business>(){
-                public int compare(Business obj1, Business obj2) {
-                    // ## Ascending order
-                    try {
-                        return ((String) method.invoke(obj1)).compareToIgnoreCase((String) method.invoke(obj2));
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    } catch (InvocationTargetException e) {
-                        e.printStackTrace();
-                    }
-                    // To compare string values
-                    // return Integer.valueOf(obj1.empId).compareTo(obj2.empId); // To compare integer values
 
-                    // ## Descending order
-                    // return obj2.firstName.compareToIgnoreCase(obj1.firstName); // To compare string values
-                    // return Integer.valueOf(obj2.empId).compareTo(obj1.empId); // To compare integer values
-                    return 0;
+        if(methodName.equals("getDefault"))
+        {
+            //resetting businesses
+            if(rvAdapterBusinessesID!=null)
+                rvAdapterBusinessesID.resetData();
+        }
+        else if(methodName.equals("getDistance"))
+        {
+
+        }
+        else
+        {
+            final Method method;
+            try {
+                method = businesses.get(0).getClass().getMethod(methodName);
+                //use reflections to call the method by the given sortBy String
+                Collections.sort(businesses, new Comparator<Business>(){
+                    public int compare(Business obj1, Business obj2) {
+                        // ## Ascending order
+                            try {
+                                return ((String) method.invoke(obj1)).compareToIgnoreCase((String) method.invoke(obj2));
+                            } catch (IllegalAccessException e) {
+                                e.printStackTrace();
+                            } catch (InvocationTargetException e) {
+                                e.printStackTrace();
+                            }
+                            // To compare string values
+                            // return Integer.valueOf(obj1.empId).compareTo(obj2.empId); // To compare integer values
+
+                            // ## Descending order
+                            // return obj2.firstName.compareToIgnoreCase(obj1.firstName); // To compare string values
+                            // return Integer.valueOf(obj2.empId).compareTo(obj1.empId); // To compare integer values
+                            return 0;
+                        }
+                    });
                 }
-            });
+                catch (NoSuchMethodException e)
+                {
+                    e.printStackTrace();
+                }
             if(rvAdapterBusinessesID!=null)
                 rvAdapterBusinessesID.changeDataSet(businesses);
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
         }
+
 
     }
     @Override

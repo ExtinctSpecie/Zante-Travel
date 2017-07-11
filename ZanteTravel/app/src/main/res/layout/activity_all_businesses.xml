@@ -7,15 +7,8 @@
     android:background="@drawable/drawer_header_background"
     tools:context="extinctspecie.com.zantetravel.activities.AllBusinessesActivity">
 
-    <android.support.v7.widget.SearchView
-        android:id="@+id/svSearch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        app:defaultQueryHint="Search"
-        android:background="@color/Aquamarine"
-        android:textColor="@color/Black"/>
+
+
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
@@ -35,8 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/AntiqueWhite"
-        android:padding="5dp"
-        android:layout_below="@+id/svSearch">
+        android:padding="5dp">
         <TextView
             android:id="@+id/tvSpinnerHelper"
             android:layout_width="wrap_content"
@@ -80,4 +72,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>
+
+
 </RelativeLayout>

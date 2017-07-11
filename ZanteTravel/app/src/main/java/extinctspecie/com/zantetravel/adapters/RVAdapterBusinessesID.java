@@ -67,6 +67,11 @@ public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusines
         return businessList.size();
     }
 
+    public void resetData() {
+        businessList = businessListCopy;
+        notifyDataSetChanged();
+    }
+
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         //thumbnail /title / location / type
         public TextView name, type, location;

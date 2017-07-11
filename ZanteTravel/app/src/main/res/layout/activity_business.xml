@@ -1,23 +1,229 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="extinctspecie.com.zantetravel.activities.BusinessActivity">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/vpGallery"
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:layout_margin="10dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvGroupID"
-        android:textColor="@color/Black"
-        android:text="GroupID : "
-        android:layout_centerInParent="true"
-        android:textSize="25sp"/>
+    <RelativeLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
 
-</RelativeLayout>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vpGallery"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_margin="10dp"/>
+
+        <LinearLayout
+            android:id="@+id/llButtonRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/vpGallery"
+            android:layout_marginTop="10dp">
+
+            <Space
+                android:layout_width="30dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/activities_icon"
+                />
+
+            <Space
+                android:layout_width="30dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/activities_icon"
+                />
+
+            <Space
+                android:layout_width="30dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/activities_icon"
+                />
+
+            <Space
+                android:layout_width="30dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/activities_icon"
+                />
+
+            <Space
+                android:layout_width="30dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvDescriptionHelper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:layout_below="@id/llButtonRow"
+            android:text="Description"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_below="@+id/tvDescriptionHelper"
+            android:text="some long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long description"
+            android:textColor="@color/Black"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/tvLocationHelper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:layout_below="@id/tvDescription"
+            android:text="Location"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/tvLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:layout_below="@+id/tvLocationHelper"
+            android:text="Zante Town"
+            android:textColor="@color/Black"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/tvTypeHelper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:layout_below="@id/tvLocation"
+            android:text="Type"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/tvType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:layout_below="@+id/tvTypeHelper"
+            android:text="Vegeterian/Meat/Fish"
+            android:textColor="@color/Black"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/tvWorkingHoursHelper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:layout_below="@id/tvType"
+            android:text="Working Hours"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/tvWorkingHours"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:layout_below="@+id/tvWorkingHoursHelper"
+            android:text="16:00 - 1:00"
+            android:textColor="@color/Black"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/tvContactHelper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:layout_below="@id/tvWorkingHours"
+            android:text="Contact"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/tvContactNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:layout_below="@+id/tvContactHelper"
+            android:text="Phone Number : 69465156245"
+            android:textColor="@color/Black"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/tvContactEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:layout_below="@+id/tvContactNumber"
+            android:text="Email : some@some.com"
+            android:textColor="@color/Black"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/tvContactWebsite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:layout_below="@+id/tvContactEmail"
+            android:text="Website : www.watafaka.acom"
+            android:textColor="@color/Black"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/tvCreditCardsHelper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:layout_below="@+id/tvContactWebsite"
+            android:text="Credit Cards : "
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/Black"
+            android:gravity="center"/>
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/cbCreditCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvContactWebsite"
+            android:layout_toRightOf="@id/tvCreditCardsHelper"
+            android:checked="false"
+            android:clickable="false"
+            />
+        <TextView
+            android:id="@+id/tvSummerOnlyHelper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:layout_below="@+id/cbCreditCard"
+            android:text="Opened Summer Season Only : "
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/Black"
+            android:gravity="center"/>
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/cbSummerOnly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cbCreditCard"
+            android:layout_toRightOf="@id/tvSummerOnlyHelper"
+            android:checked="false"
+            android:clickable="false"
+            />
+    </RelativeLayout>
+</ScrollView>
+

@@ -4,6 +4,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.CheckBox;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ public class BusinessActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-
+        ((CheckBox)findViewById(R.id.cbCreditCard)).setChecked(true);
         initVariables();
         initViewPager();
 
