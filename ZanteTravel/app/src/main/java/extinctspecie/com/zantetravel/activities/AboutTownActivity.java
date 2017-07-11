@@ -18,6 +18,8 @@ public class AboutTownActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        getSupportActionBar().setTitle("About Zakynthos");
+
         loadHtmlToWebView();
 
     }
