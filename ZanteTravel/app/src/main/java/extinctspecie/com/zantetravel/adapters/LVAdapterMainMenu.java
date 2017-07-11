@@ -1,7 +1,6 @@
 package extinctspecie.com.zantetravel.adapters;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,10 +88,10 @@ public class LVAdapterMainMenu extends BaseAdapter {
             viewHolder = new ViewHolder();
 
             convertView = layoutInflater.inflate(R.layout.lv_main_menu,null);
-            viewHolder.tvMenu = (TextView) convertView.findViewById(R.id.tvMenu);
-            viewHolder.ivMenu = (ImageView) convertView.findViewById(R.id.ivMenu);
+            viewHolder.tvMenuItem = (TextView) convertView.findViewById(R.id.tvMenuItem);
+            viewHolder.ivMenuItem = (ImageView) convertView.findViewById(R.id.ivMenuItem);
 
-            viewHolder.tvMenu.setTypeface(TypeFaces.getAppleButter());
+            viewHolder.tvMenuItem.setTypeface(TypeFaces.getAppleButter());
 
             convertView.setTag(viewHolder);
         }
@@ -103,15 +100,15 @@ public class LVAdapterMainMenu extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.tvMenu.setText(menu.get(position));
-        viewHolder.ivMenu.setImageResource(menuIcons.get(position));
+        viewHolder.tvMenuItem.setText(menu.get(position));
+        viewHolder.ivMenuItem.setImageResource(menuIcons.get(position));
 
         return convertView;
 
     }
     static class ViewHolder
     {
-        ImageView ivMenu;
-        TextView tvMenu;
+        ImageView ivMenuItem;
+        TextView tvMenuItem;
     }
 }

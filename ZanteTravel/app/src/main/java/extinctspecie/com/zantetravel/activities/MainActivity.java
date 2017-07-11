@@ -15,25 +15,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import extinctspecie.com.zantetravel.R;
 import extinctspecie.com.zantetravel.adapters.LVAdapterMainMenu;
-import extinctspecie.com.zantetravel.data.AllBusinesses;
 import extinctspecie.com.zantetravel.helpers.TypeFaces;
-import extinctspecie.com.zantetravel.models.Business;
-import extinctspecie.com.zantetravel.services.API;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     String TAG = this.getClass().getSimpleName();
     HashMap<Integer,Integer> menuItems;
+    String menuItemSelectedName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +108,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            menuItemSelectedName = ((TextView) view.findViewById(R.id.tvMenuItem)).getText().toString();
             menuItemSelected(position);
         }
     };
@@ -151,6 +148,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         {
             Intent intent = new Intent(getBaseContext(), AllBusinessesActivity.class);
             intent.putExtra("groupID",menuID);
+            intent.putExtra("groupName",menuItemSelectedName);
             startActivity(intent);
         }
         else
@@ -163,10 +161,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
 
-        menuItemSelected(item.getItemId());
+        menuItemSelectedName = item.getTitle().toString();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
+        menuItemSelected(item.getItemId());
 
         return true;
     }
@@ -178,5 +178,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        menuItemSelectedName = "";
     }
 }

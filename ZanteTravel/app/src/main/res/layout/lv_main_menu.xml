@@ -16,14 +16,14 @@
         app:cardCornerRadius="4dp">
 
         <ImageView
-            android:id="@+id/ivMenu"
+            android:id="@+id/ivMenuItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             app:srcCompat="@drawable/beach_icon" />
 
         <TextView
-            android:id="@+id/tvMenu"
+            android:id="@+id/tvMenuItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

@@ -36,13 +36,14 @@ public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusines
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
+        Log.v("Hello","helloooo");
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.business_rv_row, parent, false);
         MyViewHolder viewHolder = new MyViewHolder(itemView);
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.v("Item Clicked: ",((TextView)v.findViewById(R.id.tvBusinessName)).getText().toString());
+
+                Log.v("Item Clicked ",((TextView)v.findViewById(R.id.tvBusinessName)).getText().toString());
                 mClickListener.onClick(v);
             }
         });

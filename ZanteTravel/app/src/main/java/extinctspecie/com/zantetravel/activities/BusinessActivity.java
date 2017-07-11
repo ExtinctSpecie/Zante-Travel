@@ -28,6 +28,8 @@ public class BusinessActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        getSupportActionBar().setTitle(getIntent().getStringExtra("businessName"));
+
         ((CheckBox)findViewById(R.id.cbCreditCard)).setChecked(true);
         initVariables();
         initViewPager();
@@ -50,7 +52,7 @@ public class BusinessActivity extends AppCompatActivity {
 
     private void initVariables() {
         businessGroupID = getIntent().getIntExtra("groupID" , -1);
-        getIntent().getStringExtra("businessName");
+
         businessPosition = getIntent().getIntExtra("position" , -1);
         business = AllBusinesses.getBusinessesWithGID(businessGroupID).get(businessPosition);
     }

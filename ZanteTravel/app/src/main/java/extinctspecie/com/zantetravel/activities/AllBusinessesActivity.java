@@ -56,7 +56,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        //getSupportActionBar().setTitle("");
+        setActionBarTitle();
 
 
         populateViewsWithData(businessGroupID);
@@ -64,6 +64,10 @@ public class AllBusinessesActivity extends AppCompatActivity {
         
 
 
+    }
+
+    private void setActionBarTitle() {
+        getSupportActionBar().setTitle(getIntent().getStringExtra("groupName"));
     }
 
 //    private void initSwipeRefresh() {
