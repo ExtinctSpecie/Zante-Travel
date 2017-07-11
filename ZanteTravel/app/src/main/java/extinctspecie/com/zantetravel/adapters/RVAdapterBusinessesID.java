@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import extinctspecie.com.zantetravel.R;
+import extinctspecie.com.zantetravel.helpers.Information;
 import extinctspecie.com.zantetravel.models.Business;
 
 /**
@@ -36,14 +37,13 @@ public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusines
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.v("Hello","helloooo");
+
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.business_rv_row, parent, false);
         MyViewHolder viewHolder = new MyViewHolder(itemView);
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Log.v("Item Clicked ",((TextView)v.findViewById(R.id.tvBusinessName)).getText().toString());
                 mClickListener.onClick(v);
             }
         });
@@ -60,7 +60,7 @@ public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusines
         holder.name.setText(business.getName());
         holder.type.setText(business.getType());
         holder.location.setText(business.getLocation());
-        Picasso.with(context).load("http://i.imgur.com/DvpvklR.png").into(holder.thumbnail);
+        Picasso.with(context).load(Information.BASE_THUMBNAIL_URL + business.getThumbnail()).into(holder.thumbnail);
     }
 
     @Override

@@ -9,7 +9,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 /**
  * Created by WorkSpace on 03-Jul-17.
@@ -28,7 +27,7 @@ public interface API {
         public static API getInstance() {
             if (service == null) {
 
-                Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(Information.BaseURL).build();
+                Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(Information.BASE_API_URL).build();
                 service = retrofit.create(API.class);
                 return service;
             } else {
