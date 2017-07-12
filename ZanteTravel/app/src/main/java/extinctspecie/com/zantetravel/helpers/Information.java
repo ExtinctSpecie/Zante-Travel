@@ -8,5 +8,5 @@ package extinctspecie.com.zantetravel.helpers;
 public class Information
 {
     public static String BASE_API_URL = "https://zante-travel.herokuapp.com/api/";
-    public static String BASE_THUMBNAIL_URL = "https://zante-travel.herokuapp.com";
+    public static String BASE_IMAGE_URL = "https://zante-travel.herokuapp.com";
 }

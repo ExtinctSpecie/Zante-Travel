@@ -13,6 +13,7 @@ import extinctspecie.com.zantetravel.models.Business;
  */
 
 public class AllBusinesses {
+
     private static List<Business> allBusinesses = new ArrayList<>();
 
     private static HashMap<Integer ,List<Business>> allGroupBusinesses = new HashMap<>();

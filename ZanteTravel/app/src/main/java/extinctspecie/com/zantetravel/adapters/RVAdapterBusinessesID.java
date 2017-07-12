@@ -2,7 +2,6 @@ package extinctspecie.com.zantetravel.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +59,7 @@ public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusines
         holder.name.setText(business.getName());
         holder.type.setText(business.getType());
         holder.location.setText(business.getLocation());
-        Picasso.with(context).load(Information.BASE_THUMBNAIL_URL + business.getThumbnail()).into(holder.thumbnail);
+        Picasso.with(context).load(Information.BASE_IMAGE_URL + business.getThumbnail()).into(holder.thumbnail);
     }
 
     @Override
