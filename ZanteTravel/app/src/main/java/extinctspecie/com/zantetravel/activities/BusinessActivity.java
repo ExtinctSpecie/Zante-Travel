@@ -52,7 +52,7 @@ public class BusinessActivity extends AppCompatActivity {
         {
             //this workds only because of sugar orm
             businessID = business.getId().intValue();
-            Log.v("HEllo", String.valueOf(businessID));
+            
             ((TextView) findViewById(R.id.tvDescription)).setText(business.getLongDescription());
             ((TextView) findViewById(R.id.tvLocation)).setText(business.getLocation());
             ((TextView) findViewById(R.id.tvAddress)).setText(business.getAddress());

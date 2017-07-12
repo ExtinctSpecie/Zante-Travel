@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -59,7 +60,10 @@ public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusines
         holder.name.setText(business.getName());
         holder.type.setText(business.getType());
         holder.location.setText(business.getLocation());
-        Picasso.with(context).load(Information.BASE_IMAGE_URL + business.getThumbnail()).into(holder.thumbnail);
+        holder.shortDescription.setText(business.getShortDescription());
+        Picasso.with(context).load(Information.BASE_IMAGE_URL + business.getThumbnail()).fit().into(holder.thumbnail);
+
+
     }
 
     @Override
@@ -74,7 +78,9 @@ public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusines
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         //thumbnail /title / location / type
-        public TextView name, type, location;
+        private TextView name, type, location , shortDescription;
+
+
         ImageView thumbnail;
 
         public MyViewHolder(View view) {
@@ -83,6 +89,7 @@ public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusines
             name = (TextView) view.findViewById(R.id.tvBusinessName);
             type = (TextView) view.findViewById(R.id.tvBusinessType);
             location = (TextView) view.findViewById(R.id.tvBusinessLocation);
+            shortDescription = (TextView) view.findViewById(R.id.tvShortdescription);
         }
     }
     public void changeDataSet(List<Business> newItems)

@@ -16,11 +16,11 @@
 
         <ImageView
             android:id="@+id/ivBusinessThumbnail"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_margin="10dp"
             android:layout_weight="0.5"
-            app:srcCompat="@drawable/beach_icon" />
+            app:srcCompat="@drawable/attraction_icon"/>
 
         <TextView
             android:id="@+id/tvBusinessName"
@@ -58,7 +58,7 @@
             android:layout_toEndOf="@+id/tvBusinessTypeHelper"
             android:layout_toRightOf="@id/tvBusinessTypeHelper"
             android:maxLength="64"
-            android:text="Mediteterian Cousine/Fish/whatever/som ething elsecsadfs ad fsdf asdafasdfasd "
+            android:text="Mediteterian Cousine/Fish/ "
             android:textSize="12sp" />
         <TextView
             android:id="@+id/tvBusinessLocationHelper"
@@ -89,6 +89,29 @@
             android:maxLength="32"
             android:text="Kalamaki"
             android:textSize="12sp" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/ivBusinessThumbnail"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp">
+            <TextView
+                android:id="@+id/tvShortDescriptionHelper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description : "
+/>
+            <TextView
+                android:id="@+id/tvShortdescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tvShortDescriptionHelper"
+                android:text="Some short descriptiod fg fd gdsf gfd gfd gfd gfd gsdf gfd gs fd gsfdgfd nfdasfsdfdsd"
+                android:gravity="center"/>
+        </RelativeLayout>
+
     </RelativeLayout>
 
 
