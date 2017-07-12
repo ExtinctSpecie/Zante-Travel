@@ -1,5 +1,6 @@
 package extinctspecie.com.zantetravel.activities;
 
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -48,6 +49,9 @@ public class BusinessActivity extends AppCompatActivity {
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.vpGallery);
         viewPager.setAdapter(new PABusinessGallery(this,gallery));
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tlHelperForVP);
+        tabLayout.setupWithViewPager(viewPager, true);
     }
 
     private void initVariables() {
