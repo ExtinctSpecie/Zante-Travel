@@ -1,6 +1,7 @@
 package extinctspecie.com.zantetravel.activities;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
@@ -69,19 +70,6 @@ public class AllBusinessesActivity extends AppCompatActivity {
     private void setActionBarTitle() {
         getSupportActionBar().setTitle(getIntent().getStringExtra("groupName"));
     }
-
-//    private void initSwipeRefresh() {
-//        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.srlActivityAllBusinesses);
-//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//
-//                populateViewsWithData(businessGroupID);
-//                swipeRefreshLayout.setRefreshing(false);
-//            }
-//        });
-//    }
-
 
     private void populateViewsWithData(final int groupID) {
 
@@ -211,6 +199,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
         }
         else if(methodName.equals("getDistance"))
         {
+            //pop up with indicator that calculations are going on
 
         }
         else
@@ -255,4 +244,30 @@ public class AllBusinessesActivity extends AppCompatActivity {
         //finish();
     }
 
+/*
+*AsyncTask class for doing calculations of distances between the user and the business.
+*/
+
+    public class Distances extends AsyncTask<List<String>,Integer, List<String>>
+    {
+        public Distances(List<String> coordinatesCSV)
+        {
+            execute(coordinatesCSV);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected List<String> doInBackground(List<String>... params) {
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(List<String> strings) {
+            super.onPostExecute(strings);
+        }
+    }
 }
