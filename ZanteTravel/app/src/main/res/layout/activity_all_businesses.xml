@@ -23,33 +23,40 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/searchRelativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/AntiqueWhite"
         android:padding="5dp">
+        <Space
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
+
         <TextView
             android:id="@+id/tvSpinnerHelper"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:text="Sort By : "
-            android:textColor="@color/Gray"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"/>
+            android:textColor="@color/Gray"/>
+        <Space
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
         <Spinner
             android:id="@+id/spinnerSortByList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
+            android:layout_gravity="center"
             />
-    </RelativeLayout>
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
+    </LinearLayout>
 
 
 

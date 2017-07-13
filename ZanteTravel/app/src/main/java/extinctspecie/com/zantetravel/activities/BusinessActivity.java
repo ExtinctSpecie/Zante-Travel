@@ -1,5 +1,7 @@
 package extinctspecie.com.zantetravel.activities;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -7,12 +9,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import extinctspecie.com.zantetravel.R;
 import extinctspecie.com.zantetravel.adapters.PABusinessGallery;
@@ -45,6 +49,69 @@ public class BusinessActivity extends AppCompatActivity {
         initVariables();
         populateViewsWithData();
         initViewPager();
+        initButtons();
+    }
+
+    private void initButtons() {
+        (findViewById(R.id.btnBusinessCall)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                phoneCallBusiness();
+            }
+        });
+        (findViewById(R.id.btnBusinessEmail)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendEmailToBusiness();
+            }
+        });
+        (findViewById(R.id.btnBusinessWebsite)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openBusinessWebsite();
+            }
+        });
+        (findViewById(R.id.btnBusinessLocation)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openBusinessLocation();
+            }
+        });
+    }
+
+    private void openBusinessLocation() {
+        float latitude = 41.328970f;
+        float longitude = 19.818195f;
+        String uri = String.format(Locale.ENGLISH, "geo:%f,%f?z=17&q=%f,%f", latitude, longitude, latitude, longitude);
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        startActivity(intent);
+    }
+
+    private void sendEmailToBusiness() {
+        String subject = "Customer Email";
+        String message = "Greetings , \n";
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("message/rfc822");
+        intent.putExtra(Intent.EXTRA_EMAIL,new String[]{((TextView)findViewById(R.id.tvContactEmail)).getText().toString()});
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        intent.putExtra(Intent.EXTRA_TEXT, message);
+        Intent mailer = Intent.createChooser(intent, null);
+        startActivity(mailer);
+    }
+
+    private void openBusinessWebsite() {
+        String url = ((TextView)findViewById(R.id.tvContactWebsite)).getText().toString();
+
+        if (!url.startsWith("http://") && !url.startsWith("https://"))
+            url = "http://" + url;
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(browserIntent);
+    }
+
+    private void phoneCallBusiness() {
+        String phoneNumber = ((TextView)findViewById(R.id.tvContactPhoneNumber)).getText().toString();
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber));
+        startActivity(intent);
     }
 
     private void populateViewsWithData() {
@@ -68,7 +135,7 @@ public class BusinessActivity extends AppCompatActivity {
 
     private void initViewPager() {
 
-        final ProgressBar progressBar = (ProgressBar) findViewById(R.id.pbLoadingImages);
+        final ProgressBar progressBar = (ProgressBar) findViewById(R.id.pbBusinessGallery);
         final List<String> gallery = new ArrayList<>();
 
         API.Factory.getInstance().getImagesOfBusinessWithID(businessID).enqueue(new Callback<List<Images>>() {
@@ -82,7 +149,6 @@ public class BusinessActivity extends AppCompatActivity {
 
                     for(int i = 0; i < images.size(); i++) {
                         gallery.add(Information.BASE_IMAGE_URL + images.get(i).getImage());
-                        Log.v("Hello", gallery.get(i));
                     }
 
                     ViewPager viewPager = (ViewPager) findViewById(R.id.vpGallery);
@@ -96,12 +162,9 @@ public class BusinessActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Images>> call, Throwable t) {
-
-                Log.v("Hello", "NO IMAGES");
                 progressBar.setVisibility(View.GONE);
             }
         });
-        Log.v("wtf", "NO IMAGES");
         //PABusinessGallery paBusinessGallery;
 
     }

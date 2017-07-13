@@ -20,7 +20,8 @@
             android:layout_height="80dp"
             android:layout_margin="10dp"
             android:layout_weight="0.5"
-            app:srcCompat="@drawable/attraction_icon"/>
+            app:srcCompat="@drawable/attraction_icon"
+            />
 
         <TextView
             android:id="@+id/tvBusinessName"
