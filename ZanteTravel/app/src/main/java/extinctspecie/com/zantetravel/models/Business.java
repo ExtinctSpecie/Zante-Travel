@@ -29,6 +29,8 @@ public class Business extends SugarRecord<Business>
     private boolean summerOnly;
     private String thumbnail;
     private String dateCreated;
+    private String distanceToUser;
+
 
     //Empty constructor
     public Business() {}
@@ -229,6 +231,14 @@ public class Business extends SugarRecord<Business>
 
     public void setDateCreated(String dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    public String getDistanceToUser() {
+        return distanceToUser;
+    }
+
+    public void setDistanceToUser(String distanceToUser) {
+        this.distanceToUser = distanceToUser;
     }
 }
 

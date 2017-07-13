@@ -175,10 +175,14 @@ public class AllBusinessesActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
                 Toast.makeText(getApplicationContext(),parent.getItemAtPosition(position).toString(),Toast.LENGTH_SHORT).show();
 
                 String methodName = "get"+parent.getItemAtPosition(position).toString();
-                sortListItems(AllBusinesses.getBusinessesWithGID(businessGroupID) ,methodName);
+                if(!methodName.equals("getDistance"))
+                    sortListItems(AllBusinesses.getBusinessesWithGID(businessGroupID) ,methodName);
+                else
+                    new Distances(AllBusinesses.getBusinessesWithGID(businessGroupID) , methodName);
             }
 
             @Override
@@ -248,11 +252,11 @@ public class AllBusinessesActivity extends AppCompatActivity {
 *AsyncTask class for doing calculations of distances between the user and the business.
 */
 
-    public class Distances extends AsyncTask<List<String>,Integer, List<String>>
+    public class Distances extends AsyncTask<List<Business>,Integer, List<String>>
     {
-        public Distances(List<String> coordinatesCSV)
+        public Distances(List<Business> businesses , String methodName)
         {
-            execute(coordinatesCSV);
+            execute(businesses);
         }
 
         @Override
@@ -261,7 +265,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
         }
 
         @Override
-        protected List<String> doInBackground(List<String>... params) {
+        protected List<String> doInBackground(List<Business>... params) {
             return null;
         }
 
