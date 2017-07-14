@@ -201,11 +201,6 @@ public class AllBusinessesActivity extends AppCompatActivity {
             if(rvAdapterBusinessesID!=null)
                 rvAdapterBusinessesID.resetData();
         }
-        else if(methodName.equals("getDistance"))
-        {
-            //pop up with indicator that calculations are going on
-
-        }
         else
         {
             final Method method;
@@ -266,12 +261,46 @@ public class AllBusinessesActivity extends AppCompatActivity {
 
         @Override
         protected List<String> doInBackground(List<Business>... params) {
+            for (Business business : params[0] )
+            {
+                String strCoordinates[] = business.getMapCoordinates().split(",");
+                String strLongitude = strCoordinates[0].trim();
+                String strLaitude = strCoordinates[1].trim();
+                business.setCoordinates(new Coordinates(Float.parseFloat(strLongitude),Float.parseFloat(strLaitude)));
+            }
+            
             return null;
         }
 
         @Override
         protected void onPostExecute(List<String> strings) {
             super.onPostExecute(strings);
+        }
+    }
+    public class Coordinates
+    {
+        private float longitude;
+        private float latitude;
+
+        public Coordinates(float longitude, float latitude) {
+            this.longitude = longitude;
+            this.latitude = latitude;
+        }
+
+        public float getLongitude() {
+            return longitude;
+        }
+
+        public void setLongitude(float longitude) {
+            this.longitude = longitude;
+        }
+
+        public float getLatitude() {
+            return latitude;
+        }
+
+        public void setLatitude(float latitude) {
+            this.latitude = latitude;
         }
     }
 }

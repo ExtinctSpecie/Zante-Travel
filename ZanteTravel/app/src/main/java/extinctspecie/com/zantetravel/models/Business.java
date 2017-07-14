@@ -2,6 +2,8 @@ package extinctspecie.com.zantetravel.models;
 
 import com.orm.SugarRecord;
 
+import extinctspecie.com.zantetravel.activities.AllBusinessesActivity;
+
 /**
  * Created by WorkSpace on 02-Jul-17.
  */
@@ -29,11 +31,47 @@ public class Business extends SugarRecord<Business>
     private boolean summerOnly;
     private String thumbnail;
     private String dateCreated;
+
+
+    private AllBusinessesActivity.Coordinates coordinates;
     private String distanceToUser;
 
 
     //Empty constructor
     public Business() {}
+
+    public Business(int position, String name, String location, String shortDescription,
+                    String longDescription, String phoneNumber, String email, String website,
+                    String mapCoordinates, String address, String group, String category,
+                    String type, String workingHours, String price, String usefulTip,
+                    boolean isPremium, boolean creditCards, boolean summerOnly,
+                    String thumbnail, String dateCreated,
+                    AllBusinessesActivity.Coordinates coordinates, String distanceToUser) {
+        this.position = position;
+        this.name = name;
+        this.location = location;
+        this.shortDescription = shortDescription;
+        this.longDescription = longDescription;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.website = website;
+        this.mapCoordinates = mapCoordinates;
+        this.address = address;
+        this.group = group;
+        this.category = category;
+        this.type = type;
+        this.workingHours = workingHours;
+        this.price = price;
+        this.usefulTip = usefulTip;
+        this.isPremium = isPremium;
+        this.creditCards = creditCards;
+        this.summerOnly = summerOnly;
+        this.thumbnail = thumbnail;
+        this.dateCreated = dateCreated;
+        this.coordinates = coordinates;
+        this.distanceToUser = distanceToUser;
+    }
+
     public Business(int position, String name, String location, String shortDescription,
                     String longDescription, String phoneNumber, String email,
                     String website, String mapCoordinates, String address,
@@ -239,6 +277,14 @@ public class Business extends SugarRecord<Business>
 
     public void setDistanceToUser(String distanceToUser) {
         this.distanceToUser = distanceToUser;
+    }
+
+    public AllBusinessesActivity.Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(AllBusinessesActivity.Coordinates coordinates) {
+        this.coordinates = coordinates;
     }
 }
 
