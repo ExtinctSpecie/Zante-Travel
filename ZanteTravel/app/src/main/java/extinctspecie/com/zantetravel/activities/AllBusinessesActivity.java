@@ -1,7 +1,20 @@
 package extinctspecie.com.zantetravel.activities;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.GnssStatus;
+import android.location.GpsStatus;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.widget.SearchView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -38,13 +51,14 @@ public class AllBusinessesActivity extends AppCompatActivity {
 
     private RVAdapterBusinessesID rvAdapterBusinessesID;
     private int businessGroupID;
+    final static int ACCESS_LOCATION_PERMISSION = 99;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_businesses);
 
-        businessGroupID = getIntent().getIntExtra("groupID",-1);
+        businessGroupID = getIntent().getIntExtra("groupID", -1);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -53,7 +67,6 @@ public class AllBusinessesActivity extends AppCompatActivity {
 
         populateViewsWithData(businessGroupID);
         initSpinner();
-        
 
 
     }
@@ -71,25 +84,23 @@ public class AllBusinessesActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Business>> call, Response<List<Business>> response) {
 
-                try
-                {
-                    if(!response.body().isEmpty())
-                    {
+                try {
+                    if (!response.body().isEmpty()) {
                         AllBusinesses.setAllBusinesses(response.body());
 
-                        AllBusinesses.addBusinessesWithGID(response.body() , groupID);
+                        AllBusinesses.addBusinessesWithGID(response.body(), groupID);
 
                         final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvAllBusinesses);
                         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                        rvAdapterBusinessesID = new RVAdapterBusinessesID(AllBusinesses.getAllBusinesses(),getApplicationContext());
+                        rvAdapterBusinessesID = new RVAdapterBusinessesID(AllBusinesses.getAllBusinesses(), getApplicationContext());
                         rvAdapterBusinessesID.setClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 int position = recyclerView.indexOfChild(v);
                                 Intent intent = new Intent(getBaseContext(), BusinessActivity.class);
-                                intent.putExtra("businessName",((TextView)v.findViewById(R.id.tvBusinessName)).getText());
-                                intent.putExtra("position",position);
-                                intent.putExtra("groupID",groupID);
+                                intent.putExtra("businessName", ((TextView) v.findViewById(R.id.tvBusinessName)).getText());
+                                intent.putExtra("position", position);
+                                intent.putExtra("groupID", groupID);
                                 startActivity(intent);
                             }
                         });
@@ -97,9 +108,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
                         recyclerView.setAdapter(rvAdapterBusinessesID);
 
                     }
-                }
-                catch (NullPointerException e)
-                {
+                } catch (NullPointerException e) {
                     e.printStackTrace();
 
                 }
@@ -119,7 +128,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
 
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.search_menu , menu);
+        inflater.inflate(R.menu.search_menu, menu);
         MenuItem item = menu.findItem(R.id.searchMenu);
         SearchView searchView = (SearchView) item.getActionView();
 
@@ -145,11 +154,9 @@ public class AllBusinessesActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home)
-        {
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
         }
-
 
 
         return super.onOptionsItemSelected(item);
@@ -167,7 +174,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                Toast.makeText(getApplicationContext(),parent.getItemAtPosition(position).toString(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
 
                 String methodName = getMethodName(parent.getItemAtPosition(position).toString());
 
@@ -184,76 +191,85 @@ public class AllBusinessesActivity extends AppCompatActivity {
 
     private void selectSortingMethod(String methodName) {
 
-        switch (methodName)
-        {
-            case "getDistance":
-            {
-                new Distances(AllBusinesses.getBusinessesWithGID(businessGroupID) , methodName);
+        switch (methodName) {
+            case "getDistance": {
+                //method name is called "getDistanceToUser"
+                new Distances(AllBusinesses.getBusinessesWithGID(businessGroupID), methodName);
                 break;
             }
-            case "getDefault":
-            {
+            case "getDefault": {
                 resetSorting();
                 break;
             }
-            default:
-            {
-                sortListitems(AllBusinesses.getBusinessesWithGID(businessGroupID) ,methodName);
+            default: {
+                sortListitems(AllBusinesses.getBusinessesWithGID(businessGroupID), methodName);
                 break;
             }
         }
     }
 
     private void resetSorting() {
-        if(rvAdapterBusinessesID!=null)
+        if (rvAdapterBusinessesID != null)
             rvAdapterBusinessesID.resetData();
     }
 
-    private void sortListitems(List<Business> businesses , final String methodName )
-    {
+    private void sortListitems(List<Business> businesses, final String methodName) {
 
         final Method method;
 
         try {
             method = businesses.get(0).getClass().getMethod(methodName);
-            //use reflections to call the method by the given sortBy String
-            Collections.sort(businesses, new Comparator<Business>(){
+
+            Collections.sort(businesses, new Comparator<Business>() {
                 public int compare(Business obj1, Business obj2) {
                     // ## Ascending order
-                        try {
-                            if(methodName.startsWith("get"))
-                            {
+                    try {
+                        if (methodName.startsWith("get")) {
+                            if (methodName.equals("getDistanceToUser")) {
+                                return (Math.round(obj1.getDistanceToUser() - obj2.getDistanceToUser()));
+                            } else
                                 return ((String) method.invoke(obj1)).compareToIgnoreCase((String) method.invoke(obj2));
-                            }
-                            else
-                            {
-                                int b1 = obj1.isRecommended() ? 1 : 0;
-                                int b2 = obj2.isRecommended() ? 1 : 0;
+                        } else {
+                            int b1 = obj1.isRecommended() ? 1 : 0;
+                            int b2 = obj2.isRecommended() ? 1 : 0;
 
-                                return b2 - b1;
-                            }
-                        } catch (IllegalAccessException e) {
-                            e.printStackTrace();
-                        } catch (InvocationTargetException e) {
-                            e.printStackTrace();
+                            return b2 - b1;
+
                         }
-                        // To compare string values
-                        // return Integer.valueOf(obj1.empId).compareTo(obj2.empId); // To compare integer values
-
-                        // ## Descending order
-                        // return obj2.firstName.compareToIgnoreCase(obj1.firstName); // To compare string values
-                        // return Integer.valueOf(obj2.empId).compareTo(obj1.empId); // To compare integer values
-                        return 0;
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
                     }
-                });
-            }
-            catch (NoSuchMethodException e)
-            {
-                e.printStackTrace();
-            }
-        if(rvAdapterBusinessesID!=null)
+                    // To compare string values
+                    // return Integer.valueOf(obj1.empId).compareTo(obj2.empId); // To compare integer values
+
+                    // ## Descending order
+                    // return obj2.firstName.compareToIgnoreCase(obj1.firstName); // To compare string values
+                    // return Integer.valueOf(obj2.empId).compareTo(obj1.empId); // To compare integer values
+                    return 0;
+                }
+            });
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        if (rvAdapterBusinessesID != null)
             rvAdapterBusinessesID.changeDataSet(businesses);
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case ACCESS_LOCATION_PERMISSION: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                    //permission is granted
+                }
+            }
+        }
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -264,10 +280,10 @@ public class AllBusinessesActivity extends AppCompatActivity {
         String methodName;
 
 
-        if(strMethodName.equals("Recommended"))
-            methodName = "is"+strMethodName;
+        if (strMethodName.equals("Recommended"))
+            methodName = "is" + strMethodName;
         else
-            methodName = "get"+strMethodName;
+            methodName = "get" + strMethodName;
 
 
         return methodName;
@@ -277,34 +293,126 @@ public class AllBusinessesActivity extends AppCompatActivity {
 *AsyncTask class for doing calculations of distances between the user and the business.
 */
 
-    public class Distances extends AsyncTask<List<Business>,Integer, List<String>>
-    {
-        public Distances(List<Business> businesses , String methodName)
-        {
-            execute(businesses);
+    private class Distances extends AsyncTask<List<Business>, Integer, List<String>> implements LocationListener{
+
+        AlertDialog.Builder dialog;
+        List<Business> businesses;
+
+        LocationManager locationManager;
+        Location userLocation;
+
+
+        private Distances(List<Business> businesses, String methodName) {
+            this.businesses = businesses;
+            initPreparations();
         }
+
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            // locationManager.removeUpdates(locationListener);
+
         }
 
         @Override
         protected List<String> doInBackground(List<Business>... params) {
-            for (Business business : params[0] )
-            {
+
+            Log.v("Hello",userLocation.toString());
+            for (Business business : params[0]) {
+
+                //Split string into longitude and altitude
                 String strCoordinates[] = business.getMapCoordinates().split(",");
+
+                //if not exactly 2 strings throw error
+                //that means the data provided from the api is wrong
+                if (strCoordinates.length != 2) {
+                    throw new NullPointerException("Coordinates does not have 2 properties ( WRONG COORDINATES CHECK API )");
+                }
+
+
                 String strLongitude = strCoordinates[0].trim();
                 String strLaitude = strCoordinates[1].trim();
-                business.setCoordinates(new Coordinates(Float.parseFloat(strLongitude),Float.parseFloat(strLaitude)));
+
+                business.setCoordinates(new Coordinates(Float.parseFloat(strLongitude), Float.parseFloat(strLaitude)));
             }
-            
+
             return null;
         }
 
         @Override
         protected void onPostExecute(List<String> strings) {
             super.onPostExecute(strings);
+            sortListitems(AllBusinesses.getBusinessesWithGID(businessGroupID), "getDistanceToUser");
+        }
+
+        private void initPreparations() {
+
+
+            int hasLocationPermission = checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION);
+
+            if (hasLocationPermission != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{
+                        Manifest.permission.ACCESS_FINE_LOCATION
+
+                }, ACCESS_LOCATION_PERMISSION);
+                return;
+            }
+
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,100,50, this);
+
+            if (!(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)))
+            {
+                dialog = new AlertDialog.Builder(AllBusinessesActivity.this);
+                showDialogToProvideGPS();
+            }
+        }
+
+        private void showDialogToProvideGPS() {
+
+
+            dialog.setMessage(AllBusinessesActivity.this.getResources().getString(R.string.gpsNoEnabled));
+
+            dialog.setPositiveButton(AllBusinessesActivity.this.getResources().getString(R.string.openLocationSettings), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                    // TODO Auto-generated method stub
+                    Intent myIntent = new Intent( Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    AllBusinessesActivity.this.startActivity(myIntent);
+                }
+            });
+            dialog.setNegativeButton(AllBusinessesActivity.this.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                    // TODO Auto-generated method stub
+                    //set sorting to default
+                }
+            });
+            dialog.show();
+        }
+
+        @Override
+        public void onLocationChanged(Location location) {
+            userLocation = location;
+            locationManager.removeUpdates(this);
+            execute(businesses);
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+            //set sorting to default again
         }
     }
     public class Coordinates
@@ -312,7 +420,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
         private float longitude;
         private float latitude;
 
-        public Coordinates(float longitude, float latitude) {
+        private Coordinates(float longitude, float latitude) {
             this.longitude = longitude;
             this.latitude = latitude;
         }

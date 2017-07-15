@@ -36,7 +36,7 @@ public class Business extends SugarRecord<Business>
 
 
     private AllBusinessesActivity.Coordinates coordinates;
-    private String distanceToUser;
+    private float distanceToUser = 0f;
 
 
     //Empty constructor
@@ -48,7 +48,7 @@ public class Business extends SugarRecord<Business>
                     String type, String workingHours, String price, String usefulTip,
                     boolean isPremium, boolean creditCards, boolean summerOnly, boolean isRecommended,
                     String thumbnail, String dateCreated,
-                    AllBusinessesActivity.Coordinates coordinates, String distanceToUser) {
+                    AllBusinessesActivity.Coordinates coordinates, Float distanceToUser) {
         this.position = position;
         this.name = name;
         this.location = location;
@@ -283,11 +283,11 @@ public class Business extends SugarRecord<Business>
         this.dateCreated = dateCreated;
     }
 
-    public String getDistanceToUser() {
+    public float getDistanceToUser() {
         return distanceToUser;
     }
 
-    public void setDistanceToUser(String distanceToUser) {
+    public void setDistanceToUser(float distanceToUser) {
         this.distanceToUser = distanceToUser;
     }
 
