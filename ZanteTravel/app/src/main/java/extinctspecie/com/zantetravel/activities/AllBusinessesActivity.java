@@ -363,10 +363,11 @@ public class AllBusinessesActivity extends AppCompatActivity {
                 }
 
 
-                String strLongitude = strCoordinates[0].trim();
-                String strLaitude = strCoordinates[1].trim();
 
-                business.setCoordinates(new Coordinates(Float.parseFloat(strLongitude), Float.parseFloat(strLaitude)));
+                String strLatitude = strCoordinates[0].trim();
+                String strLongitude = strCoordinates[1].trim();
+
+                business.setCoordinates(new Coordinates(Float.parseFloat(strLatitude), Float.parseFloat(strLongitude)));
 
                 Coordinates userCoordinates = new Coordinates((float) userLocation.getLatitude() , (float) userLocation.getLongitude());
 

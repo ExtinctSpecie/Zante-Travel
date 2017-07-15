@@ -80,11 +80,41 @@ public class BusinessActivity extends AppCompatActivity {
     }
 
     private void openBusinessLocation() {
-        float latitude = 41.328970f;
-        float longitude = 19.818195f;
-        String uri = String.format(Locale.ENGLISH, "geo:%f,%f?z=17&q=%f,%f", latitude, longitude, latitude, longitude);
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-        startActivity(intent);
+        if(business.isPremium())
+        {
+            float latitude = 41.328970f;
+            float longitude = 19.818195f;
+            if(business.getCoordinates() != null)
+            {
+                latitude = business.getCoordinates().getLatitude();
+                longitude = business.getCoordinates().getLongitude();
+            }
+            else
+            {
+                //Split string into longitude and altitude
+                String strCoordinates[] = business.getMapCoordinates().split(",");
+
+                //if not exactly 2 strings throw error
+                //that means the data provided from the api is wrong
+                if (strCoordinates.length != 2) {
+                    throw new NullPointerException("Coordinates does not have 2 properties ( WRONG COORDINATES CHECK API )");
+                }
+
+
+                String strLongitude = strCoordinates[0].trim();
+                String strLaitude = strCoordinates[1].trim();
+                latitude = Float.parseFloat(strLaitude);
+                longitude = Float.parseFloat(strLaitude);
+            }
+
+            String uri = String.format(Locale.ENGLISH, "geo:%f,%f?z=17&q=%f,%f", latitude, longitude, latitude, longitude);
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+            startActivity(intent);
+        }
+        else
+        {
+            (findViewById(R.id.btnBusinessLocation)).setActivated(false);
+        }
     }
 
     private void sendEmailToBusiness() {
