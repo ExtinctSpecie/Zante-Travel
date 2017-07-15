@@ -59,14 +59,6 @@
     </LinearLayout>
 
 
-
-    <ImageView
-        android:id="@+id/ivAd"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@color/BlueViolet"
-        android:layout_alignParentBottom="true"/>
-
     <LinearLayout
         android:id="@+id/rvDataLoadingProgress"
         android:layout_width="fill_parent"

@@ -29,8 +29,10 @@ public class Business extends SugarRecord<Business>
     private boolean isPremium;
     private boolean creditCards;
     private boolean summerOnly;
+    private boolean isRecommended;
     private String thumbnail;
     private String dateCreated;
+
 
 
     private AllBusinessesActivity.Coordinates coordinates;
@@ -44,7 +46,7 @@ public class Business extends SugarRecord<Business>
                     String longDescription, String phoneNumber, String email, String website,
                     String mapCoordinates, String address, String group, String category,
                     String type, String workingHours, String price, String usefulTip,
-                    boolean isPremium, boolean creditCards, boolean summerOnly,
+                    boolean isPremium, boolean creditCards, boolean summerOnly, boolean isRecommended,
                     String thumbnail, String dateCreated,
                     AllBusinessesActivity.Coordinates coordinates, String distanceToUser) {
         this.position = position;
@@ -66,6 +68,7 @@ public class Business extends SugarRecord<Business>
         this.isPremium = isPremium;
         this.creditCards = creditCards;
         this.summerOnly = summerOnly;
+        this.isRecommended = isRecommended;
         this.thumbnail = thumbnail;
         this.dateCreated = dateCreated;
         this.coordinates = coordinates;
@@ -77,7 +80,7 @@ public class Business extends SugarRecord<Business>
                     String website, String mapCoordinates, String address,
                     String group, String category, String type, String workingHours,
                     String price, String usefulTip, boolean isPremium,
-                    boolean creditCards, boolean summerOnly,
+                    boolean creditCards, boolean summerOnly, boolean isRecommended,
                     String thumbnail, String dateCreated)
     {
         this.position = position;
@@ -99,6 +102,7 @@ public class Business extends SugarRecord<Business>
         this.isPremium = isPremium;
         this.creditCards = creditCards;
         this.summerOnly = summerOnly;
+        this.isRecommended = isRecommended;
         this.thumbnail = thumbnail;
         this.dateCreated = dateCreated;
     }
@@ -253,6 +257,14 @@ public class Business extends SugarRecord<Business>
 
     public void setSummerOnly(boolean summerOnly) {
         this.summerOnly = summerOnly;
+    }
+
+    public boolean isRecommended() {
+        return isRecommended;
+    }
+
+    public void setRecommended(boolean recommended) {
+        isRecommended = recommended;
     }
 
     public String getThumbnail() {

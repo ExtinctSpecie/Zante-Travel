@@ -2,13 +2,7 @@ package extinctspecie.com.zantetravel.activities;
 
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.view.MenuItemCompat;
-import android.app.SearchManager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.SearchView;
-import android.widget.SearchView.OnQueryTextListener;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,20 +15,17 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 import extinctspecie.com.zantetravel.R;
-import extinctspecie.com.zantetravel.adapters.LVAdapterAllBusinesses;
 import extinctspecie.com.zantetravel.adapters.RVAdapterBusinessesID;
 import extinctspecie.com.zantetravel.data.AllBusinesses;
 import extinctspecie.com.zantetravel.models.Business;
@@ -178,11 +169,9 @@ public class AllBusinessesActivity extends AppCompatActivity {
 
                 Toast.makeText(getApplicationContext(),parent.getItemAtPosition(position).toString(),Toast.LENGTH_SHORT).show();
 
-                String methodName = "get"+parent.getItemAtPosition(position).toString();
-                if(!methodName.equals("getDistance"))
-                    sortListItems(AllBusinesses.getBusinessesWithGID(businessGroupID) ,methodName);
-                else
-                    new Distances(AllBusinesses.getBusinessesWithGID(businessGroupID) , methodName);
+                String methodName = getMethodName(parent.getItemAtPosition(position).toString());
+
+                selectSortingMethod(methodName);
             }
 
             @Override
@@ -192,55 +181,96 @@ public class AllBusinessesActivity extends AppCompatActivity {
         });
 
     }
-    private void sortListItems(List<Business> businesses ,String methodName)
+
+    private void selectSortingMethod(String methodName) {
+
+        switch (methodName)
+        {
+            case "getDistance":
+            {
+                new Distances(AllBusinesses.getBusinessesWithGID(businessGroupID) , methodName);
+                break;
+            }
+            case "getDefault":
+            {
+                resetSorting();
+                break;
+            }
+            default:
+            {
+                sortListitems(AllBusinesses.getBusinessesWithGID(businessGroupID) ,methodName);
+                break;
+            }
+        }
+    }
+
+    private void resetSorting() {
+        if(rvAdapterBusinessesID!=null)
+            rvAdapterBusinessesID.resetData();
+    }
+
+    private void sortListitems(List<Business> businesses , final String methodName )
     {
 
-        if(methodName.equals("getDefault"))
-        {
-            //resetting businesses
-            if(rvAdapterBusinessesID!=null)
-                rvAdapterBusinessesID.resetData();
-        }
-        else
-        {
-            final Method method;
-            try {
-                method = businesses.get(0).getClass().getMethod(methodName);
-                //use reflections to call the method by the given sortBy String
-                Collections.sort(businesses, new Comparator<Business>(){
-                    public int compare(Business obj1, Business obj2) {
-                        // ## Ascending order
-                            try {
+        final Method method;
+
+        try {
+            method = businesses.get(0).getClass().getMethod(methodName);
+            //use reflections to call the method by the given sortBy String
+            Collections.sort(businesses, new Comparator<Business>(){
+                public int compare(Business obj1, Business obj2) {
+                    // ## Ascending order
+                        try {
+                            if(methodName.startsWith("get"))
+                            {
                                 return ((String) method.invoke(obj1)).compareToIgnoreCase((String) method.invoke(obj2));
-                            } catch (IllegalAccessException e) {
-                                e.printStackTrace();
-                            } catch (InvocationTargetException e) {
-                                e.printStackTrace();
                             }
-                            // To compare string values
-                            // return Integer.valueOf(obj1.empId).compareTo(obj2.empId); // To compare integer values
+                            else
+                            {
+                                int b1 = obj1.isRecommended() ? 1 : 0;
+                                int b2 = obj2.isRecommended() ? 1 : 0;
 
-                            // ## Descending order
-                            // return obj2.firstName.compareToIgnoreCase(obj1.firstName); // To compare string values
-                            // return Integer.valueOf(obj2.empId).compareTo(obj1.empId); // To compare integer values
-                            return 0;
+                                return b2 - b1;
+                            }
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        } catch (InvocationTargetException e) {
+                            e.printStackTrace();
                         }
-                    });
-                }
-                catch (NoSuchMethodException e)
-                {
-                    e.printStackTrace();
-                }
-            if(rvAdapterBusinessesID!=null)
-                rvAdapterBusinessesID.changeDataSet(businesses);
-        }
+                        // To compare string values
+                        // return Integer.valueOf(obj1.empId).compareTo(obj2.empId); // To compare integer values
 
-
+                        // ## Descending order
+                        // return obj2.firstName.compareToIgnoreCase(obj1.firstName); // To compare string values
+                        // return Integer.valueOf(obj2.empId).compareTo(obj1.empId); // To compare integer values
+                        return 0;
+                    }
+                });
+            }
+            catch (NoSuchMethodException e)
+            {
+                e.printStackTrace();
+            }
+        if(rvAdapterBusinessesID!=null)
+            rvAdapterBusinessesID.changeDataSet(businesses);
     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
         //finish();
+    }
+
+    public String getMethodName(String strMethodName) {
+        String methodName;
+
+
+        if(strMethodName.equals("Recommended"))
+            methodName = "is"+strMethodName;
+        else
+            methodName = "get"+strMethodName;
+
+
+        return methodName;
     }
 
 /*
