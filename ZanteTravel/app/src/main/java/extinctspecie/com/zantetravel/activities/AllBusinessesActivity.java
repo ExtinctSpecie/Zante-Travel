@@ -2,6 +2,7 @@ package extinctspecie.com.zantetravel.activities;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -52,6 +53,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
     private RVAdapterBusinessesID rvAdapterBusinessesID;
     private int businessGroupID;
     final static int ACCESS_LOCATION_PERMISSION = 99;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_all_businesses);
 
         businessGroupID = getIntent().getIntExtra("groupID", -1);
+        initProgressDialog();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -69,6 +72,11 @@ public class AllBusinessesActivity extends AppCompatActivity {
         initSpinner();
 
 
+
+    }
+
+    private void initProgressDialog() {
+        progressDialog = new ProgressDialog(this);
     }
 
     private void setActionBarTitle() {
@@ -257,6 +265,40 @@ public class AllBusinessesActivity extends AppCompatActivity {
             rvAdapterBusinessesID.changeDataSet(businesses);
     }
 
+    public String getMethodName(String strMethodName) {
+        String methodName;
+
+
+        if (strMethodName.equals("Recommended"))
+            methodName = "is" + strMethodName;
+        else
+            methodName = "get" + strMethodName;
+
+
+        return methodName;
+    }
+    private void startProgressDialog(String message, boolean cancelable)
+    {
+
+        if (progressDialog != null)
+        {
+            progressDialog.setMessage(message);
+            progressDialog.setCancelable(cancelable);
+            progressDialog.show();
+        }
+    }
+    public void stopProgressDialog()
+    {
+        if(progressDialog!=null)
+            progressDialog.dismiss();
+    }
+    public void updateProgressDialog(String message)
+    {
+        if(progressDialog != null)
+        {
+            progressDialog.setMessage(message);
+        }
+    }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -276,18 +318,6 @@ public class AllBusinessesActivity extends AppCompatActivity {
         //finish();
     }
 
-    public String getMethodName(String strMethodName) {
-        String methodName;
-
-
-        if (strMethodName.equals("Recommended"))
-            methodName = "is" + strMethodName;
-        else
-            methodName = "get" + strMethodName;
-
-
-        return methodName;
-    }
 
 /*
 *AsyncTask class for doing calculations of distances between the user and the business.
@@ -302,6 +332,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
         Location userLocation;
 
 
+
         private Distances(List<Business> businesses, String methodName) {
             this.businesses = businesses;
             initPreparations();
@@ -311,6 +342,8 @@ public class AllBusinessesActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            //start dialog when trying to get the users location
+            updateProgressDialog("Calculating distances please wait...");
             // locationManager.removeUpdates(locationListener);
 
         }
@@ -318,7 +351,6 @@ public class AllBusinessesActivity extends AppCompatActivity {
         @Override
         protected List<String> doInBackground(List<Business>... params) {
 
-            Log.v("Hello",userLocation.toString());
             for (Business business : params[0]) {
 
                 //Split string into longitude and altitude
@@ -335,6 +367,11 @@ public class AllBusinessesActivity extends AppCompatActivity {
                 String strLaitude = strCoordinates[1].trim();
 
                 business.setCoordinates(new Coordinates(Float.parseFloat(strLongitude), Float.parseFloat(strLaitude)));
+
+                Coordinates userCoordinates = new Coordinates((float) userLocation.getLatitude() , (float) userLocation.getLongitude());
+
+                business.setDistanceToUser(distanceToUser(userCoordinates ,business.getCoordinates()));
+                Log.v("distance",String.valueOf(business.getDistanceToUser()));
             }
 
             return null;
@@ -344,6 +381,30 @@ public class AllBusinessesActivity extends AppCompatActivity {
         protected void onPostExecute(List<String> strings) {
             super.onPostExecute(strings);
             sortListitems(AllBusinesses.getBusinessesWithGID(businessGroupID), "getDistanceToUser");
+            stopProgressDialog();
+        }
+        private  float distanceToUser(Coordinates startingPoint , Coordinates endingPoint)
+        {
+            double theta = startingPoint.getLongitude() - endingPoint.getLongitude();
+            double dist = Math.sin(deg2rad(startingPoint.getLatitude())) * Math.sin(deg2rad(endingPoint.getLatitude())) + Math.cos(deg2rad(startingPoint.getLatitude())) * Math.cos(deg2rad(endingPoint.getLatitude())) * Math.cos(deg2rad(theta));
+            dist = Math.acos(dist);
+            dist = rad2deg(dist);
+            dist = dist * 60 * 1.1515;
+
+            //convert it to KM
+            dist = dist * 1.609344;
+
+            return (float) dist;
+
+        }
+
+	    //This function converts decimal degrees to radians
+        private  double deg2rad(double deg) {
+            return (deg * Math.PI / 180.0);
+        }
+        //This function converts radians to decimal degrees
+        private  double rad2deg(double rad) {
+            return (rad * 180 / Math.PI);
         }
 
         private void initPreparations() {
@@ -362,9 +423,12 @@ public class AllBusinessesActivity extends AppCompatActivity {
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,100,50, this);
 
+            startProgressDialog("Getting your location..." , false);
+
             if (!(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)))
             {
                 dialog = new AlertDialog.Builder(AllBusinessesActivity.this);
+                dialog.setCancelable(false);
                 showDialogToProvideGPS();
             }
         }
@@ -386,13 +450,21 @@ public class AllBusinessesActivity extends AppCompatActivity {
 
                 @Override
                 public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                    // TODO Auto-generated method stub
-                    //set sorting to default
+                    stopProgressDialog();
+                }
+            });
+            dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    stopProgressDialog();
                 }
             });
             dialog.show();
         }
 
+
+
+        //On location changed listener ( interface )
         @Override
         public void onLocationChanged(Location location) {
             userLocation = location;
@@ -420,7 +492,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
         private float longitude;
         private float latitude;
 
-        private Coordinates(float longitude, float latitude) {
+        private Coordinates(float latitude, float longitude) {
             this.longitude = longitude;
             this.latitude = latitude;
         }
