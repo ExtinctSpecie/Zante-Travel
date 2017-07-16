@@ -1,20 +1,24 @@
 package extinctspecie.com.zantetravel.data;
 
+import android.content.Context;
 import android.support.annotation.Nullable;
+import android.util.Log;
+
+import org.jetbrains.annotations.Contract;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
 import extinctspecie.com.zantetravel.models.Business;
+import extinctspecie.com.zantetravel.models.Images;
 
 /**
  * Created by WorkSpace on 05-Jul-17.
  */
 
 public class AllBusinesses {
-
-    private static List<Business> allBusinesses = new ArrayList<>();
 
     private static HashMap<Integer ,List<Business>> allGroupBusinesses = new HashMap<>();
 
@@ -28,17 +32,5 @@ public class AllBusinesses {
     public static List<Business> getBusinessesWithGID(int groupID)
     {
         return allGroupBusinesses.get(groupID);
-    }
-
-    @Nullable
-    public static List<Business> getAllBusinesses() {
-        if(!allBusinesses.isEmpty())
-            return allBusinesses;
-        else
-            return null;
-    }
-
-    public static void setAllBusinesses(List<Business> allBusinesses) {
-        AllBusinesses.allBusinesses = allBusinesses;
     }
 }

@@ -148,7 +148,7 @@ public class BusinessActivity extends AppCompatActivity {
         if(business != null)
         {
             //this workds only because of sugar orm
-            businessID = business.getId().intValue();
+            businessID = business.getId();
             
             ((TextView) findViewById(R.id.tvDescription)).setText(business.getLongDescription());
             ((TextView) findViewById(R.id.tvLocation)).setText(business.getLocation());

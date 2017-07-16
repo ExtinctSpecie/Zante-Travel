@@ -1,18 +1,18 @@
 package extinctspecie.com.zantetravel.models;
 
-import com.orm.SugarRecord;
-
 /**
  * Created by WorkSpace on 02-Jul-17.
  */
 
-public class Images extends SugarRecord<Business>
+public class Images
 {
     private int business;
     private int position;
     private String image;
 
-    public Images() {}
+    public Images() {
+        super();
+    }
 
     public Images(int business, int position, String image) {
         this.business = business;

@@ -17,6 +17,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.orm.SugarApp;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,12 +38,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        setupSugarORM();
 
         createMenuMap();
         initTypeFaces();
         initToolbarAndDrawer();
         initListViewMenu();
 
+    }
+
+    private void setupSugarORM() {
+        SugarApp.getSugarContext();
     }
 
     private void getDataFromServer() {

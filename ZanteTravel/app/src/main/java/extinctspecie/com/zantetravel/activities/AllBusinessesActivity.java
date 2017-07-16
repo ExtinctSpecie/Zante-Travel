@@ -61,7 +61,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_all_businesses);
 
         businessGroupID = getIntent().getIntExtra("groupID", -1);
-        initProgressDialog();
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -69,6 +69,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
 
 
         populateViewsWithData(businessGroupID);
+        initProgressDialog();
         initSpinner();
 
 
@@ -94,13 +95,15 @@ public class AllBusinessesActivity extends AppCompatActivity {
 
                 try {
                     if (!response.body().isEmpty()) {
-                        AllBusinesses.setAllBusinesses(response.body());
 
                         AllBusinesses.addBusinessesWithGID(response.body(), groupID);
 
                         final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvAllBusinesses);
+
                         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                        rvAdapterBusinessesID = new RVAdapterBusinessesID(AllBusinesses.getAllBusinesses(), getApplicationContext());
+
+                        rvAdapterBusinessesID = new RVAdapterBusinessesID(AllBusinesses.getBusinessesWithGID(groupID), getApplicationContext());
+
                         rvAdapterBusinessesID.setClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

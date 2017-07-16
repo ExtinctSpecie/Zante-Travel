@@ -1,15 +1,15 @@
 package extinctspecie.com.zantetravel.models;
 
-import com.orm.SugarRecord;
-
 import extinctspecie.com.zantetravel.activities.AllBusinessesActivity;
 
 /**
  * Created by WorkSpace on 02-Jul-17.
  */
 
-public class Business extends SugarRecord<Business>
+public class Business
 {
+
+    private int id;
     private int position;
     private String name;
     private String location;
@@ -21,6 +21,7 @@ public class Business extends SugarRecord<Business>
     private String mapCoordinates;
     private String address;
     private String group;
+    private int groupID;
     private String category;
     private String type;
     private String workingHours;
@@ -31,7 +32,8 @@ public class Business extends SugarRecord<Business>
     private boolean summerOnly;
     private boolean isRecommended;
     private String thumbnail;
-    private String dateCreated;
+    private String date;
+
 
 
 
@@ -40,15 +42,18 @@ public class Business extends SugarRecord<Business>
 
 
     //Empty constructor
-    public Business() {}
+    public Business() {
+        super();
+    }
 
-    public Business(int position, String name, String location, String shortDescription,
+    public Business(int id , int position, String name, String location, String shortDescription,
                     String longDescription, String phoneNumber, String email, String website,
-                    String mapCoordinates, String address, String group, String category,
+                    String mapCoordinates, String address, String group, int groupID, String category,
                     String type, String workingHours, String price, String usefulTip,
                     boolean isPremium, boolean creditCards, boolean summerOnly, boolean isRecommended,
-                    String thumbnail, String dateCreated,
+                    String thumbnail, String date,
                     AllBusinessesActivity.Coordinates coordinates, Float distanceToUser) {
+        this.id = id;
         this.position = position;
         this.name = name;
         this.location = location;
@@ -60,6 +65,7 @@ public class Business extends SugarRecord<Business>
         this.mapCoordinates = mapCoordinates;
         this.address = address;
         this.group = group;
+        this.groupID = groupID;
         this.category = category;
         this.type = type;
         this.workingHours = workingHours;
@@ -70,19 +76,17 @@ public class Business extends SugarRecord<Business>
         this.summerOnly = summerOnly;
         this.isRecommended = isRecommended;
         this.thumbnail = thumbnail;
-        this.dateCreated = dateCreated;
+        this.date = date;
         this.coordinates = coordinates;
         this.distanceToUser = distanceToUser;
     }
-
-    public Business(int position, String name, String location, String shortDescription,
-                    String longDescription, String phoneNumber, String email,
-                    String website, String mapCoordinates, String address,
-                    String group, String category, String type, String workingHours,
-                    String price, String usefulTip, boolean isPremium,
-                    boolean creditCards, boolean summerOnly, boolean isRecommended,
-                    String thumbnail, String dateCreated)
-    {
+    public Business(int id, int position, String name, String location, String shortDescription,
+                    String longDescription, String phoneNumber, String email, String website,
+                    String mapCoordinates, String address, String group, int groupID, String category,
+                    String type, String workingHours, String price, String usefulTip,
+                    boolean isPremium, boolean creditCards, boolean summerOnly, boolean isRecommended,
+                    String thumbnail, String date) {
+        this.id = id;
         this.position = position;
         this.name = name;
         this.location = location;
@@ -94,6 +98,7 @@ public class Business extends SugarRecord<Business>
         this.mapCoordinates = mapCoordinates;
         this.address = address;
         this.group = group;
+        this.groupID = groupID;
         this.category = category;
         this.type = type;
         this.workingHours = workingHours;
@@ -104,7 +109,15 @@ public class Business extends SugarRecord<Business>
         this.summerOnly = summerOnly;
         this.isRecommended = isRecommended;
         this.thumbnail = thumbnail;
-        this.dateCreated = dateCreated;
+        this.date = date;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getPosition() {
@@ -195,6 +208,14 @@ public class Business extends SugarRecord<Business>
         this.group = group;
     }
 
+    public int getGroupID() {
+        return groupID;
+    }
+
+    public void setGroupID(int groupID) {
+        this.groupID = groupID;
+    }
+
     public String getCategory() {
         return category;
     }
@@ -275,12 +296,12 @@ public class Business extends SugarRecord<Business>
         this.thumbnail = thumbnail;
     }
 
-    public String getDateCreated() {
-        return dateCreated;
+    public String getDate() {
+        return date;
     }
 
-    public void setDateCreated(String dateCreated) {
-        this.dateCreated = dateCreated;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public float getDistanceToUser() {
