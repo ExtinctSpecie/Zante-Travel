@@ -7,15 +7,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.GnssStatus;
-import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.widget.SearchView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -54,6 +51,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
     private int businessGroupID;
     final static int ACCESS_LOCATION_PERMISSION = 99;
     ProgressDialog progressDialog;
+    LinearLayout tvTodayProgress ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +65,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         setActionBarTitle();
 
-
-        populateViewsWithData(businessGroupID);
+        initData(businessGroupID);
         initProgressDialog();
         initSpinner();
 
@@ -83,11 +80,45 @@ public class AllBusinessesActivity extends AppCompatActivity {
     private void setActionBarTitle() {
         getSupportActionBar().setTitle(getIntent().getStringExtra("groupName"));
     }
+    private void initData(int groupID)
+    {
+        tvTodayProgress = (LinearLayout) findViewById(R.id.rvDataLoadingProgress);
+        if(AllBusinesses.getBusinessesWithGID(groupID) != null)
+        {
+            populateViews(groupID);
+        }
+        else
+        {
+            getDataFromAPI(groupID);
+        }
+    }
 
-    private void populateViewsWithData(final int groupID) {
+    public void populateViews(final int groupID)
+    {
 
-        final LinearLayout tvTodayProgress = (LinearLayout) findViewById(R.id.rvDataLoadingProgress);
-        tvTodayProgress.setVisibility(View.VISIBLE);
+        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvAllBusinesses);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+        rvAdapterBusinessesID = new RVAdapterBusinessesID(AllBusinesses.getBusinessesWithGID(groupID), getApplicationContext());
+
+        rvAdapterBusinessesID.setClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = recyclerView.indexOfChild(v);
+                Intent intent = new Intent(getBaseContext(), BusinessActivity.class);
+                intent.putExtra("businessName", ((TextView) v.findViewById(R.id.tvBusinessName)).getText());
+                intent.putExtra("position", position);
+                intent.putExtra("groupID", groupID);
+                startActivity(intent);
+            }
+        });
+        recyclerView.setAdapter(rvAdapterBusinessesID);
+
+        tvTodayProgress.setVisibility(View.GONE);
+    }
+
+    private void getDataFromAPI(final int groupID) {
 
         API.Factory.getInstance().getBusinessesWithGroupID(groupID).enqueue(new Callback<List<Business>>() {
             @Override
@@ -96,34 +127,16 @@ public class AllBusinessesActivity extends AppCompatActivity {
                 try {
                     if (!response.body().isEmpty()) {
 
+                        //saves data
                         AllBusinesses.addBusinessesWithGID(response.body(), groupID);
-
-                        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvAllBusinesses);
-
-                        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-
-                        rvAdapterBusinessesID = new RVAdapterBusinessesID(AllBusinesses.getBusinessesWithGID(groupID), getApplicationContext());
-
-                        rvAdapterBusinessesID.setClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                int position = recyclerView.indexOfChild(v);
-                                Intent intent = new Intent(getBaseContext(), BusinessActivity.class);
-                                intent.putExtra("businessName", ((TextView) v.findViewById(R.id.tvBusinessName)).getText());
-                                intent.putExtra("position", position);
-                                intent.putExtra("groupID", groupID);
-                                startActivity(intent);
-                            }
-                        });
-
-                        recyclerView.setAdapter(rvAdapterBusinessesID);
+                        //populates views
+                        populateViews(groupID);
 
                     }
                 } catch (NullPointerException e) {
                     e.printStackTrace();
 
                 }
-                tvTodayProgress.setVisibility(View.GONE);
 
             }
 
