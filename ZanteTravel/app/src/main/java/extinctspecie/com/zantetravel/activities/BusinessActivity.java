@@ -202,7 +202,7 @@ public class BusinessActivity extends AppCompatActivity {
     private void initVariables() {
         businessGroupID = getIntent().getIntExtra("groupID" , -1);
         businessPosition = getIntent().getIntExtra("position" , -1);
-        business = AllBusinesses.getBusinessesWithGID(businessGroupID).get(businessPosition);
+        business = AllBusinesses.getBusiness(businessGroupID , businessPosition);
     }
 
     @Override

@@ -38,7 +38,7 @@ public class Business
 
 
     private AllBusinessesActivity.Coordinates coordinates;
-    private float distanceToUser = 0f;
+    private float distanceToUser = -1f;
 
 
     //Empty constructor

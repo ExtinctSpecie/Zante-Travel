@@ -62,7 +62,11 @@ public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusines
         holder.location.setText(business.getLocation());
         holder.shortDescription.setText(business.getShortDescription());
         Picasso.with(context).load(Information.BASE_IMAGE_URL + business.getThumbnail()).fit().into(holder.thumbnail);
-
+        if(business.getDistanceToUser() > -1f)
+        {
+            holder.distanceToUser.setText(String.valueOf(business.getDistanceToUser()).substring(0,4) + " KM");
+            holder.distanceToUser.setVisibility(View.VISIBLE);
+        }
 
     }
 
@@ -78,7 +82,7 @@ public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusines
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         //thumbnail /title / location / type
-        private TextView name, type, location , shortDescription;
+        private TextView name, type, location , shortDescription , distanceToUser;
 
 
         ImageView thumbnail;
@@ -90,6 +94,7 @@ public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusines
             type = (TextView) view.findViewById(R.id.tvBusinessType);
             location = (TextView) view.findViewById(R.id.tvBusinessLocation);
             shortDescription = (TextView) view.findViewById(R.id.tvShortdescription);
+            distanceToUser = (TextView) view.findViewById(R.id.tvDistanceToUser);
         }
     }
     public void changeDataSet(List<Business> newItems)

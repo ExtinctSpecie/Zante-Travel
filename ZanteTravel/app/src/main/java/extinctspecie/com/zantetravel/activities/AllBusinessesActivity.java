@@ -28,7 +28,6 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -52,6 +51,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
     final static int ACCESS_LOCATION_PERMISSION = 99;
     ProgressDialog progressDialog;
     LinearLayout tvTodayProgress ;
+    AlertDialog.Builder dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +83,8 @@ public class AllBusinessesActivity extends AppCompatActivity {
     private void initData(int groupID)
     {
         tvTodayProgress = (LinearLayout) findViewById(R.id.rvDataLoadingProgress);
+        tvTodayProgress.setVisibility(View.VISIBLE);
+
         if(AllBusinesses.getBusinessesWithGID(groupID) != null)
         {
             populateViews(groupID);
@@ -197,8 +199,6 @@ public class AllBusinessesActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                Toast.makeText(getApplicationContext(), parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
 
                 String methodName = getMethodName(parent.getItemAtPosition(position).toString());
 
@@ -315,14 +315,49 @@ public class AllBusinessesActivity extends AppCompatActivity {
             progressDialog.setMessage(message);
         }
     }
+    private void showDialogToProvideGPS() {
+
+
+        dialog.setMessage(AllBusinessesActivity.this.getResources().getString(R.string.gpsNotEnabled));
+
+        dialog.setPositiveButton(AllBusinessesActivity.this.getResources().getString(R.string.openLocationSettings), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+
+                Intent myIntent = new Intent( Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                AllBusinessesActivity.this.startActivity(myIntent);
+            }
+        });
+        dialog.setNegativeButton(AllBusinessesActivity.this.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                ((Spinner) findViewById(R.id.spinnerSortByList)).setSelection(0);
+                stopProgressDialog();
+            }
+        });
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                ((Spinner) findViewById(R.id.spinnerSortByList)).setSelection(0);
+                stopProgressDialog();
+            }
+        });
+        dialog.show();
+    }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         switch (requestCode) {
             case ACCESS_LOCATION_PERMISSION: {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //permission is granted
+                    selectSortingMethod("getDistance");
+                }
+                else
+                {
+                    ((Spinner) findViewById(R.id.spinnerSortByList)).setSelection(0);
                 }
             }
         }
@@ -341,7 +376,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
 
     private class Distances extends AsyncTask<List<Business>, Integer, List<String>> implements LocationListener{
 
-        AlertDialog.Builder dialog;
+
         List<Business> businesses;
 
         LocationManager locationManager;
@@ -426,7 +461,6 @@ public class AllBusinessesActivity extends AppCompatActivity {
 
         private void initPreparations() {
 
-
             int hasLocationPermission = checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION);
 
             if (hasLocationPermission != PackageManager.PERMISSION_GRANTED) {
@@ -449,36 +483,6 @@ public class AllBusinessesActivity extends AppCompatActivity {
                 showDialogToProvideGPS();
             }
         }
-
-        private void showDialogToProvideGPS() {
-
-
-            dialog.setMessage(AllBusinessesActivity.this.getResources().getString(R.string.gpsNoEnabled));
-
-            dialog.setPositiveButton(AllBusinessesActivity.this.getResources().getString(R.string.openLocationSettings), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                    // TODO Auto-generated method stub
-                    Intent myIntent = new Intent( Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                    AllBusinessesActivity.this.startActivity(myIntent);
-                }
-            });
-            dialog.setNegativeButton(AllBusinessesActivity.this.getString(R.string.cancel), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                    stopProgressDialog();
-                }
-            });
-            dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                @Override
-                public void onCancel(DialogInterface dialog) {
-                    stopProgressDialog();
-                }
-            });
-            dialog.show();
-        }
-
 
 
         //On location changed listener ( interface )

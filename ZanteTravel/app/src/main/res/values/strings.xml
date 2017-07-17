@@ -3,7 +3,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="cancel">Cancel</string>
-    <string name="gpsNoEnabled">GPS is not enables please enable your GPS to calculate distances</string>
+    <string name="gpsNotEnabled">GPS is not enabled please enable your GPS to calculate distances</string>
     <string name="openLocationSettings">Provide Location</string>
     <string name="action_settings">Settings</string>
 

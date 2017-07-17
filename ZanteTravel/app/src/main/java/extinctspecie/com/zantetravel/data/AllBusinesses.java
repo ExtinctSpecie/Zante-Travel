@@ -33,4 +33,8 @@ public class AllBusinesses {
     {
         return allGroupBusinesses.get(groupID);
     }
+    public static Business getBusiness(int groupID, int position)
+    {
+       return allGroupBusinesses.get(groupID).get(position);
+    }
 }
