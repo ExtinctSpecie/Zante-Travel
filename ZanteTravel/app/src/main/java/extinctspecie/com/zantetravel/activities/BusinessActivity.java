@@ -178,7 +178,7 @@ public class BusinessActivity extends AppCompatActivity {
                 {
 
                     for(int i = 0; i < images.size(); i++) {
-                        gallery.add(Information.BASE_IMAGE_URL + images.get(i).getImage());
+                        gallery.add(images.get(i).getImageURL());
                     }
 
                     ViewPager viewPager = (ViewPager) findViewById(R.id.vpGallery);

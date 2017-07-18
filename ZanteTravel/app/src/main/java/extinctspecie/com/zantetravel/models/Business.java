@@ -1,14 +1,22 @@
 package extinctspecie.com.zantetravel.models;
 
 import extinctspecie.com.zantetravel.activities.AllBusinessesActivity;
+import io.realm.RealmModel;
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
+import io.realm.annotations.Index;
+import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.RealmClass;
 
 /**
  * Created by WorkSpace on 02-Jul-17.
  */
 
-public class Business
+@RealmClass
+public class Business implements RealmModel
 {
 
+    @PrimaryKey
     private int id;
     private int position;
     private String name;
@@ -37,8 +45,9 @@ public class Business
 
 
 
-
+    @Ignore
     private AllBusinessesActivity.Coordinates coordinates;
+    @Ignore
     private float distanceToUser = -1f;
 
 

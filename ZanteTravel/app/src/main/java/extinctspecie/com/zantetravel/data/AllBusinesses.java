@@ -13,6 +13,10 @@ import java.util.List;
 
 import extinctspecie.com.zantetravel.models.Business;
 import extinctspecie.com.zantetravel.models.Images;
+import io.realm.Realm;
+import io.realm.RealmObject;
+import io.realm.RealmResults;
+import io.realm.exceptions.RealmPrimaryKeyConstraintException;
 
 /**
  * Created by WorkSpace on 05-Jul-17.
@@ -28,6 +32,23 @@ public class AllBusinesses {
     public static void addBusinessesWithGID(List<Business> businesses , int groupID)
     {
         allGroupBusinesses.put(groupID,businesses);
+        Realm realm = Realm.getDefaultInstance();
+        try {
+
+            realm.beginTransaction();
+            realm.copyToRealm(businesses);
+            realm.commitTransaction();
+
+        }
+        catch (RealmPrimaryKeyConstraintException e)
+        {
+            e.printStackTrace();
+        }
+        RealmResults<Business> businessesCp = realm.where(Business.class).equalTo("name","Prosilio").findAll();
+
+        Business business = businessesCp.get(0);
+
+        Log.v("hello",String.valueOf(business.getName()));
     }
     public static List<Business> getBusinessesWithGID(int groupID)
     {

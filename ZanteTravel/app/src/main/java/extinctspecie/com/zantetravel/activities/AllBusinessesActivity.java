@@ -50,7 +50,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
     private int businessGroupID;
     final static int ACCESS_LOCATION_PERMISSION = 99;
     ProgressDialog progressDialog;
-    LinearLayout tvTodayProgress ;
+    LinearLayout rvLoadingData;
     AlertDialog.Builder dialog;
 
     @Override
@@ -82,8 +82,8 @@ public class AllBusinessesActivity extends AppCompatActivity {
     }
     private void initData(int groupID)
     {
-        tvTodayProgress = (LinearLayout) findViewById(R.id.rvDataLoadingProgress);
-        tvTodayProgress.setVisibility(View.VISIBLE);
+        rvLoadingData = (LinearLayout) findViewById(R.id.rvDataLoadingProgress);
+        rvLoadingData.setVisibility(View.VISIBLE);
 
         if(AllBusinesses.getBusinessesWithGID(groupID) != null)
         {
@@ -117,7 +117,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
         });
         recyclerView.setAdapter(rvAdapterBusinessesID);
 
-        tvTodayProgress.setVisibility(View.GONE);
+        rvLoadingData.setVisibility(View.GONE);
     }
 
     private void getDataFromAPI(final int groupID) {
@@ -133,8 +133,12 @@ public class AllBusinessesActivity extends AppCompatActivity {
                         AllBusinesses.addBusinessesWithGID(response.body(), groupID);
                         //populates views
                         populateViews(groupID);
-
                     }
+                    else
+                    {
+                        rvLoadingData.setVisibility(View.GONE);
+                    }
+
                 } catch (NullPointerException e) {
                     e.printStackTrace();
 
