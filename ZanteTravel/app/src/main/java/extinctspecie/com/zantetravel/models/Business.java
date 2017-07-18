@@ -32,6 +32,7 @@ public class Business
     private boolean summerOnly;
     private boolean isRecommended;
     private String thumbnail;
+    private String thumbnailURL;
     private String date;
 
 
@@ -51,7 +52,7 @@ public class Business
                     String mapCoordinates, String address, String group, int groupID, String category,
                     String type, String workingHours, String price, String usefulTip,
                     boolean isPremium, boolean creditCards, boolean summerOnly, boolean isRecommended,
-                    String thumbnail, String date,
+                    String thumbnail, String thumbnailURL, String date,
                     AllBusinessesActivity.Coordinates coordinates, Float distanceToUser) {
         this.id = id;
         this.position = position;
@@ -76,6 +77,7 @@ public class Business
         this.summerOnly = summerOnly;
         this.isRecommended = isRecommended;
         this.thumbnail = thumbnail;
+        this.thumbnailURL = thumbnailURL;
         this.date = date;
         this.coordinates = coordinates;
         this.distanceToUser = distanceToUser;
@@ -85,7 +87,7 @@ public class Business
                     String mapCoordinates, String address, String group, int groupID, String category,
                     String type, String workingHours, String price, String usefulTip,
                     boolean isPremium, boolean creditCards, boolean summerOnly, boolean isRecommended,
-                    String thumbnail, String date) {
+                    String thumbnail, String thumbnailURL, String date) {
         this.id = id;
         this.position = position;
         this.name = name;
@@ -109,6 +111,7 @@ public class Business
         this.summerOnly = summerOnly;
         this.isRecommended = isRecommended;
         this.thumbnail = thumbnail;
+        this.thumbnailURL = thumbnailURL;
         this.date = date;
     }
 
@@ -294,6 +297,14 @@ public class Business
 
     public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
+    }
+
+    public String getThumbnailURL() {
+        return thumbnailURL;
+    }
+
+    public void setThumbnailURL(String thumbnailURL) {
+        this.thumbnailURL = thumbnailURL;
     }
 
     public String getDate() {

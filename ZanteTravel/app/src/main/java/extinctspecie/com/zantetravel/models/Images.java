@@ -9,15 +9,17 @@ public class Images
     private int business;
     private int position;
     private String image;
+    private String imageURL;
 
     public Images() {
         super();
     }
 
-    public Images(int business, int position, String image) {
+    public Images(int business, int position, String image, String imageURL) {
         this.business = business;
         this.position = position;
         this.image = image;
+        this.imageURL = imageURL;
     }
 
     public int getBusiness() {
@@ -42,5 +44,13 @@ public class Images
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 }
