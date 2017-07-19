@@ -127,6 +127,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvDescriptionHelper"
+            android:textStyle="bold"
             android:gravity="center"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
@@ -151,6 +152,7 @@
             android:gravity="center"
             android:paddingTop="10dp"
             android:text="Zante Town"
+            android:textStyle="bold"
             android:textColor="@color/Black" />
 
         <TextView
@@ -170,6 +172,7 @@
             android:gravity="center"
             android:paddingTop="10dp"
             android:text="Mapa 3"
+            android:textStyle="bold"
             android:textColor="@color/Black" />
 
         <TextView
@@ -189,13 +192,34 @@
             android:gravity="center"
             android:paddingTop="10dp"
             android:text="Vegeterian/Meat/Fish"
+            android:textStyle="bold"
             android:textColor="@color/Black" />
+
+        <TextView
+            android:id="@+id/tvUsefulTipHelper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvType"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:text="Suitable For" />
+
+        <TextView
+            android:id="@+id/tvUsefulTip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvUsefulTipHelper"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:text="Families , Romantic , Business Meetings"
+            android:textStyle="bold"
+            android:textColor="@color/Black"/>
 
         <TextView
             android:id="@+id/tvWorkingHoursHelper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvType"
+            android:layout_below="@id/tvUsefulTip"
             android:gravity="center"
             android:paddingTop="10dp"
             android:text="Working Hours" />
@@ -266,7 +290,7 @@
             android:layout_below="@+id/tvExtraInfoHelper"
             android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:paddingTop="10dp"
+            android:paddingTop="5dp"
             android:text="Credit Cards : "
             android:textColor="@color/Black" />
 
@@ -276,17 +300,21 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tvExtraInfoHelper"
             android:layout_toRightOf="@id/tvCreditCardsHelper"
+            android:layout_toEndOf="@id/tvCreditCardsHelper"
+            android:paddingTop="10dp"
             android:checked="false"
+            android:buttonTint="@color/DarkBlue"
+            android:layout_alignTop="@id/tvCreditCardsHelper"
             android:clickable="false" />
 
         <TextView
             android:id="@+id/tvSummerOnlyHelper"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/cbCreditCard"
+            android:layout_below="@+id/tvCreditCardsHelper"
             android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:paddingTop="10dp"
+            android:paddingTop="5dp"
             android:text="Opened Summer Season Only : "
             android:textColor="@color/Black" />
 
@@ -296,8 +324,13 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/cbCreditCard"
             android:layout_toRightOf="@id/tvSummerOnlyHelper"
-            android:checked="false"
-            android:clickable="false" />
+            android:layout_toEndOf="@id/tvSummerOnlyHelper"
+            android:layout_alignTop="@id/tvSummerOnlyHelper"
+            android:checked="true"
+            android:buttonTint="@color/DarkBlue"
+            android:paddingTop="10dp"
+            android:clickable="false"
+            android:layout_marginBottom="20dp"/>
     </RelativeLayout>
 </ScrollView>
 

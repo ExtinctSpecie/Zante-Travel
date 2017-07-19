@@ -23,13 +23,16 @@ import java.util.Map;
 import extinctspecie.com.zantetravel.R;
 import extinctspecie.com.zantetravel.adapters.LVAdapterMainMenu;
 import extinctspecie.com.zantetravel.helpers.TypeFaces;
+import extinctspecie.com.zantetravel.models.Business;
 import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     String TAG = this.getClass().getSimpleName();
     HashMap<Integer,Integer> menuItems;
     String menuItemSelectedName = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +41,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         Realm.init(this);
 
+
         createMenuMap();
         initTypeFaces();
         initToolbarAndDrawer();
         initListViewMenu();
-
     }
 
     private void getDataFromServer() {

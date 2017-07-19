@@ -24,12 +24,13 @@ import extinctspecie.com.zantetravel.models.Business;
 
 public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusinessesID.MyViewHolder>{
 
+    String typeHelper;
     private List<Business> businessList;
     private List<Business> businessListCopy;
     Context context;
     View.OnClickListener mClickListener;
 
-    public RVAdapterBusinessesID(List<Business> businessList , Context context) {
+    public RVAdapterBusinessesID(List<Business> businessList , Context context ) {
         this.businessList = businessList;
         this.businessListCopy = new ArrayList<>(businessList);
         this.context = context;
@@ -79,6 +80,10 @@ public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusines
     public int getItemCount() {
         return businessList.size();
     }
+    public Business getBusiness(int position)
+    {
+        return businessList.get(position);
+    }
 
     public void resetData() {
         businessList = businessListCopy;
@@ -88,7 +93,6 @@ public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusines
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         //thumbnail /title / location / type
         private TextView name, type, location , shortDescription , distanceToUser;
-
 
         ImageView thumbnail;
 

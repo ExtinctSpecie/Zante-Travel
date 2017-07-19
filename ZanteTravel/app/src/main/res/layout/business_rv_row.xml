@@ -1,130 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     android:elevation="5dp"
     android:foreground="?android:attr/selectableItemBackground"
+    android:orientation="vertical"
     app:cardCornerRadius="4dp">
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/ivBusinessThumbnail"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_margin="10dp"
-            android:layout_weight="0.5"
-            app:srcCompat="@drawable/attraction_icon"
-            />
-
-        <TextView
-            android:id="@+id/tvBusinessName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:text="To Steki"
-            android:textColor="@color/Black"
-            android:textSize="15sp" />
-        <TextView
-            android:id="@+id/tvDistanceToUser"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:text="25.5km"
-            android:visibility="gone"/>
-
-        <TextView
-            android:id="@+id/tvBusinessTypeHelper"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvBusinessName"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_toEndOf="@+id/ivBusinessThumbnail"
-            android:layout_toRightOf="@id/ivBusinessThumbnail"
-            android:text="Type : "
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/tvBusinessType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvBusinessName"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_toEndOf="@+id/tvBusinessTypeHelper"
-            android:layout_toRightOf="@id/tvBusinessTypeHelper"
-            android:maxLength="64"
-            android:text="Mediteterian Cousine/Fish/ "
-            android:textSize="12sp" />
-        <TextView
-            android:id="@+id/tvBusinessLocationHelper"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/ivBusinessThumbnail"
-            android:layout_toRightOf="@id/ivBusinessThumbnail"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_below="@id/tvBusinessType"
-            android:layout_centerHorizontal="true"
-            android:text="Location : "
-            android:textSize="12sp"
-            />
-        <TextView
-            android:id="@+id/tvBusinessLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvBusinessType"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_toEndOf="@+id/tvBusinessLocationHelper"
-            android:layout_toRightOf="@id/tvBusinessLocationHelper"
-            android:maxLength="32"
-            android:text="Kalamaki"
-            android:textSize="12sp" />
         <RelativeLayout
+            android:id="@+id/rlBusinessHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:id="@+id/ivBusinessThumbnail"
+                android:layout_width="100dp"
+                android:layout_height="130dp"
+                android:layout_margin="10dp"
+                android:layout_weight="0.5"
+                app:srcCompat="@drawable/attraction_icon" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/ivBusinessThumbnail"
+                android:layout_toRightOf="@+id/ivBusinessThumbnail"                >
+
+                <TextView
+                    android:id="@+id/tvBusinessName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:text="To Steki"
+                    android:textColor="@color/Black"
+                    android:textStyle="bold"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tvDistanceToUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="25.5km"
+                    android:visibility="gone" />
+                <TextView
+                    android:id="@+id/tvBusinessTypeHelper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_below="@id/tvBusinessName"
+                    android:layout_centerHorizontal="true"
+                    android:text="Type"
+                    android:textColor="@color/Black"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:id="@+id/tvBusinessType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvBusinessTypeHelper"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:maxLength="128"
+                    android:textAllCaps="false"
+                    android:text="Mediteterian Cousine/Fish/dsfafdasdas fasdasfsdfgdsgsdgs "
+                    android:textSize="12sp" />
+                <TextView
+                    android:id="@+id/tvBusinessLocationHelper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_below="@id/tvBusinessType"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/Black"
+                    android:text="Location"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:id="@+id/tvBusinessLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvBusinessLocationHelper"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:maxLength="64"
+                    android:textStyle="bold"
+                    android:textAllCaps="false"
+                    android:text="Location: Kalamakifsdfs dfdsfsdfsdfsdfs dfsdfsdfsdfsd"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rlBusinessInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/rlBusinessHeader"
             android:layout_centerHorizontal="true"
-            android:layout_below="@id/ivBusinessThumbnail"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp">
+
             <TextView
                 android:id="@+id/tvShortDescriptionHelper"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Description : "
-/>
+                android:layout_centerHorizontal="true"
+                android:text="Short Description"
+                android:textColor="@color/Black" />
             <TextView
                 android:id="@+id/tvShortdescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/tvShortDescriptionHelper"
-                android:text="Some short descriptiod fg fd gdsf gfd gfd gfd gfd gsdf gfd gs fd gsfdgfd nfdasfsdfdsd"
-                android:gravity="center"/>
+                android:layout_below="@+id/tvShortDescriptionHelper"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="Some short descriptiod fg fd gdsf gfd gfd gfd gfd gsdf gfd gs fd gsfdgfd nfdasfsdfdsd" />
         </RelativeLayout>
-
     </RelativeLayout>
-
-
 </android.support.v7.widget.CardView>

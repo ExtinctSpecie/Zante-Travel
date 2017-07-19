@@ -16,6 +16,7 @@ import extinctspecie.com.zantetravel.models.Images;
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
+import io.realm.exceptions.RealmException;
 import io.realm.exceptions.RealmPrimaryKeyConstraintException;
 
 /**
@@ -24,38 +25,49 @@ import io.realm.exceptions.RealmPrimaryKeyConstraintException;
 
 public class AllBusinesses {
 
-    private static HashMap<Integer ,List<Business>> allGroupBusinesses = new HashMap<>();
-
     //Empty constructor
     public AllBusinesses() {}
 
     public static void addBusinessesWithGID(List<Business> businesses , int groupID)
     {
-        allGroupBusinesses.put(groupID,businesses);
-        Realm realm = Realm.getDefaultInstance();
         try {
 
+            Realm realm = Realm.getDefaultInstance();
             realm.beginTransaction();
-            realm.copyToRealm(businesses);
+            realm.copyToRealmOrUpdate(businesses);
             realm.commitTransaction();
-
         }
         catch (RealmPrimaryKeyConstraintException e)
         {
             e.printStackTrace();
         }
-        RealmResults<Business> businessesCp = realm.where(Business.class).equalTo("name","Prosilio").findAll();
 
-        Business business = businessesCp.get(0);
-
-        Log.v("hello",String.valueOf(business.getName()));
     }
     public static List<Business> getBusinessesWithGID(int groupID)
     {
-        return allGroupBusinesses.get(groupID);
+        Realm realm = Realm.getDefaultInstance();
+
+        try
+        {
+            return realm.where(Business.class).equalTo("groupID",groupID).findAll();
+        }
+        catch (RealmException e)
+        {
+            e.printStackTrace();
+        }
+        return null;
     }
-    public static Business getBusiness(int groupID, int position)
+    public static Business getBusinessWithID(int ID)
     {
-       return allGroupBusinesses.get(groupID).get(position);
+        Realm realm = Realm.getDefaultInstance();
+        try
+        {
+            return realm.where(Business.class).equalTo("id",ID).findFirst();
+        }
+        catch (RealmException e)
+        {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

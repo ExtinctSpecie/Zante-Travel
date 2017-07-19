@@ -6,10 +6,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -21,7 +19,6 @@ import java.util.Locale;
 import extinctspecie.com.zantetravel.R;
 import extinctspecie.com.zantetravel.adapters.PABusinessGallery;
 import extinctspecie.com.zantetravel.data.AllBusinesses;
-import extinctspecie.com.zantetravel.helpers.Information;
 import extinctspecie.com.zantetravel.models.Business;
 import extinctspecie.com.zantetravel.models.Images;
 import extinctspecie.com.zantetravel.services.API;
@@ -30,8 +27,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BusinessActivity extends AppCompatActivity {
-    private int businessGroupID;
-    private int businessPosition;
+
     private int businessID;
     private Business business ;
 
@@ -40,15 +36,16 @@ public class BusinessActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business);
 
+        initVariables();
+
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        getSupportActionBar().setTitle(getIntent().getStringExtra("businessName"));
+        getSupportActionBar().setTitle(business.getName());
 
-
-        initVariables();
         populateViewsWithData();
-        initViewPager();
+        getGalleryFromAPI();
         initButtons();
     }
 
@@ -147,9 +144,6 @@ public class BusinessActivity extends AppCompatActivity {
     private void populateViewsWithData() {
         if(business != null)
         {
-            //this workds only because of sugar orm
-            businessID = business.getId();
-            
             ((TextView) findViewById(R.id.tvDescription)).setText(business.getLongDescription());
             ((TextView) findViewById(R.id.tvLocation)).setText(business.getLocation());
             ((TextView) findViewById(R.id.tvAddress)).setText(business.getAddress());
@@ -163,7 +157,7 @@ public class BusinessActivity extends AppCompatActivity {
 
     }
 
-    private void initViewPager() {
+    private void getGalleryFromAPI() {
 
         final ProgressBar progressBar = (ProgressBar) findViewById(R.id.pbBusinessGallery);
         final List<String> gallery = new ArrayList<>();
@@ -195,14 +189,13 @@ public class BusinessActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
             }
         });
-        //PABusinessGallery paBusinessGallery;
 
     }
 
     private void initVariables() {
-        businessGroupID = getIntent().getIntExtra("groupID" , -1);
-        businessPosition = getIntent().getIntExtra("position" , -1);
-        business = AllBusinesses.getBusiness(businessGroupID , businessPosition);
+
+        business = AllBusinesses.getBusinessWithID(getIntent().getIntExtra("businessID",0));
+        businessID = business.getId();
     }
 
     @Override

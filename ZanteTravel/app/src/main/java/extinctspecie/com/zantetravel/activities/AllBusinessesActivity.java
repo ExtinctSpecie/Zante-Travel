@@ -27,7 +27,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -38,6 +37,7 @@ import java.util.List;
 import extinctspecie.com.zantetravel.R;
 import extinctspecie.com.zantetravel.adapters.RVAdapterBusinessesID;
 import extinctspecie.com.zantetravel.data.AllBusinesses;
+import extinctspecie.com.zantetravel.helpers.Information;
 import extinctspecie.com.zantetravel.models.Business;
 import extinctspecie.com.zantetravel.services.API;
 import retrofit2.Call;
@@ -85,13 +85,18 @@ public class AllBusinessesActivity extends AppCompatActivity {
         rvLoadingData = (LinearLayout) findViewById(R.id.rvDataLoadingProgress);
         rvLoadingData.setVisibility(View.VISIBLE);
 
-        if(AllBusinesses.getBusinessesWithGID(groupID) != null)
+        if(AllBusinesses.getBusinessesWithGID(groupID) != null && !AllBusinesses.getBusinessesWithGID(groupID).isEmpty())
         {
             populateViews(groupID);
+            if(Information.isInternetAvailable(this))
+            {
+                getBusinessesFromAPI(groupID , false);
+            }
         }
         else
         {
-            getDataFromAPI(groupID);
+            if(Information.isInternetAvailable(this))
+                getBusinessesFromAPI(groupID , true);
         }
     }
 
@@ -107,11 +112,12 @@ public class AllBusinessesActivity extends AppCompatActivity {
         rvAdapterBusinessesID.setClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 int position = recyclerView.indexOfChild(v);
+
+                Business business = rvAdapterBusinessesID.getBusiness(position);
                 Intent intent = new Intent(getBaseContext(), BusinessActivity.class);
-                intent.putExtra("businessName", ((TextView) v.findViewById(R.id.tvBusinessName)).getText());
-                intent.putExtra("position", position);
-                intent.putExtra("groupID", groupID);
+                intent.putExtra("businessID", business.getId());
                 startActivity(intent);
             }
         });
@@ -120,7 +126,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
         rvLoadingData.setVisibility(View.GONE);
     }
 
-    private void getDataFromAPI(final int groupID) {
+    private void getBusinessesFromAPI(final int groupID , final boolean populateViesAfterDownload) {
 
         API.Factory.getInstance().getBusinessesWithGroupID(groupID).enqueue(new Callback<List<Business>>() {
             @Override
@@ -132,16 +138,15 @@ public class AllBusinessesActivity extends AppCompatActivity {
                         //saves data
                         AllBusinesses.addBusinessesWithGID(response.body(), groupID);
                         //populates views
-                        populateViews(groupID);
+                        if(populateViesAfterDownload)
+                            populateViews(groupID);
                     }
-                    else
-                    {
-                        rvLoadingData.setVisibility(View.GONE);
-                    }
+
+                    rvLoadingData.setVisibility(View.GONE);
+
 
                 } catch (NullPointerException e) {
                     e.printStackTrace();
-
                 }
 
             }
