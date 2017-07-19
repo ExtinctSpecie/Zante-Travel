@@ -65,7 +65,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         setActionBarTitle();
 
-        initData(businessGroupID);
+        initData();
         initProgressDialog();
         initSpinner();
 
@@ -80,34 +80,34 @@ public class AllBusinessesActivity extends AppCompatActivity {
     private void setActionBarTitle() {
         getSupportActionBar().setTitle(getIntent().getStringExtra("groupName"));
     }
-    private void initData(int groupID)
+    private void initData()
     {
         rvLoadingData = (LinearLayout) findViewById(R.id.rvDataLoadingProgress);
         rvLoadingData.setVisibility(View.VISIBLE);
 
-        if(AllBusinesses.getBusinessesWithGID(groupID) != null && !AllBusinesses.getBusinessesWithGID(groupID).isEmpty())
+        if(AllBusinesses.getBusinessesWithGID(businessGroupID) != null && !AllBusinesses.getBusinessesWithGID(businessGroupID).isEmpty())
         {
-            populateViews(groupID);
+            populateViews();
             if(Information.isInternetAvailable(this))
             {
-                getBusinessesFromAPI(groupID , false);
+                getBusinessesFromAPI(false);
             }
         }
         else
         {
             if(Information.isInternetAvailable(this))
-                getBusinessesFromAPI(groupID , true);
+                getBusinessesFromAPI(true);
         }
     }
 
-    public void populateViews(final int groupID)
+    public void populateViews()
     {
 
         final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvAllBusinesses);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
-        rvAdapterBusinessesID = new RVAdapterBusinessesID(AllBusinesses.getBusinessesWithGID(groupID), getApplicationContext());
+        rvAdapterBusinessesID = new RVAdapterBusinessesID(AllBusinesses.getBusinessesWithGID(businessGroupID), getApplicationContext());
 
         rvAdapterBusinessesID.setClickListener(new View.OnClickListener() {
             @Override
@@ -126,9 +126,9 @@ public class AllBusinessesActivity extends AppCompatActivity {
         rvLoadingData.setVisibility(View.GONE);
     }
 
-    private void getBusinessesFromAPI(final int groupID , final boolean populateViesAfterDownload) {
+    private void getBusinessesFromAPI(final boolean populateViesAfterDownload) {
 
-        API.Factory.getInstance().getBusinessesWithGroupID(groupID).enqueue(new Callback<List<Business>>() {
+        API.Factory.getInstance().getBusinessesWithGroupID(businessGroupID).enqueue(new Callback<List<Business>>() {
             @Override
             public void onResponse(Call<List<Business>> call, Response<List<Business>> response) {
 
@@ -136,10 +136,10 @@ public class AllBusinessesActivity extends AppCompatActivity {
                     if (!response.body().isEmpty()) {
 
                         //saves data
-                        AllBusinesses.addBusinessesWithGID(response.body(), groupID);
+                        AllBusinesses.addBusinessesWithGID(response.body());
                         //populates views
                         if(populateViesAfterDownload)
-                            populateViews(groupID);
+                            populateViews();
                     }
 
                     rvLoadingData.setVisibility(View.GONE);
@@ -154,6 +154,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<Business>> call, Throwable t) {
                 Log.v("error: ", "Error While Getting Data" + t);
+                rvLoadingData.setVisibility(View.GONE);
             }
         });
 

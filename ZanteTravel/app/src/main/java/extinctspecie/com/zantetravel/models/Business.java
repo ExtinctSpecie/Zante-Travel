@@ -53,7 +53,7 @@ public class Business implements RealmModel
 
     //Empty constructor
     public Business() {
-        super();
+
     }
 
     public Business(int id , int position, String name, String location, String shortDescription,

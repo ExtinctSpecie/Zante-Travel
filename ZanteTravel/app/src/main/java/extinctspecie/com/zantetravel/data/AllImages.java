@@ -3,39 +3,43 @@ package extinctspecie.com.zantetravel.data;
 import java.util.List;
 
 import extinctspecie.com.zantetravel.models.Business;
+import extinctspecie.com.zantetravel.models.Image;
 import io.realm.Realm;
+import io.realm.RealmModel;
 import io.realm.exceptions.RealmException;
 import io.realm.exceptions.RealmPrimaryKeyConstraintException;
 
 /**
- * Created by WorkSpace on 05-Jul-17.
+ * Created by WorkSpace on 19-Jul-17.
  */
 
-public class AllBusinesses {
-
-
-    public static void addBusinessesWithGID(List<Business> businesses)
+public class AllImages
+{
+    public static void addImages(List<Image> images)
     {
         try {
 
             Realm realm = Realm.getDefaultInstance();
+
             realm.beginTransaction();
-            realm.copyToRealmOrUpdate(businesses);
+
+            realm.insertOrUpdate(images);
+            //realm.copyToRealmOrUpdate(images);
+
             realm.commitTransaction();
         }
         catch (RealmPrimaryKeyConstraintException e)
         {
             e.printStackTrace();
         }
-
     }
-    public static List<Business> getBusinessesWithGID(int groupID)
+    public static List<Image> getImagesOfBusinessID(int businessID)
     {
         Realm realm = Realm.getDefaultInstance();
 
         try
         {
-            return realm.where(Business.class).equalTo("groupID",groupID).findAll();
+            return realm.where(Image.class).equalTo("business",businessID).findAll();
         }
         catch (RealmException e)
         {
@@ -43,12 +47,12 @@ public class AllBusinesses {
         }
         return null;
     }
-    public static Business getBusinessWithID(int ID)
+    public static Image getImageWithID(int ID)
     {
         Realm realm = Realm.getDefaultInstance();
         try
         {
-            return realm.where(Business.class).equalTo("id",ID).findFirst();
+            return realm.where(Image.class).equalTo("id",ID).findFirst();
         }
         catch (RealmException e)
         {

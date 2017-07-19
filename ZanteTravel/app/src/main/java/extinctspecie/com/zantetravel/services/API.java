@@ -4,7 +4,7 @@ import java.util.List;
 
 import extinctspecie.com.zantetravel.helpers.Information;
 import extinctspecie.com.zantetravel.models.Business;
-import extinctspecie.com.zantetravel.models.Images;
+import extinctspecie.com.zantetravel.models.Image;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -24,7 +24,7 @@ public interface API {
     Call<List<Business>> getBusinessesWithGroupID(@Path("ID") int businessGroupID);
 
     @GET("images/{ID}")
-    Call<List<Images>> getImagesOfBusinessWithID(@Path("ID") int businessID);
+    Call<List<Image>> getImagesOfBusinessWithID(@Path("ID") int businessID);
 
     public class Factory {
 

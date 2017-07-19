@@ -19,8 +19,9 @@ import java.util.Locale;
 import extinctspecie.com.zantetravel.R;
 import extinctspecie.com.zantetravel.adapters.PABusinessGallery;
 import extinctspecie.com.zantetravel.data.AllBusinesses;
+import extinctspecie.com.zantetravel.data.AllImages;
 import extinctspecie.com.zantetravel.models.Business;
-import extinctspecie.com.zantetravel.models.Images;
+import extinctspecie.com.zantetravel.models.Image;
 import extinctspecie.com.zantetravel.services.API;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -160,36 +161,44 @@ public class BusinessActivity extends AppCompatActivity {
     private void getGalleryFromAPI() {
 
         final ProgressBar progressBar = (ProgressBar) findViewById(R.id.pbBusinessGallery);
-        final List<String> gallery = new ArrayList<>();
 
-        API.Factory.getInstance().getImagesOfBusinessWithID(businessID).enqueue(new Callback<List<Images>>() {
+
+        API.Factory.getInstance().getImagesOfBusinessWithID(businessID).enqueue(new Callback<List<Image>>() {
             @Override
-            public void onResponse(Call<List<Images>> call, Response<List<Images>> response) {
+            public void onResponse(Call<List<Image>> call, Response<List<Image>> response) {
 
-                List<Images> images = response.body();
-
-                if(images != null && !images.isEmpty())
+                if(!response.body().isEmpty())
                 {
+                    AllImages.addImages(response.body());
 
-                    for(int i = 0; i < images.size(); i++) {
-                        gallery.add(images.get(i).getImageURL());
-                    }
+                    populateViewPagerWithImages();
 
-                    ViewPager viewPager = (ViewPager) findViewById(R.id.vpGallery);
-                    viewPager.setAdapter(new PABusinessGallery(getApplicationContext(),gallery));
-
-                    TabLayout tabLayout = (TabLayout) findViewById(R.id.tlHelperForVP);
-                    tabLayout.setupWithViewPager(viewPager, true);
                 }
                 progressBar.setVisibility(View.GONE);
             }
 
             @Override
-            public void onFailure(Call<List<Images>> call, Throwable t) {
+            public void onFailure(Call<List<Image>> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
             }
         });
+    }
 
+    private void populateViewPagerWithImages() {
+
+        List<Image> images = AllImages.getImagesOfBusinessID(businessID);
+
+        List<String> gallery = new ArrayList<>();
+
+        for(int i = 0; i < images.size(); i++) {
+            gallery.add(images.get(i).getImageURL());
+        }
+
+        ViewPager viewPager = (ViewPager) findViewById(R.id.vpGallery);
+        viewPager.setAdapter(new PABusinessGallery(getApplicationContext(),gallery));
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tlHelperForVP);
+        tabLayout.setupWithViewPager(viewPager, true);
     }
 
     private void initVariables() {

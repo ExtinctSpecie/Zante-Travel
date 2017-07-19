@@ -17,15 +17,23 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 import extinctspecie.com.zantetravel.R;
 import extinctspecie.com.zantetravel.adapters.LVAdapterMainMenu;
+import extinctspecie.com.zantetravel.helpers.Migration;
 import extinctspecie.com.zantetravel.helpers.TypeFaces;
-import extinctspecie.com.zantetravel.models.Business;
 import io.realm.Realm;
-import io.realm.RealmResults;
+import io.realm.RealmConfiguration;
+import io.realm.RealmMigration;
+import io.realm.exceptions.RealmMigrationNeededException;
+import io.realm.internal.Table;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -33,14 +41,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     HashMap<Integer,Integer> menuItems;
     String menuItemSelectedName = "";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Realm.init(this);
 
+        Realm.init(this);
 
         createMenuMap();
         initTypeFaces();

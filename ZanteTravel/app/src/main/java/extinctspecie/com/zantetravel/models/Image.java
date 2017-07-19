@@ -1,25 +1,43 @@
 package extinctspecie.com.zantetravel.models;
 
+import io.realm.RealmModel;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.RealmClass;
+
 /**
  * Created by WorkSpace on 02-Jul-17.
  */
 
-public class Images
-{
+@RealmClass
+public class Image implements RealmModel  {
+
+    @PrimaryKey
+    private int id;
     private int business;
     private int position;
     private String image;
     private String imageURL;
 
-    public Images() {
-        super();
+    public Image() {
+
     }
 
-    public Images(int business, int position, String image, String imageURL) {
+    public Image(int id, int business, int position, String image, String imageURL) {
+        this.id = id;
         this.business = business;
         this.position = position;
         this.image = image;
+
         this.imageURL = imageURL;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getBusiness() {
