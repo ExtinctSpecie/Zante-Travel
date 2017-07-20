@@ -37,6 +37,7 @@ import java.util.List;
 import extinctspecie.com.zantetravel.R;
 import extinctspecie.com.zantetravel.adapters.RVAdapterBusinessesID;
 import extinctspecie.com.zantetravel.data.AllBusinesses;
+import extinctspecie.com.zantetravel.models.Coordinates;
 import extinctspecie.com.zantetravel.helpers.Information;
 import extinctspecie.com.zantetravel.models.Business;
 import extinctspecie.com.zantetravel.services.API;
@@ -516,32 +517,6 @@ public class AllBusinessesActivity extends AppCompatActivity {
         @Override
         public void onProviderDisabled(String provider) {
             //set sorting to default again
-        }
-    }
-    public class Coordinates
-    {
-        private float longitude;
-        private float latitude;
-
-        private Coordinates(float latitude, float longitude) {
-            this.longitude = longitude;
-            this.latitude = latitude;
-        }
-
-        public float getLongitude() {
-            return longitude;
-        }
-
-        public void setLongitude(float longitude) {
-            this.longitude = longitude;
-        }
-
-        public float getLatitude() {
-            return latitude;
-        }
-
-        public void setLatitude(float latitude) {
-            this.latitude = latitude;
         }
     }
 }

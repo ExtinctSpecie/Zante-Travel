@@ -1,10 +1,6 @@
 package extinctspecie.com.zantetravel.models;
 
-import extinctspecie.com.zantetravel.activities.AllBusinessesActivity;
 import io.realm.RealmModel;
-import io.realm.RealmObject;
-import io.realm.annotations.Ignore;
-import io.realm.annotations.Index;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
 
@@ -44,10 +40,8 @@ public class Business implements RealmModel
     private String date;
 
 
+    private Coordinates coordinates;
 
-    @Ignore
-    private AllBusinessesActivity.Coordinates coordinates;
-    @Ignore
     private float distanceToUser = -1f;
 
 
@@ -62,7 +56,7 @@ public class Business implements RealmModel
                     String type, String workingHours, String price, String usefulTip,
                     boolean isPremium, boolean creditCards, boolean summerOnly, boolean isRecommended,
                     String thumbnail, String thumbnailURL, String date,
-                    AllBusinessesActivity.Coordinates coordinates, Float distanceToUser) {
+                    Coordinates coordinates, Float distanceToUser) {
         this.id = id;
         this.position = position;
         this.name = name;
@@ -332,12 +326,13 @@ public class Business implements RealmModel
         this.distanceToUser = distanceToUser;
     }
 
-    public AllBusinessesActivity.Coordinates getCoordinates() {
+    public Coordinates getCoordinates() {
         return coordinates;
     }
 
-    public void setCoordinates(AllBusinessesActivity.Coordinates coordinates) {
+    public void setCoordinates(Coordinates coordinates) {
         this.coordinates = coordinates;
     }
+
 }
 

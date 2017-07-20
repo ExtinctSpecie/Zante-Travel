@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
@@ -20,9 +21,11 @@ import extinctspecie.com.zantetravel.R;
 import extinctspecie.com.zantetravel.adapters.PABusinessGallery;
 import extinctspecie.com.zantetravel.data.AllBusinesses;
 import extinctspecie.com.zantetravel.data.AllImages;
+import extinctspecie.com.zantetravel.models.Coordinates;
 import extinctspecie.com.zantetravel.models.Business;
 import extinctspecie.com.zantetravel.models.Image;
 import extinctspecie.com.zantetravel.services.API;
+import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -78,12 +81,13 @@ public class BusinessActivity extends AppCompatActivity {
     }
 
     private void openBusinessLocation() {
-        if(business.isPremium())
+        float latitude = -1;
+        float longitude = -1;
+        if(!business.isPremium())
         {
-            float latitude = 41.328970f;
-            float longitude = 19.818195f;
             if(business.getCoordinates() != null)
             {
+                Log.v("hello","location is saved");
                 latitude = business.getCoordinates().getLatitude();
                 longitude = business.getCoordinates().getLongitude();
             }
@@ -98,11 +102,11 @@ public class BusinessActivity extends AppCompatActivity {
                     throw new NullPointerException("Coordinates does not have 2 properties ( WRONG COORDINATES CHECK API )");
                 }
 
+                String strLongitude = strCoordinates[1].trim();
+                String strLatitude = strCoordinates[0].trim();
 
-                String strLongitude = strCoordinates[0].trim();
-                String strLaitude = strCoordinates[1].trim();
-                latitude = Float.parseFloat(strLaitude);
-                longitude = Float.parseFloat(strLaitude);
+                longitude = Float.parseFloat(strLongitude);
+                latitude = Float.parseFloat(strLatitude);
             }
 
             String uri = String.format(Locale.ENGLISH, "geo:%f,%f?z=17&q=%f,%f", latitude, longitude, latitude, longitude);
@@ -113,6 +117,13 @@ public class BusinessActivity extends AppCompatActivity {
         {
             (findViewById(R.id.btnBusinessLocation)).setActivated(false);
         }
+        business.setCoordinates(new Coordinates(latitude , longitude));
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+
+        realm.insertOrUpdate(business);
+
+        realm.commitTransaction();
     }
 
     private void sendEmailToBusiness() {

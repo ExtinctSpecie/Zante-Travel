@@ -1,7 +1,7 @@
 package extinctspecie.com.zantetravel.models;
 
+
 import io.realm.RealmModel;
-import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
 
@@ -19,6 +19,9 @@ public class Image implements RealmModel  {
     private String image;
     private String imageURL;
 
+
+    private String imageURI;
+
     public Image() {
 
     }
@@ -28,7 +31,6 @@ public class Image implements RealmModel  {
         this.business = business;
         this.position = position;
         this.image = image;
-
         this.imageURL = imageURL;
     }
 
@@ -66,6 +68,14 @@ public class Image implements RealmModel  {
 
     public String getImageURL() {
         return imageURL;
+    }
+
+    public String getImageURI() {
+        return imageURI;
+    }
+
+    public void setImageURI(String imageURI) {
+        this.imageURI = imageURI;
     }
 
     public void setImageURL(String imageURL) {
