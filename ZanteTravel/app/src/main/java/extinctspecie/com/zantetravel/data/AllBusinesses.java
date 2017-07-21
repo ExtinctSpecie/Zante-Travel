@@ -7,6 +7,8 @@ import java.util.List;
 import extinctspecie.com.zantetravel.models.Business;
 import extinctspecie.com.zantetravel.models.Coordinates;
 import io.realm.Realm;
+import io.realm.RealmObject;
+import io.realm.RealmResults;
 import io.realm.exceptions.RealmException;
 import io.realm.exceptions.RealmPrimaryKeyConstraintException;
 
@@ -17,14 +19,30 @@ import io.realm.exceptions.RealmPrimaryKeyConstraintException;
 public class AllBusinesses {
 
 
-    public static void addBusinessesWithGID(List<Business> businesses)
+    public static void addBusinesses(List<Business> businesses)
     {
         try {
 
+
             Realm realm = Realm.getDefaultInstance();
+
+            RealmResults<Business> realmBusinesses = realm.where(Business.class).findAll();
+
+            for (int i = 0 ; i < realmBusinesses.size() ; i++)
+            {
+                if(realmBusinesses.get(i).getDistanceToUser() > -1 && businesses.get(i).getDistanceToUser() == -1)
+                {
+                    businesses.get(i).setDistanceToUser(realmBusinesses.get(i).getDistanceToUser());
+                }
+            }
+
             realm.beginTransaction();
             realm.copyToRealmOrUpdate(businesses);
             realm.commitTransaction();
+
+
+            realm.close();
+
         }
         catch (RealmPrimaryKeyConstraintException e)
         {

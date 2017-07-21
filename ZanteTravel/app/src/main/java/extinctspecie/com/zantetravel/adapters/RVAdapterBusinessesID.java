@@ -94,7 +94,7 @@ public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusines
                 }
             });
         }
-
+        Log.v("Hello",business.getDistanceToUser() +"");
         if(business.getDistanceToUser() > -1f)
         {
             holder.distanceToUser.setText(String.valueOf(business.getDistanceToUser()).substring(0,4) + " KM");

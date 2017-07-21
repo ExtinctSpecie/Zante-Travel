@@ -138,7 +138,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
                     if (!response.body().isEmpty()) {
 
                         //saves data
-                        AllBusinesses.addBusinessesWithGID(response.body());
+                        AllBusinesses.addBusinesses(response.body());
                         //populates views
                         if(populateViesAfterDownload)
                             populateViews();
@@ -440,7 +440,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
                 business.setDistanceToUser(distanceToUser(userCoordinates ,business.getCoordinates()));
             }
 
-            AllBusinesses.addBusinessesWithGID(params[0]);
+            AllBusinesses.addBusinesses(params[0]);
 
             return null;
         }
