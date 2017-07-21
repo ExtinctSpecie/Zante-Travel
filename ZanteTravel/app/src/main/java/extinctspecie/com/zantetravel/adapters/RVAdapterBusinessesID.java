@@ -140,22 +140,26 @@ public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusines
         //Clear first
         this.businessList.clear();
 
-        if(text.isEmpty()){
+        if(text.isEmpty())
+        {
             this.businessList.addAll(this.businessListCopy);
-        } else{
+        }
+        else
+        {
             text = text.toLowerCase();
 
-            Log.v("querytext",text);
-            Log.v("copylistsize",businessListCopy.size()+"");
-
             for(Business business: businessListCopy){
-                Log.v("querytext",business.getName());
-                if(business.getName().toLowerCase().contains(text) || business.getType().toLowerCase().contains(text) || business.getLocation().toLowerCase().contains(text)){
 
+                if(businessSearch(business , text))
+                {
                     businessList.add(business);
                 }
             }
        }
         notifyDataSetChanged();
+    }
+    private boolean businessSearch(Business business,String textQuery)
+    {
+       return business.getName().toLowerCase().contains(textQuery) || business.getType().toLowerCase().contains(textQuery) || business.getLocation().toLowerCase().contains(textQuery) || business.getLongDescription().toLowerCase().contains(textQuery);
     }
 }

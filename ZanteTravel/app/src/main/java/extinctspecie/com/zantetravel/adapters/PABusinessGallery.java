@@ -2,12 +2,15 @@ package extinctspecie.com.zantetravel.adapters;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -42,12 +45,32 @@ public class PABusinessGallery extends PagerAdapter
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(ViewGroup container,final int position) {
 
         View itemView = LayoutInflater.from(container.getContext()).inflate(R.layout.activity_business_gallery, container, false);
-        ImageView imageView = (ImageView) itemView.findViewById(R.id.ivImage);
+        final ImageView imageView = (ImageView) itemView.findViewById(R.id.ivImage);
 
-        Picasso.with(context).load(items.get(position)).fit().into(imageView);
+        Picasso.with(context).load(items.get(position)).networkPolicy(NetworkPolicy.OFFLINE).fit().into(imageView, new Callback() {
+            @Override
+            public void onSuccess() {
+                Log.v("picassss","offline image loaded");
+            }
+
+            @Override
+            public void onError() {
+                Picasso.with(context).load(items.get(position)).fit().into(imageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
+            }
+        });
 
         container.addView(itemView);
 
