@@ -5,3 +5,5 @@ BusinessActivity work offline and download data on background when connected to 
 
 
 PUT ON INFORMATION LOCATION FREE OR NOT
+
+REMOVE COORDINATES CLASS SINCE MAPCOORDINATES HAS SAME INFORMATION

@@ -25,7 +25,6 @@ import extinctspecie.com.zantetravel.models.Coordinates;
 import extinctspecie.com.zantetravel.models.Business;
 import extinctspecie.com.zantetravel.models.Image;
 import extinctspecie.com.zantetravel.services.API;
-import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -109,6 +108,8 @@ public class BusinessActivity extends AppCompatActivity {
                 latitude = Float.parseFloat(strLatitude);
             }
 
+            AllBusinesses.addCoordinatesOfBusinessID(businessID,new Coordinates(latitude,longitude));
+
             String uri = String.format(Locale.ENGLISH, "geo:%f,%f?z=17&q=%f,%f", latitude, longitude, latitude, longitude);
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
             startActivity(intent);
@@ -117,13 +118,7 @@ public class BusinessActivity extends AppCompatActivity {
         {
             (findViewById(R.id.btnBusinessLocation)).setActivated(false);
         }
-        business.setCoordinates(new Coordinates(latitude , longitude));
-        Realm realm = Realm.getDefaultInstance();
-        realm.beginTransaction();
 
-        realm.insertOrUpdate(business);
-
-        realm.commitTransaction();
     }
 
     private void sendEmailToBusiness() {

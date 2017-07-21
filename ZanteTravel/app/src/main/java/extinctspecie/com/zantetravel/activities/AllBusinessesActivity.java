@@ -41,6 +41,7 @@ import extinctspecie.com.zantetravel.models.Coordinates;
 import extinctspecie.com.zantetravel.helpers.Information;
 import extinctspecie.com.zantetravel.models.Business;
 import extinctspecie.com.zantetravel.services.API;
+import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -250,12 +251,14 @@ public class AllBusinessesActivity extends AppCompatActivity {
 
     private void sortListitems(List<Business> businesses, final String methodName) {
 
+
+        List<Business> myBusinesses  = Realm.getDefaultInstance().copyFromRealm(businesses);
         final Method method;
 
         try {
-            method = businesses.get(0).getClass().getMethod(methodName);
+            method = myBusinesses.get(0).getClass().getMethod(methodName);
 
-            Collections.sort(businesses, new Comparator<Business>() {
+            Collections.sort(myBusinesses, new Comparator<Business>() {
                 public int compare(Business obj1, Business obj2) {
                     // ## Ascending order
                     try {
@@ -288,8 +291,9 @@ public class AllBusinessesActivity extends AppCompatActivity {
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
+        Realm.getDefaultInstance().close();
         if (rvAdapterBusinessesID != null)
-            rvAdapterBusinessesID.changeDataSet(businesses);
+            rvAdapterBusinessesID.changeDataSet(myBusinesses);
     }
 
     public String getMethodName(String strMethodName) {
@@ -429,13 +433,16 @@ public class AllBusinessesActivity extends AppCompatActivity {
                 String strLatitude = strCoordinates[0].trim();
                 String strLongitude = strCoordinates[1].trim();
 
+
+
                 business.setCoordinates(new Coordinates(Float.parseFloat(strLatitude), Float.parseFloat(strLongitude)));
 
                 Coordinates userCoordinates = new Coordinates((float) userLocation.getLatitude() , (float) userLocation.getLongitude());
 
                 business.setDistanceToUser(distanceToUser(userCoordinates ,business.getCoordinates()));
-                Log.v("distance",String.valueOf(business.getDistanceToUser()));
             }
+
+            AllBusinesses.addBusinessesWithGID(params[0]);
 
             return null;
         }

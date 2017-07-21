@@ -1,8 +1,11 @@
 package extinctspecie.com.zantetravel.data;
 
+import android.util.Log;
+
 import java.util.List;
 
 import extinctspecie.com.zantetravel.models.Business;
+import extinctspecie.com.zantetravel.models.Coordinates;
 import io.realm.Realm;
 import io.realm.exceptions.RealmException;
 import io.realm.exceptions.RealmPrimaryKeyConstraintException;
@@ -29,13 +32,29 @@ public class AllBusinesses {
         }
 
     }
+    public static void addBusiness(Business business)
+    {
+        try {
+
+            Realm realm = Realm.getDefaultInstance();
+            realm.beginTransaction();
+            realm.copyToRealmOrUpdate(business);
+            realm.commitTransaction();
+        }
+        catch (RealmPrimaryKeyConstraintException e)
+        {
+            e.printStackTrace();
+        }
+    }
     public static List<Business> getBusinessesWithGID(int groupID)
     {
         Realm realm = Realm.getDefaultInstance();
 
         try
         {
-            return realm.where(Business.class).equalTo("groupID",groupID).findAll();
+            List<Business> businesses = realm.copyFromRealm(realm.where(Business.class).equalTo("groupID",groupID).findAll());
+            realm.close();
+            return businesses;
         }
         catch (RealmException e)
         {
@@ -48,7 +67,10 @@ public class AllBusinesses {
         Realm realm = Realm.getDefaultInstance();
         try
         {
-            return realm.where(Business.class).equalTo("id",ID).findFirst();
+            Business business = realm.copyFromRealm(realm.where(Business.class).equalTo("id",ID).findFirst());
+            realm.close();
+            return business;
+
         }
         catch (RealmException e)
         {
@@ -56,4 +78,24 @@ public class AllBusinesses {
         }
         return null;
     }
+    public static void addCoordinatesOfBusinessID(int businessID , Coordinates coordinates)
+    {
+
+        Realm realm = Realm.getDefaultInstance();
+
+        Business myBusiness = realm.where(Business.class).equalTo("id",businessID).findFirst();
+
+
+
+        realm.beginTransaction();
+
+        Coordinates myCoordinates1 = realm.copyToRealm(coordinates);
+        myBusiness.setCoordinates(myCoordinates1);
+        realm.copyToRealmOrUpdate(myBusiness);
+
+        realm.commitTransaction();
+
+        realm.close();
+    }
+
 }

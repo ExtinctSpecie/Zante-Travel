@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -17,6 +19,7 @@ import java.util.List;
 import extinctspecie.com.zantetravel.R;
 import extinctspecie.com.zantetravel.helpers.Information;
 import extinctspecie.com.zantetravel.models.Business;
+import io.realm.Realm;
 
 /**
  * Created by WorkSpace on 06-Jul-17.
@@ -24,15 +27,17 @@ import extinctspecie.com.zantetravel.models.Business;
 
 public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusinessesID.MyViewHolder>{
 
-    String typeHelper;
     private List<Business> businessList;
     private List<Business> businessListCopy;
     Context context;
     View.OnClickListener mClickListener;
 
-    public RVAdapterBusinessesID(List<Business> businessList , Context context ) {
-        this.businessList = businessList;
-        this.businessListCopy = new ArrayList<>(businessList);
+    public RVAdapterBusinessesID(List<Business> businesses , Context context ) {
+
+        this.businessList = businesses;
+
+        this.businessListCopy = new ArrayList<>(businesses);
+
         this.context = context;
     }
 
@@ -55,9 +60,9 @@ public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusines
         mClickListener = callback;
     }
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
 
-        Business business = businessList.get(position);
+        final Business business = businessList.get(position);
         holder.name.setText(business.getName());
         holder.type.setText(business.getType());
         holder.location.setText(business.getLocation());
@@ -65,7 +70,27 @@ public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusines
 
         if(business.getThumbnailURL() != null && !business.getThumbnailURL().isEmpty())
         {
-            Picasso.with(context).load(business.getThumbnailURL()).fit().into(holder.thumbnail);
+            Picasso.with(context).load(business.getThumbnailURL()).networkPolicy(NetworkPolicy.OFFLINE).fit().into(holder.thumbnail, new Callback() {
+                @Override
+                public void onSuccess() {
+                    Log.v("Picasso","Offline thumbnails loaded");
+                }
+
+                @Override
+                public void onError() {
+                    Picasso.with(context).load(business.getThumbnail()).fit().into(holder.thumbnail, new Callback() {
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onError() {
+                            Log.v("Picasso","Could not fetch image");
+                        }
+                    });
+                }
+            });
         }
 
         if(business.getDistanceToUser() > -1f)
@@ -86,7 +111,7 @@ public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusines
     }
 
     public void resetData() {
-        businessList = businessListCopy;
+        businessList = new ArrayList<>(businessListCopy);
         notifyDataSetChanged();
     }
 
@@ -113,19 +138,24 @@ public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusines
     }
     public void filter(String text) {
         //Clear first
-        businessList.clear();
+        this.businessList.clear();
 
         if(text.isEmpty()){
-            businessList.addAll(businessListCopy);
+            this.businessList.addAll(this.businessListCopy);
         } else{
             text = text.toLowerCase();
-            if(businessListCopy.isEmpty()) ;
+
+            Log.v("querytext",text);
+            Log.v("copylistsize",businessListCopy.size()+"");
+
             for(Business business: businessListCopy){
+                Log.v("querytext",business.getName());
                 if(business.getName().toLowerCase().contains(text) || business.getType().toLowerCase().contains(text) || business.getLocation().toLowerCase().contains(text)){
+
                     businessList.add(business);
                 }
             }
-        }
+       }
         notifyDataSetChanged();
     }
 }

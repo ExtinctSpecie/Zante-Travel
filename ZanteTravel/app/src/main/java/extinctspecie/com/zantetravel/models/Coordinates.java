@@ -1,5 +1,6 @@
 package extinctspecie.com.zantetravel.models;
 
+import io.realm.Realm;
 import io.realm.RealmModel;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
@@ -8,11 +9,11 @@ import io.realm.annotations.RealmClass;
  * Created by WorkSpace on 20-Jul-17.
  */
 @RealmClass
-public class Coordinates implements RealmModel
+public class Coordinates  implements RealmModel
 {
-    @PrimaryKey
+
     private float longitude;
-    @PrimaryKey
+
     private float latitude;
 
     public Coordinates()
@@ -20,8 +21,14 @@ public class Coordinates implements RealmModel
 
     }
     public Coordinates(float latitude, float longitude) {
+
         this.longitude = longitude;
         this.latitude = latitude;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(latitude + " , " + String.valueOf(longitude));
     }
 
     public float getLongitude() {
