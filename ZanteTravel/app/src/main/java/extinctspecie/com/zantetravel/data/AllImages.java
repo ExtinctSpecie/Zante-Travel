@@ -1,5 +1,6 @@
 package extinctspecie.com.zantetravel.data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import extinctspecie.com.zantetravel.models.Business;
@@ -27,6 +28,8 @@ public class AllImages
             //realm.copyToRealmOrUpdate(images);
 
             realm.commitTransaction();
+
+            realm.close();
         }
         catch (RealmPrimaryKeyConstraintException e)
         {
@@ -39,7 +42,9 @@ public class AllImages
 
         try
         {
-            return realm.where(Image.class).equalTo("business",businessID).findAll();
+            List<Image> images = new ArrayList<>(realm.copyFromRealm(realm.where(Image.class).equalTo("business",businessID).findAll()));
+            realm.close();
+            return images;
         }
         catch (RealmException e)
         {
@@ -52,7 +57,11 @@ public class AllImages
         Realm realm = Realm.getDefaultInstance();
         try
         {
-            return realm.where(Image.class).equalTo("id",ID).findFirst();
+            Image image = realm.copyFromRealm(realm.where(Image.class).equalTo("id",ID).findFirst());
+
+            realm.close();
+
+            return image;
         }
         catch (RealmException e)
         {

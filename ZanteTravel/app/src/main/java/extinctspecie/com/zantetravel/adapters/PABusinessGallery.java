@@ -24,6 +24,7 @@ import extinctspecie.com.zantetravel.R;
 public class PABusinessGallery extends PagerAdapter
 {
 
+    private String TAG = this.getClass().getSimpleName();
     private List<String> items;
     Context context;
 
@@ -66,7 +67,7 @@ public class PABusinessGallery extends PagerAdapter
 
                     @Override
                     public void onError() {
-
+                        Log.v(TAG,"Picasso could not fetch image");
                     }
                 });
             }

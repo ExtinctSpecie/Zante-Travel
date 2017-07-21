@@ -21,6 +21,7 @@ import extinctspecie.com.zantetravel.R;
 import extinctspecie.com.zantetravel.adapters.PABusinessGallery;
 import extinctspecie.com.zantetravel.data.AllBusinesses;
 import extinctspecie.com.zantetravel.data.AllImages;
+import extinctspecie.com.zantetravel.helpers.Information;
 import extinctspecie.com.zantetravel.models.Coordinates;
 import extinctspecie.com.zantetravel.models.Business;
 import extinctspecie.com.zantetravel.models.Image;
@@ -33,6 +34,7 @@ public class BusinessActivity extends AppCompatActivity {
 
     private int businessID;
     private Business business ;
+    private String TAG = this.getClass().getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +50,29 @@ public class BusinessActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(business.getName());
 
         populateViewsWithData();
-        getGalleryFromAPI();
+
+        initGallery();
+
         initButtons();
+    }
+
+    private void initGallery() {
+
+        if(AllImages.getImagesOfBusinessID(businessID) != null && !AllImages.getImagesOfBusinessID(businessID).isEmpty())
+        {
+            if(Information.isInternetAvailable(this))
+            {
+                populateViewPagerWithImages();
+                Log.v(TAG,"getting images and saving them in abckground");
+                getGalleryFromAPI(false);
+            }
+        }
+        else
+        {
+            Log.v(TAG,"getting images and updating views");
+            if(Information.isInternetAvailable(this))
+                getGalleryFromAPI(true);
+        }
     }
 
     private void initButtons() {
@@ -86,7 +109,6 @@ public class BusinessActivity extends AppCompatActivity {
         {
             if(business.getCoordinates() != null)
             {
-                Log.v("hello","location is saved");
                 latitude = business.getCoordinates().getLatitude();
                 longitude = business.getCoordinates().getLongitude();
             }
@@ -107,8 +129,6 @@ public class BusinessActivity extends AppCompatActivity {
                 longitude = Float.parseFloat(strLongitude);
                 latitude = Float.parseFloat(strLatitude);
             }
-
-            AllBusinesses.addCoordinatesOfBusinessID(businessID,new Coordinates(latitude,longitude));
 
             String uri = String.format(Locale.ENGLISH, "geo:%f,%f?z=17&q=%f,%f", latitude, longitude, latitude, longitude);
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
@@ -164,7 +184,7 @@ public class BusinessActivity extends AppCompatActivity {
 
     }
 
-    private void getGalleryFromAPI() {
+    private void getGalleryFromAPI(final boolean populateViewsAfterDownload) {
 
         final ProgressBar progressBar = (ProgressBar) findViewById(R.id.pbBusinessGallery);
 
@@ -177,7 +197,8 @@ public class BusinessActivity extends AppCompatActivity {
                 {
                     AllImages.addImages(response.body());
 
-                    populateViewPagerWithImages();
+                    if(populateViewsAfterDownload)
+                        populateViewPagerWithImages();
 
                 }
                 progressBar.setVisibility(View.GONE);

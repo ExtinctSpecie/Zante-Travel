@@ -70,6 +70,8 @@ public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusines
 
         if(business.getThumbnailURL() != null && !business.getThumbnailURL().isEmpty())
         {
+
+
             Picasso.with(context).load(business.getThumbnailURL()).networkPolicy(NetworkPolicy.OFFLINE).fit().into(holder.thumbnail, new Callback() {
                 @Override
                 public void onSuccess() {
@@ -78,7 +80,7 @@ public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusines
 
                 @Override
                 public void onError() {
-                    Picasso.with(context).load(business.getThumbnail()).fit().into(holder.thumbnail, new Callback() {
+                    Picasso.with(context).load(business.getThumbnailURL()).fit().into(holder.thumbnail, new Callback() {
                         @Override
                         public void onSuccess() {
 

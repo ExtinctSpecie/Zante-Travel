@@ -8,8 +8,8 @@ import io.realm.annotations.RealmClass;
 /**
  * Created by WorkSpace on 20-Jul-17.
  */
-@RealmClass
-public class Coordinates  implements RealmModel
+
+public class Coordinates
 {
 
     private float longitude;

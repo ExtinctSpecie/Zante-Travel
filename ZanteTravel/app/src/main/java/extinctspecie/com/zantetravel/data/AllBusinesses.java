@@ -78,24 +78,5 @@ public class AllBusinesses {
         }
         return null;
     }
-    public static void addCoordinatesOfBusinessID(int businessID , Coordinates coordinates)
-    {
-
-        Realm realm = Realm.getDefaultInstance();
-
-        Business myBusiness = realm.where(Business.class).equalTo("id",businessID).findFirst();
-
-
-
-        realm.beginTransaction();
-
-        Coordinates myCoordinates1 = realm.copyToRealm(coordinates);
-        myBusiness.setCoordinates(myCoordinates1);
-        realm.copyToRealmOrUpdate(myBusiness);
-
-        realm.commitTransaction();
-
-        realm.close();
-    }
 
 }

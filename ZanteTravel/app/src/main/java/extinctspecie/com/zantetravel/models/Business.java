@@ -1,6 +1,7 @@
 package extinctspecie.com.zantetravel.models;
 
 import io.realm.RealmModel;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
 
@@ -40,6 +41,7 @@ public class Business implements RealmModel
     private String date;
 
 
+    @Ignore
     private Coordinates coordinates;
 
     private float distanceToUser = -1f;

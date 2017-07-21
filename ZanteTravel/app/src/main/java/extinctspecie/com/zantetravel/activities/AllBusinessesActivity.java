@@ -251,14 +251,12 @@ public class AllBusinessesActivity extends AppCompatActivity {
 
     private void sortListitems(List<Business> businesses, final String methodName) {
 
-
-        List<Business> myBusinesses  = Realm.getDefaultInstance().copyFromRealm(businesses);
         final Method method;
 
         try {
-            method = myBusinesses.get(0).getClass().getMethod(methodName);
+            method = businesses.get(0).getClass().getMethod(methodName);
 
-            Collections.sort(myBusinesses, new Comparator<Business>() {
+            Collections.sort(businesses, new Comparator<Business>() {
                 public int compare(Business obj1, Business obj2) {
                     // ## Ascending order
                     try {
@@ -293,7 +291,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
         }
         Realm.getDefaultInstance().close();
         if (rvAdapterBusinessesID != null)
-            rvAdapterBusinessesID.changeDataSet(myBusinesses);
+            rvAdapterBusinessesID.changeDataSet(businesses);
     }
 
     public String getMethodName(String strMethodName) {
@@ -481,21 +479,21 @@ public class AllBusinessesActivity extends AppCompatActivity {
 
             int hasLocationPermission = checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION);
 
-            if (hasLocationPermission != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{
-                        Manifest.permission.ACCESS_FINE_LOCATION
-
-                }, ACCESS_LOCATION_PERMISSION);
+            if (hasLocationPermission != PackageManager.PERMISSION_GRANTED)
+            {
+                requestPermissions(new String[]{ Manifest.permission.ACCESS_FINE_LOCATION ,  Manifest.permission.ACCESS_COARSE_LOCATION}, ACCESS_LOCATION_PERMISSION);
                 return;
             }
 
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,100,50, this);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER ,100,50,this);
 
             startProgressDialog("Getting your location..." , false);
 
             if (!(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)))
             {
+
                 dialog = new AlertDialog.Builder(AllBusinessesActivity.this);
                 dialog.setCancelable(false);
                 showDialogToProvideGPS();
