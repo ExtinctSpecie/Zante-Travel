@@ -14,9 +14,11 @@ import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import extinctspecie.com.zantetravel.R;
+import extinctspecie.com.zantetravel.data.AllBusinesses;
 import extinctspecie.com.zantetravel.helpers.Information;
 import extinctspecie.com.zantetravel.models.Business;
 import io.realm.Realm;
@@ -27,6 +29,7 @@ import io.realm.Realm;
 
 public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusinessesID.MyViewHolder>{
 
+    private int groupID;
     private List<Business> businessList;
     private List<Business> businessListCopy;
     Context context;
@@ -34,11 +37,17 @@ public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusines
 
     public RVAdapterBusinessesID(List<Business> businesses , Context context ) {
 
-        this.businessList = businesses;
+        if(!businesses.isEmpty())
+        {
+            this.businessList = businesses;
 
-        this.businessListCopy = new ArrayList<>(businesses);
+            this.businessListCopy = new ArrayList<>(businesses);
 
-        this.context = context;
+            this.context = context;
+
+            this.groupID = businesses.get(0).getGroupID();
+        }
+
     }
 
     @Override
@@ -94,7 +103,6 @@ public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusines
                 }
             });
         }
-        Log.v("Hello",business.getDistanceToUser() +"");
         if(business.getDistanceToUser() > -1f)
         {
             holder.distanceToUser.setText(String.valueOf(business.getDistanceToUser()).substring(0,4) + " KM");
@@ -113,7 +121,9 @@ public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusines
     }
 
     public void resetData() {
-        businessList = new ArrayList<>(businessListCopy);
+
+        businessList.clear();
+        businessList.addAll(AllBusinesses.getBusinessesWithGID(groupID));
         notifyDataSetChanged();
     }
 
@@ -162,6 +172,10 @@ public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusines
     }
     private boolean businessSearch(Business business,String textQuery)
     {
-       return business.getName().toLowerCase().contains(textQuery) || business.getType().toLowerCase().contains(textQuery) || business.getLocation().toLowerCase().contains(textQuery) || business.getLongDescription().toLowerCase().contains(textQuery);
+       return business.getName().toLowerCase().contains(textQuery)
+               || business.getType().toLowerCase().contains(textQuery)
+               || business.getLocation().toLowerCase().contains(textQuery)
+               || business.getUsefulTip().toLowerCase().contains(textQuery)
+               || business.getLongDescription().toLowerCase().contains(textQuery);
     }
 }
