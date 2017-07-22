@@ -26,7 +26,7 @@ public class AllBusinesses {
 
             Realm realm = Realm.getDefaultInstance();
 
-            RealmResults<Business> realmBusinesses = realm.where(Business.class).findAll();
+            RealmResults<Business> realmBusinesses = realm.where(Business.class).equalTo("id",businesses.get(0).getId()).findAll();
 
             for (int i = 0 ; i < realmBusinesses.size() ; i++)
             {

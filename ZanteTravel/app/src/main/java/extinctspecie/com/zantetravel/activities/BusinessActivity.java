@@ -224,8 +224,12 @@ public class BusinessActivity extends AppCompatActivity {
         ViewPager viewPager = (ViewPager) findViewById(R.id.vpGallery);
         viewPager.setAdapter(new PABusinessGallery(getApplicationContext(),gallery));
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tlHelperForVP);
-        tabLayout.setupWithViewPager(viewPager, true);
+        if(images.size() > 1)
+        {
+            TabLayout tabLayout = (TabLayout) findViewById(R.id.tlHelperForVP);
+            tabLayout.setupWithViewPager(viewPager, true);
+        }
+
     }
 
     private void initVariables() {

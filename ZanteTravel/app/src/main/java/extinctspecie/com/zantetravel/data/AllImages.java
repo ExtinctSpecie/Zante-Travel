@@ -7,6 +7,7 @@ import extinctspecie.com.zantetravel.models.Business;
 import extinctspecie.com.zantetravel.models.Image;
 import io.realm.Realm;
 import io.realm.RealmModel;
+import io.realm.RealmResults;
 import io.realm.exceptions.RealmException;
 import io.realm.exceptions.RealmPrimaryKeyConstraintException;
 
@@ -22,7 +23,14 @@ public class AllImages
 
             Realm realm = Realm.getDefaultInstance();
 
+            int bId = images.get(0).getBusiness();
+            RealmResults<Image> dbImages = realm.where(Image.class).equalTo("business",bId).findAll();
+
+
             realm.beginTransaction();
+
+            if(images.size() != dbImages.size())
+                dbImages.deleteAllFromRealm();
 
             realm.insertOrUpdate(images);
             //realm.copyToRealmOrUpdate(images);

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="extinctspecie.com.zantetravel.activities.BusinessActivity">
+    tools:context="extinctspecie.com.zantetravel.activities.BusinessActivity"
+    android:background="@drawable/drawer_header_background">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -60,9 +61,8 @@
                 android:id="@+id/btnBusinessCall"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:textAllCaps="false"
-                android:text="Call"
-                android:background="@color/BlueViolet" />
+                android:background="@drawable/phone_icon"
+                android:textAllCaps="false" />
 
             <Space
                 android:layout_width="30dp"
@@ -74,8 +74,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:textAllCaps="false"
-                android:text="Mail"
-                android:background="@color/BlueViolet" />
+                android:background="@drawable/mail_icon" />
 
             <Space
                 android:layout_width="30dp"
@@ -87,8 +86,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:textAllCaps="false"
-                android:text="Web"
-                android:background="@color/BlueViolet"/>
+                android:background="@drawable/web_icon"/>
 
             <Space
                 android:layout_width="30dp"
@@ -100,8 +98,7 @@
                 android:id="@+id/btnBusinessLocation"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@color/BlueViolet"
-                android:text="Loc."
+                android:background="@drawable/location_pin_icon"
                 android:textAllCaps="false"
 
                 />
