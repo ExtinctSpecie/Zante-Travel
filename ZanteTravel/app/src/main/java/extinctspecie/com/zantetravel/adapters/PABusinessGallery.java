@@ -1,6 +1,8 @@
 package extinctspecie.com.zantetravel.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import extinctspecie.com.zantetravel.R;
+import extinctspecie.com.zantetravel.activities.FullScreenImagesActivity;
 
 /**
  * Created by WorkSpace on 09-Jul-17.
@@ -27,6 +30,7 @@ public class PABusinessGallery extends PagerAdapter
     private String TAG = this.getClass().getSimpleName();
     private List<String> items;
     Context context;
+    private View.OnClickListener mClickListener;
 
     public PABusinessGallery(Context context,List<String> items) {
         this.context = context;
@@ -73,13 +77,22 @@ public class PABusinessGallery extends PagerAdapter
             }
         });
 
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mClickListener.onClick(v);
+            }
+        });
+
         container.addView(itemView);
 
         return itemView;
 
         //return super.instantiateItem(container, position);
     }
-
+    public void setClickListener(View.OnClickListener callback) {
+        mClickListener = callback;
+    }
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((LinearLayout) object);

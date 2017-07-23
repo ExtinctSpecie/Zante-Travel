@@ -16,7 +16,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:replace="android:icon">
-
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,18 +25,22 @@
         </activity>
         <activity
             android:name=".activities.BusinessActivity"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.DIAL" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name=".activities.AllBusinessesActivity"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustNothing"/>
-        <activity android:name=".activities.AboutTownActivity"
-            android:theme="@style/AppTheme"/>
+            android:windowSoftInputMode="adjustNothing" />
+        <activity
+            android:name=".activities.AboutTownActivity"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".activities.FullScreenImagesActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
