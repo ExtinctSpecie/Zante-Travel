@@ -91,8 +91,6 @@ public class LVAdapterMainMenu extends BaseAdapter {
             viewHolder.tvMenuItem = (TextView) convertView.findViewById(R.id.tvMenuItem);
             viewHolder.ivMenuItem = (ImageView) convertView.findViewById(R.id.ivMenuItem);
 
-            viewHolder.tvMenuItem.setTypeface(TypeFaces.getPunkBoy());
-
             convertView.setTag(viewHolder);
         }
         else

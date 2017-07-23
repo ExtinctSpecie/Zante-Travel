@@ -267,7 +267,7 @@
             android:layout_below="@+id/tvContactEmail"
             android:gravity="center"
             android:paddingTop="10dp"
-            android:text="Website : www.watafaka.acom"
+            android:text="Website : www.website.com"
             android:textColor="@color/Black" />
 
         <TextView

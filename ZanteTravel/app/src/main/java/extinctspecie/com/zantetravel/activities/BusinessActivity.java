@@ -168,9 +168,45 @@ public class BusinessActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void hideViewsNotNeeded()
+    {
+        if(!isBusiness(business))
+        {
+
+            ( findViewById(R.id.tvContactHelper)).setVisibility(View.GONE);
+            ( findViewById(R.id.tvAddress)).setVisibility(View.GONE);
+            ( findViewById(R.id.tvAddressHelper)).setVisibility(View.GONE);
+            ( findViewById(R.id.tvWorkingHours)).setVisibility(View.GONE);
+            ( findViewById(R.id.tvContactEmail)).setVisibility(View.GONE);
+            ( findViewById(R.id.tvContactWebsite)).setVisibility(View.GONE);
+            ( findViewById(R.id.tvContactPhoneNumber)).setVisibility(View.GONE);
+            ( findViewById(R.id.tvExtraInfoHelper)).setVisibility(View.GONE);
+            ( findViewById(R.id.cbSummerOnly)).setVisibility(View.GONE);
+            ( findViewById(R.id.cbCreditCard)).setVisibility(View.GONE);
+            ((TextView) findViewById(R.id.tvUsefulTipHelper)).setText("Find More");
+            ( findViewById(R.id.tvType)).setVisibility(View.GONE);
+            ( findViewById(R.id.tvTypeHelper)).setVisibility(View.GONE);
+            ( findViewById(R.id.tvWorkingHoursHelper)).setVisibility(View.GONE);
+            ( findViewById(R.id.tvCreditCardsHelper)).setVisibility(View.GONE);
+            ( findViewById(R.id.tvSummerOnlyHelper)).setVisibility(View.GONE);
+
+            ((TextView) findViewById(R.id.tvUsefulTip)).setTextColor(getResources().getColor(R.color.DarkBlue));
+            ( findViewById(R.id.tvUsefulTip)).setOnClickListener(findMore);
+        }
+    }
+    private boolean isBusiness(Business b)
+    {
+        return !(b.getEmail().isEmpty()
+                && b.getPhoneNumber().isEmpty()
+                && b.getWebsite().isEmpty()
+                && b.getWorkingHours().isEmpty());
+    }
+
     private void populateViewsWithData() {
         if(business != null)
         {
+            hideViewsNotNeeded();
+            ((TextView) findViewById(R.id.tvUsefulTip)).setText(business.getUsefulTip());
             ((TextView) findViewById(R.id.tvDescription)).setText(business.getLongDescription());
             ((TextView) findViewById(R.id.tvLocation)).setText(business.getLocation());
             ((TextView) findViewById(R.id.tvAddress)).setText(business.getAddress());
@@ -183,7 +219,17 @@ public class BusinessActivity extends AppCompatActivity {
         }
 
     }
-
+    View.OnClickListener findMore = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getBaseContext(), AllBusinessesActivity.class);
+            //ID 9 is for Other on menu
+            intent.putExtra("groupID",9);
+            intent.putExtra("groupName","Other");
+            startActivity(intent);
+        }
+    };
     private void getGalleryFromAPI(final boolean populateViewsAfterDownload) {
 
         final ProgressBar progressBar = (ProgressBar) findViewById(R.id.pbBusinessGallery);
