@@ -11,30 +11,19 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 import extinctspecie.com.zantetravel.R;
 import extinctspecie.com.zantetravel.adapters.LVAdapterMainMenu;
-import extinctspecie.com.zantetravel.helpers.Migration;
 import extinctspecie.com.zantetravel.helpers.TypeFaces;
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
-import io.realm.RealmMigration;
-import io.realm.exceptions.RealmMigrationNeededException;
-import io.realm.internal.Table;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -157,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //that means we need to start another activity ( for info )
         //static data for info activity is fine since it won't get any update
         //#Slide Animation transition
-        Bundle bundleAnimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.animator.some_xml_1,R.animator.some_xml_2).toBundle();
+        Bundle bundleAnimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.animator.trans_right_in,R.animator.trans_left_out).toBundle();
         if(menuID > 0)
         {
             Intent intent = new Intent(getBaseContext(), AllBusinessesActivity.class);

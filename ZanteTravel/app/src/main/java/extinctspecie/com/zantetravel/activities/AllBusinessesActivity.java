@@ -72,8 +72,6 @@ public class AllBusinessesActivity extends AppCompatActivity {
         initProgressDialog();
         initSpinner();
 
-
-
     }
 
     private void initProgressDialog() {
@@ -85,7 +83,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
     }
     private void initData()
     {
-        bundleAnimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.animator.some_xml_1,R.animator.some_xml_2).toBundle();
+        bundleAnimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.animator.trans_right_in,R.animator.trans_left_out).toBundle();
 
         rvLoadingData = (LinearLayout) findViewById(R.id.rvDataLoadingProgress);
         rvLoadingData.setVisibility(View.VISIBLE);
@@ -97,11 +95,21 @@ public class AllBusinessesActivity extends AppCompatActivity {
             {
                 getBusinessesFromAPI(false);
             }
+            else
+            {
+                rvLoadingData.setVisibility(View.GONE);
+            }
         }
         else
         {
             if(Information.isInternetAvailable(this))
+            {
                 getBusinessesFromAPI(true);
+            }
+            else
+            {
+                rvLoadingData.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -127,7 +135,6 @@ public class AllBusinessesActivity extends AppCompatActivity {
             }
         });
         recyclerView.setAdapter(rvAdapterBusinessesID);
-
         rvLoadingData.setVisibility(View.GONE);
     }
 
@@ -150,7 +157,6 @@ public class AllBusinessesActivity extends AppCompatActivity {
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
@@ -172,6 +178,13 @@ public class AllBusinessesActivity extends AppCompatActivity {
 
         searchView.setOnQueryTextListener(onQueryTextListener);
 
+        if(getIntent().getStringExtra("searchFor") != null)
+        {
+            searchView.setQuery(getIntent().getStringExtra("searchFor") , false);
+            searchView.setFocusable(true);
+            searchView.setIconified(false);
+            searchView.requestFocus();
+        }
         return super.onCreateOptionsMenu(menu);
     }
 

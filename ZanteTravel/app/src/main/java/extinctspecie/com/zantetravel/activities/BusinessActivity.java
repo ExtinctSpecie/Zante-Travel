@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ProgressBar;
@@ -24,7 +23,6 @@ import extinctspecie.com.zantetravel.adapters.PABusinessGallery;
 import extinctspecie.com.zantetravel.data.AllBusinesses;
 import extinctspecie.com.zantetravel.data.AllImages;
 import extinctspecie.com.zantetravel.helpers.Information;
-import extinctspecie.com.zantetravel.models.Coordinates;
 import extinctspecie.com.zantetravel.models.Business;
 import extinctspecie.com.zantetravel.models.Image;
 import extinctspecie.com.zantetravel.services.API;
@@ -38,6 +36,7 @@ public class BusinessActivity extends AppCompatActivity {
     private Business business ;
     private String TAG = this.getClass().getSimpleName();
     Bundle bundleAnimation;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,11 +67,21 @@ public class BusinessActivity extends AppCompatActivity {
             {
                 getGalleryFromAPI(false);
             }
+            else
+            {
+                stopProgressBar();
+            }
         }
         else
         {
             if(Information.isInternetAvailable(this))
+            {
                 getGalleryFromAPI(true);
+            }
+            else
+            {
+                stopProgressBar();
+            }
         }
     }
 
@@ -228,6 +237,7 @@ public class BusinessActivity extends AppCompatActivity {
             //ID 9 is for Other on menu
             intent.putExtra("groupID",9);
             intent.putExtra("groupName","Other");
+            intent.putExtra("searchFor",getSupportActionBar().getTitle());
             startActivity(intent,bundleAnimation);
         }
     };
@@ -247,11 +257,15 @@ public class BusinessActivity extends AppCompatActivity {
                         populateViewPagerWithImages();
 
                 }
+                else
+                {
+                    stopProgressBar();
+                }
             }
 
             @Override
             public void onFailure(Call<List<Image>> call, Throwable t) {
-                (findViewById(R.id.pbBusinessGallery)).setVisibility(View.GONE);
+                stopProgressBar();
             }
         });
     }
@@ -285,15 +299,31 @@ public class BusinessActivity extends AppCompatActivity {
             TabLayout tabLayout = (TabLayout) findViewById(R.id.tlHelperForVP);
             tabLayout.setupWithViewPager(viewPager, true);
         }
-        (findViewById(R.id.pbBusinessGallery)).setVisibility(View.GONE);
 
+        stopProgressBar();
     }
 
     private void initVariables() {
 
-        bundleAnimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.animator.some_xml_1,R.animator.some_xml_2).toBundle();
+        bundleAnimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.animator.trans_right_in,R.animator.trans_left_out).toBundle();
+        progressBar = (ProgressBar)findViewById(R.id.pbBusinessGallery);
         business = AllBusinesses.getBusinessWithID(getIntent().getIntExtra("businessID",0));
         businessID = business.getId();
+    }
+
+    private void stopProgressBar()
+    {
+        if(progressBar != null)
+        {
+            progressBar.setVisibility(View.GONE);
+        }
+    }
+    private void startProgressBar()
+    {
+        if(progressBar != null)
+        {
+            progressBar.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
