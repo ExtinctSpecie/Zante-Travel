@@ -55,27 +55,31 @@ public class PABusinessGallery extends PagerAdapter
         View itemView = LayoutInflater.from(container.getContext()).inflate(R.layout.activity_business_gallery, container, false);
         final ImageView imageView = (ImageView) itemView.findViewById(R.id.ivImage);
 
-        Picasso.with(context).load(items.get(position)).networkPolicy(NetworkPolicy.OFFLINE).fit().into(imageView, new Callback() {
-            @Override
-            public void onSuccess() {
-                Log.v("picassss","offline image loaded");
-            }
+        if(items.get(position) != null && !items.get(position).isEmpty())
+        {
 
-            @Override
-            public void onError() {
-                Picasso.with(context).load(items.get(position)).fit().into(imageView, new Callback() {
-                    @Override
-                    public void onSuccess() {
+            Picasso.with(context).load(items.get(position)).networkPolicy(NetworkPolicy.OFFLINE).fit().into(imageView, new Callback() {
+                @Override
+                public void onSuccess() {
+                    Log.v("Picasso","Offline Image loaded loaded");
+                }
 
-                    }
+                @Override
+                public void onError() {
+                    Picasso.with(context).load(items.get(position)).fit().into(imageView, new Callback() {
+                        @Override
+                        public void onSuccess() {
 
-                    @Override
-                    public void onError() {
-                        Log.v(TAG,"Picasso could not fetch image");
-                    }
-                });
-            }
-        });
+                        }
+
+                        @Override
+                        public void onError() {
+                            Log.v("Picasso","Could not fetch image for gallery");
+                        }
+                    });
+                }
+            });
+        }
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override

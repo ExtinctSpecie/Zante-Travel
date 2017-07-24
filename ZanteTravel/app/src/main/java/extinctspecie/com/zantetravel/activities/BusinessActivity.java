@@ -1,5 +1,6 @@
 package extinctspecie.com.zantetravel.activities;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
@@ -36,6 +37,7 @@ public class BusinessActivity extends AppCompatActivity {
     private int businessID;
     private Business business ;
     private String TAG = this.getClass().getSimpleName();
+    Bundle bundleAnimation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,16 +63,14 @@ public class BusinessActivity extends AppCompatActivity {
 
         if(AllImages.getImagesOfBusinessID(businessID) != null && !AllImages.getImagesOfBusinessID(businessID).isEmpty())
         {
+            populateViewPagerWithImages();
             if(Information.isInternetAvailable(this))
             {
-                populateViewPagerWithImages();
-                Log.v(TAG,"getting images and saving them in abckground");
                 getGalleryFromAPI(false);
             }
         }
         else
         {
-            Log.v(TAG,"getting images and updating views");
             if(Information.isInternetAvailable(this))
                 getGalleryFromAPI(true);
         }
@@ -133,7 +133,7 @@ public class BusinessActivity extends AppCompatActivity {
 
             String uri = String.format(Locale.ENGLISH, "geo:%f,%f?z=17&q=%f,%f", latitude, longitude, latitude, longitude);
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-            startActivity(intent);
+            startActivity(intent,bundleAnimation);
         }
         else
         {
@@ -151,7 +151,7 @@ public class BusinessActivity extends AppCompatActivity {
         intent.putExtra(Intent.EXTRA_SUBJECT, subject);
         intent.putExtra(Intent.EXTRA_TEXT, message);
         Intent mailer = Intent.createChooser(intent, null);
-        startActivity(mailer);
+        startActivity(mailer,bundleAnimation);
     }
 
     private void openBusinessWebsite() {
@@ -160,13 +160,13 @@ public class BusinessActivity extends AppCompatActivity {
         if (!url.startsWith("http://") && !url.startsWith("https://"))
             url = "http://" + url;
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        startActivity(browserIntent);
+        startActivity(browserIntent,bundleAnimation);
     }
 
     private void phoneCallBusiness() {
         String phoneNumber = ((TextView)findViewById(R.id.tvContactPhoneNumber)).getText().toString();
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber));
-        startActivity(intent);
+        startActivity(intent,bundleAnimation);
     }
 
     private void hideViewsNotNeeded()
@@ -228,12 +228,11 @@ public class BusinessActivity extends AppCompatActivity {
             //ID 9 is for Other on menu
             intent.putExtra("groupID",9);
             intent.putExtra("groupName","Other");
-            startActivity(intent);
+            startActivity(intent,bundleAnimation);
         }
     };
     private void getGalleryFromAPI(final boolean populateViewsAfterDownload) {
 
-        final ProgressBar progressBar = (ProgressBar) findViewById(R.id.pbBusinessGallery);
 
 
         API.Factory.getInstance().getImagesOfBusinessWithID(businessID).enqueue(new Callback<List<Image>>() {
@@ -248,12 +247,11 @@ public class BusinessActivity extends AppCompatActivity {
                         populateViewPagerWithImages();
 
                 }
-                progressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<List<Image>> call, Throwable t) {
-                progressBar.setVisibility(View.GONE);
+                (findViewById(R.id.pbBusinessGallery)).setVisibility(View.GONE);
             }
         });
     }
@@ -270,12 +268,13 @@ public class BusinessActivity extends AppCompatActivity {
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.vpGallery);
         PABusinessGallery paBusinessGallery = new PABusinessGallery(getApplicationContext(),gallery);
+        Log.v("GALLERY",gallery.size() + "");
         paBusinessGallery.setClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent intent = new Intent(getBaseContext(), FullScreenImagesActivity.class);
-                startActivity(intent);
+                startActivity(intent,bundleAnimation);
 
             }
         });
@@ -286,11 +285,13 @@ public class BusinessActivity extends AppCompatActivity {
             TabLayout tabLayout = (TabLayout) findViewById(R.id.tlHelperForVP);
             tabLayout.setupWithViewPager(viewPager, true);
         }
+        (findViewById(R.id.pbBusinessGallery)).setVisibility(View.GONE);
 
     }
 
     private void initVariables() {
 
+        bundleAnimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.animator.some_xml_1,R.animator.some_xml_2).toBundle();
         business = AllBusinesses.getBusinessWithID(getIntent().getIntExtra("businessID",0));
         businessID = business.getId();
     }
@@ -302,6 +303,12 @@ public class BusinessActivity extends AppCompatActivity {
             onBackPressed();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.left_in,R.anim.right_out);
     }
 
     @Override

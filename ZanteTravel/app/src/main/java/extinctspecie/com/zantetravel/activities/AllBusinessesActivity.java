@@ -1,6 +1,7 @@
 package extinctspecie.com.zantetravel.activities;
 
 import android.Manifest;
+import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -54,6 +55,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     LinearLayout rvLoadingData;
     AlertDialog.Builder dialog;
+    Bundle bundleAnimation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +63,6 @@ public class AllBusinessesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_all_businesses);
 
         businessGroupID = getIntent().getIntExtra("groupID", -1);
-
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -84,6 +85,8 @@ public class AllBusinessesActivity extends AppCompatActivity {
     }
     private void initData()
     {
+        bundleAnimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.animator.some_xml_1,R.animator.some_xml_2).toBundle();
+
         rvLoadingData = (LinearLayout) findViewById(R.id.rvDataLoadingProgress);
         rvLoadingData.setVisibility(View.VISIBLE);
 
@@ -120,7 +123,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
                 Business business = rvAdapterBusinessesID.getBusiness(position);
                 Intent intent = new Intent(getBaseContext(), BusinessActivity.class);
                 intent.putExtra("businessID", business.getId());
-                startActivity(intent);
+                startActivity(intent,bundleAnimation);
             }
         });
         recyclerView.setAdapter(rvAdapterBusinessesID);
@@ -143,9 +146,6 @@ public class AllBusinessesActivity extends AppCompatActivity {
                         if(populateViesAfterDownload)
                             populateViews();
                     }
-
-                    rvLoadingData.setVisibility(View.GONE);
-
 
                 } catch (NullPointerException e) {
                     e.printStackTrace();
@@ -195,8 +195,6 @@ public class AllBusinessesActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
         }
-
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -338,7 +336,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
             public void onClick(DialogInterface paramDialogInterface, int paramInt) {
 
                 Intent myIntent = new Intent( Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                AllBusinessesActivity.this.startActivity(myIntent);
+                AllBusinessesActivity.this.startActivity(myIntent,bundleAnimation);
             }
         });
         dialog.setNegativeButton(AllBusinessesActivity.this.getString(R.string.cancel), new DialogInterface.OnClickListener() {
@@ -374,6 +372,22 @@ public class AllBusinessesActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        //Intent intent = new Intent(getBaseContext(), MainActivity.class);
+        //startActivity(intent);
+
+        super.onBackPressed();
+
+        //incoming activity // outgoing activity
+        overridePendingTransition(R.anim.left_in,R.anim.right_out);
+
+
+
+
     }
 
     @Override

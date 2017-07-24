@@ -1,6 +1,7 @@
 package extinctspecie.com.zantetravel.activities;
 
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -155,17 +156,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //if menu = 0
         //that means we need to start another activity ( for info )
         //static data for info activity is fine since it won't get any update
+        //#Slide Animation transition
+        Bundle bundleAnimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.animator.some_xml_1,R.animator.some_xml_2).toBundle();
         if(menuID > 0)
         {
             Intent intent = new Intent(getBaseContext(), AllBusinessesActivity.class);
             intent.putExtra("groupID",menuID);
             intent.putExtra("groupName",menuItemSelectedName);
-            startActivity(intent);
+            startActivity(intent, bundleAnimation);
+
         }
         else
         {
-            startActivity(new Intent(getBaseContext(),AboutTownActivity.class));
+            startActivity(new Intent(getBaseContext(),AboutTownActivity.class) , bundleAnimation);
         }
+        //overridePendingTransition(R.animator.fade_in,R.animator.fade_out);
     }
 
     @Override
