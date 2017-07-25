@@ -1,14 +1,11 @@
 package extinctspecie.com.zantetravel.adapters;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.dmallcott.dismissibleimageview.DismissibleImageView;
@@ -19,7 +16,6 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import extinctspecie.com.zantetravel.R;
-import extinctspecie.com.zantetravel.activities.FullScreenImagesActivity;
 
 /**
  * Created by WorkSpace on 09-Jul-17.

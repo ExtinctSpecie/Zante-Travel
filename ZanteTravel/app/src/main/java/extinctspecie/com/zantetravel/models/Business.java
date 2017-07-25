@@ -1,5 +1,7 @@
 package extinctspecie.com.zantetravel.models;
 
+import android.util.Log;
+
 import io.realm.RealmModel;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
@@ -336,5 +338,9 @@ public class Business implements RealmModel
         this.coordinates = coordinates;
     }
 
+    public void printSelf() {
+        Log.v("BUSINESS",this.getName());
+        Log.v("BUSINESS",this.getLongDescription());
+    }
 }
 

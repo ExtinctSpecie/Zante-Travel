@@ -268,7 +268,9 @@
             android:gravity="center"
             android:paddingTop="10dp"
             android:text="Website : www.website.com"
-            android:textColor="@color/Black" />
+            android:textColor="@color/Black"
+            android:textColorLink="@color/DarkBlue"
+            android:autoLink="web"/>
 
         <TextView
             android:id="@+id/tvExtraInfoHelper"

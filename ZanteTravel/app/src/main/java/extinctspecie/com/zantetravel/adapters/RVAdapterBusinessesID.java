@@ -115,8 +115,10 @@ public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusines
     public int getItemCount() {
         return businessList.size();
     }
+
     public Business getBusiness(int position)
     {
+        Log.v("SIZEEEE",businessList.size()+"");
         return businessList.get(position);
     }
 

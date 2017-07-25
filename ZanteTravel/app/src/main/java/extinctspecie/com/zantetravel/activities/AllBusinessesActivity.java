@@ -126,9 +126,12 @@ public class AllBusinessesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                int position = recyclerView.indexOfChild(v);
+                //int position = recyclerView.indexOfChild(v);
+                int position = recyclerView.getChildLayoutPosition(v);
 
                 Business business = rvAdapterBusinessesID.getBusiness(position);
+                business.printSelf();
+                Log.v("HELLO",position+"");
                 Intent intent = new Intent(getBaseContext(), BusinessActivity.class);
                 intent.putExtra("businessID", business.getId());
                 startActivity(intent,bundleAnimation);
