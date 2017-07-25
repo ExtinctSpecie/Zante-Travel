@@ -1,6 +1,12 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://jitpack.io'
+    }
+}
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
@@ -45,4 +51,11 @@ dependencies {
 
     testCompile 'junit:junit:4.12'
     compile 'org.jetbrains:annotations-java5:15.0'
+
+    ///Opens images to full screen ( problem : when image starts from landscape doesn't fit screen very good )
+    // but if image starts from portrait and then changes to landscape works fine
+    compile 'com.github.dmallcott:DismissibleImageView:1.0.1'
+
+    /// opens images to full screen
+    compile 'com.bogdwellers:pinchtozoom:0.1'
 }

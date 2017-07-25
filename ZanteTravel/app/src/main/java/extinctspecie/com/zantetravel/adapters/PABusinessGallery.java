@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.dmallcott.dismissibleimageview.DismissibleImageView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -53,7 +54,8 @@ public class PABusinessGallery extends PagerAdapter
     public Object instantiateItem(ViewGroup container,final int position) {
 
         View itemView = LayoutInflater.from(container.getContext()).inflate(R.layout.activity_business_gallery, container, false);
-        final ImageView imageView = (ImageView) itemView.findViewById(R.id.ivImage);
+
+        final com.dmallcott.dismissibleimageview.DismissibleImageView imageView = (DismissibleImageView) itemView.findViewById(R.id.ivImage);
 
         if(items.get(position) != null && !items.get(position).isEmpty())
         {
@@ -81,12 +83,12 @@ public class PABusinessGallery extends PagerAdapter
             });
         }
 
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mClickListener.onClick(v);
-            }
-        });
+//        imageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mClickListener.onClick(v);
+//            }
+//        });
 
         container.addView(itemView);
 

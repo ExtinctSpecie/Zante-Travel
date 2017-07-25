@@ -14,8 +14,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.bogdwellers.pinchtozoom.ImageMatrixTouchHandler;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -103,7 +106,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ListView listView = (ListView) findViewById(R.id.lvMainMenu);
         listView.setAdapter(new LVAdapterMainMenu(this));
         listView.setOnItemClickListener(onMainMenuItemClickListener);
-
     }
     ListView.OnItemClickListener onMainMenuItemClickListener = new ListView.OnItemClickListener()
     {

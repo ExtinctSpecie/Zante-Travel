@@ -283,15 +283,15 @@ public class BusinessActivity extends AppCompatActivity {
         ViewPager viewPager = (ViewPager) findViewById(R.id.vpGallery);
         PABusinessGallery paBusinessGallery = new PABusinessGallery(getApplicationContext(),gallery);
         Log.v("GALLERY",gallery.size() + "");
-        paBusinessGallery.setClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(getBaseContext(), FullScreenImagesActivity.class);
-                startActivity(intent,bundleAnimation);
-
-            }
-        });
+//        paBusinessGallery.setClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                //Intent intent = new Intent(getBaseContext(), FullScreenImagesActivity.class);
+//                //startActivity(intent,bundleAnimation);
+//
+//            }
+//        });
         viewPager.setAdapter(paBusinessGallery);
 
         if(images.size() > 1)

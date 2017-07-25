@@ -136,6 +136,9 @@ public class AllBusinessesActivity extends AppCompatActivity {
         });
         recyclerView.setAdapter(rvAdapterBusinessesID);
         rvLoadingData.setVisibility(View.GONE);
+
+        if(getIntent().getStringExtra("searchFor")!=null)
+            onQueryTextListener.onQueryTextChange(getIntent().getStringExtra("searchFor"));
     }
 
     private void getBusinessesFromAPI(final boolean populateViesAfterDownload) {
@@ -180,10 +183,10 @@ public class AllBusinessesActivity extends AppCompatActivity {
 
         if(getIntent().getStringExtra("searchFor") != null)
         {
-            searchView.setQuery(getIntent().getStringExtra("searchFor") , false);
             searchView.setFocusable(true);
             searchView.setIconified(false);
             searchView.requestFocus();
+            searchView.setQuery(getIntent().getStringExtra("searchFor") , false);
         }
         return super.onCreateOptionsMenu(menu);
     }
