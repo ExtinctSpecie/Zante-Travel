@@ -59,8 +59,8 @@
 
             <Button
                 android:id="@+id/btnBusinessCall"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:background="@drawable/phone_icon"
                 android:textAllCaps="false" />
 
@@ -71,8 +71,8 @@
 
             <Button
                 android:id="@+id/btnBusinessEmail"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:textAllCaps="false"
                 android:background="@drawable/mail_icon" />
 
@@ -83,8 +83,8 @@
 
             <Button
                 android:id="@+id/btnBusinessWebsite"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:textAllCaps="false"
                 android:background="@drawable/web_icon"/>
 
@@ -96,8 +96,8 @@
 
             <Button
                 android:id="@+id/btnBusinessLocation"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:background="@drawable/location_pin_icon"
                 android:textAllCaps="false"
 
@@ -117,7 +117,8 @@
             android:layout_below="@id/llButtonRow"
             android:gravity="center"
             android:paddingTop="10dp"
-            android:text="Description" />
+            android:text="Description"
+            android:textSize="10sp"/>
 
         <TextView
             android:id="@+id/tvDescription"
@@ -130,7 +131,8 @@
             android:paddingRight="10dp"
             android:paddingTop="10dp"
             android:text="some long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long description"
-            android:textColor="@color/Black" />
+            android:textColor="@color/Black"
+            android:textSize="12sp"/>
 
         <TextView
             android:id="@+id/tvLocationHelper"
@@ -139,7 +141,8 @@
             android:layout_below="@id/tvDescription"
             android:gravity="center"
             android:paddingTop="10dp"
-            android:text="Location" />
+            android:text="Location"
+            android:textSize="10sp"/>
 
         <TextView
             android:id="@+id/tvLocation"
@@ -150,7 +153,8 @@
             android:paddingTop="10dp"
             android:text="Zante Town"
             android:textStyle="bold"
-            android:textColor="@color/Black" />
+            android:textColor="@color/Black"
+            android:textSize="12sp"/>
 
         <TextView
             android:id="@+id/tvAddressHelper"
@@ -159,7 +163,8 @@
             android:layout_below="@id/tvLocation"
             android:gravity="center"
             android:paddingTop="10dp"
-            android:text="Address" />
+            android:text="Address"
+            android:textSize="10sp"/>
 
         <TextView
             android:id="@+id/tvAddress"
@@ -170,7 +175,8 @@
             android:paddingTop="10dp"
             android:text="Mapa 3"
             android:textStyle="bold"
-            android:textColor="@color/Black" />
+            android:textColor="@color/Black"
+            android:textSize="12sp"/>
 
         <TextView
             android:id="@+id/tvTypeHelper"
@@ -179,7 +185,8 @@
             android:layout_below="@id/tvAddress"
             android:gravity="center"
             android:paddingTop="10dp"
-            android:text="Type" />
+            android:text="Type"
+            android:textSize="10sp"/>
 
         <TextView
             android:id="@+id/tvType"
@@ -190,7 +197,8 @@
             android:paddingTop="10dp"
             android:text="Vegeterian/Meat/Fish"
             android:textStyle="bold"
-            android:textColor="@color/Black" />
+            android:textColor="@color/Black"
+            android:textSize="12sp"/>
 
         <TextView
             android:id="@+id/tvUsefulTipHelper"
@@ -199,7 +207,8 @@
             android:layout_below="@+id/tvType"
             android:gravity="center"
             android:paddingTop="10dp"
-            android:text="Suitable For" />
+            android:text="Suitable For"
+            android:textSize="10sp"/>
 
         <TextView
             android:id="@+id/tvUsefulTip"
@@ -210,7 +219,8 @@
             android:paddingTop="10dp"
             android:text="Families , Romantic , Business Meetings"
             android:textStyle="bold"
-            android:textColor="@color/Black"/>
+            android:textColor="@color/Black"
+            android:textSize="12sp"/>
 
         <TextView
             android:id="@+id/tvWorkingHoursHelper"
@@ -219,7 +229,8 @@
             android:layout_below="@id/tvUsefulTip"
             android:gravity="center"
             android:paddingTop="10dp"
-            android:text="Working Hours" />
+            android:text="Working Hours"
+            android:textSize="10sp"/>
 
         <TextView
             android:id="@+id/tvWorkingHours"
@@ -229,7 +240,8 @@
             android:gravity="center"
             android:paddingTop="10dp"
             android:text="16:00 - 1:00"
-            android:textColor="@color/Black" />
+            android:textColor="@color/Black"
+            android:textSize="12sp"/>
 
         <TextView
             android:id="@+id/tvContactHelper"
@@ -238,7 +250,8 @@
             android:layout_below="@id/tvWorkingHours"
             android:gravity="center"
             android:paddingTop="10dp"
-            android:text="Contact" />
+            android:text="Contact"
+            android:textSize="10sp"/>
 
         <TextView
             android:id="@+id/tvContactPhoneNumber"
@@ -248,7 +261,10 @@
             android:gravity="center"
             android:paddingTop="10dp"
             android:text="Phone Number : 69465156245"
-            android:textColor="@color/Black" />
+            android:textColor="@color/Black"
+            android:textColorLink="@color/DarkBlue"
+            android:autoLink="phone"
+            android:textSize="12sp"/>
 
         <TextView
             android:id="@+id/tvContactEmail"
@@ -258,7 +274,10 @@
             android:gravity="center"
             android:paddingTop="10dp"
             android:text="Email : some@some.com"
-            android:textColor="@color/Black" />
+            android:textColor="@color/Black"
+            android:textColorLink="@color/DarkBlue"
+            android:autoLink="email"
+            android:textSize="12sp"/>
 
         <TextView
             android:id="@+id/tvContactWebsite"
@@ -270,6 +289,7 @@
             android:text="Website : www.website.com"
             android:textColor="@color/Black"
             android:textColorLink="@color/DarkBlue"
+            android:textSize="12sp"
             android:autoLink="web"/>
 
         <TextView
@@ -279,7 +299,9 @@
             android:layout_below="@id/tvContactWebsite"
             android:gravity="center"
             android:paddingTop="10dp"
-            android:text="Extra Info" />
+            android:text="Extra Info"
+            android:textSize="10sp"
+            />
 
 
         <TextView
@@ -291,7 +313,8 @@
             android:gravity="center"
             android:paddingTop="5dp"
             android:text="Credit Cards : "
-            android:textColor="@color/Black" />
+            android:textColor="@color/Black"
+            android:textSize="12sp"/>
 
         <android.support.v7.widget.AppCompatCheckBox
             android:id="@+id/cbCreditCard"
@@ -315,6 +338,7 @@
             android:gravity="center"
             android:paddingTop="5dp"
             android:text="Opened Summer Season Only : "
+            android:textSize="12sp"
             android:textColor="@color/Black" />
 
         <android.support.v7.widget.AppCompatCheckBox
