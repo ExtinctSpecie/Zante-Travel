@@ -47,27 +47,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initToolbarAndDrawer();
         initListViewMenu();
     }
-
-    private void getDataFromServer() {
-
-
-
-    }
-
     private void createMenuMap() {
 
         menuItems = new HashMap<>();
         menuItems.put(0,R.id.aboutZante);
-        menuItems.put(1,R.id.attractions);
-        menuItems.put(2,R.id.accommodation);
-        menuItems.put(3,R.id.food);
-        menuItems.put(4,R.id.entertainment);
-        menuItems.put(5,R.id.shopping);
-        menuItems.put(6,R.id.activities);
-        menuItems.put(7,R.id.beaches);
-        menuItems.put(8,R.id.rentals);
-        menuItems.put(9,R.id.other);
-        menuItems.put(10,R.id.emergencyHelp);
 
     }
 

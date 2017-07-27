@@ -16,4 +16,11 @@
         <item>Distance</item>
     </string-array>
 
+    <string name="aboutUsStr">About Us</string>
+    <string name="aboutZanteStr">About Zante</string>
+    <string name="exitAppStr">Exit</string>
+    <string name="savedBusinessesStr">Saved</string>
+    <string name="shareAppStr">Share</string>
+    <string name="rateAppStr">Rate</string>
+    <string name="helpStr">Help</string>
 </resources>
