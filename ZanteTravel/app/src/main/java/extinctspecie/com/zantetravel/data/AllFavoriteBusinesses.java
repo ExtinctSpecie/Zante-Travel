@@ -5,8 +5,10 @@ import java.util.List;
 import extinctspecie.com.zantetravel.models.Business;
 import extinctspecie.com.zantetravel.models.FavoriteBusiness;
 import io.realm.Realm;
+import io.realm.RealmObject;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
+import io.realm.annotations.RealmClass;
 import io.realm.exceptions.RealmException;
 import io.realm.exceptions.RealmPrimaryKeyConstraintException;
 
@@ -30,6 +32,52 @@ public class AllFavoriteBusinesses
             e.printStackTrace();
         }
     }
+    public static void removeFavorite(int id)
+    {
+        try {
+
+            Realm realm = Realm.getDefaultInstance();
+            RealmResults<FavoriteBusiness> realmResults = realm.where(FavoriteBusiness.class).equalTo("id",id).findAll();
+
+            realm.beginTransaction();
+
+            if(realmResults.size() > 0)
+            {
+                realmResults.deleteFirstFromRealm();
+            }
+
+            realm.commitTransaction();
+        }
+        catch (RealmPrimaryKeyConstraintException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    public static boolean businessAlreadySaved(int id)
+    {
+        try {
+
+            Realm realm = Realm.getDefaultInstance();
+
+            //realm.beginTransaction();
+
+            FavoriteBusiness myFavoriteBusiness = realm.where(FavoriteBusiness.class).equalTo("id",id).findFirst();
+
+            realm.close();
+
+            if(myFavoriteBusiness != null)
+                return true;
+
+
+            //realm.commitTransaction();
+        }
+        catch (RealmPrimaryKeyConstraintException e)
+        {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public static List<Business> getFavBusinesses()
     {
         try

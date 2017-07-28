@@ -123,7 +123,16 @@ public class BusinessActivity extends AppCompatActivity {
     }
 
     private void saveBusiness() {
-        AllFavoriteBusinesses.addFavorite(new FavoriteBusiness(businessID));
+
+        if(AllFavoriteBusinesses.businessAlreadySaved(businessID))
+        {
+            Log.v("HELLO","business already saved");
+            AllFavoriteBusinesses.removeFavorite(businessID);
+        }
+        else
+        {
+            AllFavoriteBusinesses.addFavorite(new FavoriteBusiness(businessID));
+        }
     }
 
     private void openBusinessLocation() {
