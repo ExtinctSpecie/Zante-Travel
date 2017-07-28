@@ -18,12 +18,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.HashMap;
+import java.util.List;
 
 import extinctspecie.com.zantetravel.R;
 import extinctspecie.com.zantetravel.adapters.LVAdapterMainMenu;
+import extinctspecie.com.zantetravel.data.AllFavoriteBusinesses;
 import extinctspecie.com.zantetravel.helpers.TypeFaces;
+import extinctspecie.com.zantetravel.models.Business;
 import io.realm.Realm;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -114,8 +118,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
             case R.id.savedBusinesses:
             {
+                List<Business> favBusinesses = AllFavoriteBusinesses.getFavBusinesses();
 
+                Toast.makeText(this,favBusinesses.size()+" SIZE ",Toast.LENGTH_LONG).show();
             }
+
         }
     }
     private void menuItemSelected(int position)

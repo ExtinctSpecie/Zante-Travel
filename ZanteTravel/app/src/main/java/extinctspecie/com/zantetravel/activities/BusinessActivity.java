@@ -22,9 +22,11 @@ import java.util.Locale;
 import extinctspecie.com.zantetravel.R;
 import extinctspecie.com.zantetravel.adapters.PABusinessGallery;
 import extinctspecie.com.zantetravel.data.AllBusinesses;
+import extinctspecie.com.zantetravel.data.AllFavoriteBusinesses;
 import extinctspecie.com.zantetravel.data.AllImages;
 import extinctspecie.com.zantetravel.helpers.Information;
 import extinctspecie.com.zantetravel.models.Business;
+import extinctspecie.com.zantetravel.models.FavoriteBusiness;
 import extinctspecie.com.zantetravel.models.Image;
 import extinctspecie.com.zantetravel.services.API;
 import retrofit2.Call;
@@ -111,6 +113,17 @@ public class BusinessActivity extends AppCompatActivity {
                 openBusinessLocation();
             }
         });
+        (findViewById(R.id.btnFavorite)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveBusiness();
+            }
+        });
+
+    }
+
+    private void saveBusiness() {
+        AllFavoriteBusinesses.addFavorite(new FavoriteBusiness(businessID));
     }
 
     private void openBusinessLocation() {
@@ -284,16 +297,7 @@ public class BusinessActivity extends AppCompatActivity {
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.vpGallery);
         PABusinessGallery paBusinessGallery = new PABusinessGallery(getApplicationContext(),gallery);
-        Log.v("GALLERY",gallery.size() + "");
-//        paBusinessGallery.setClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                //Intent intent = new Intent(getBaseContext(), FullScreenImagesActivity.class);
-//                //startActivity(intent,bundleAnimation);
-//
-//            }
-//        });
+
         viewPager.setAdapter(paBusinessGallery);
 
         if(images.size() > 1)
@@ -311,6 +315,7 @@ public class BusinessActivity extends AppCompatActivity {
         progressBar = (ProgressBar)findViewById(R.id.pbBusinessGallery);
         business = AllBusinesses.getBusinessWithID(getIntent().getIntExtra("businessID",0));
         businessID = business.getId();
+
     }
 
     private void stopProgressBar()
