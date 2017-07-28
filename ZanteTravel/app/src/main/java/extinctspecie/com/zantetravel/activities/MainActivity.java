@@ -118,13 +118,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
             case R.id.savedBusinesses:
             {
-                List<Business> favBusinesses = AllFavoriteBusinesses.getFavBusinesses();
-
-                Toast.makeText(this,favBusinesses.size()+" SIZE ",Toast.LENGTH_LONG).show();
+                showSavedBusinesses();
             }
 
         }
     }
+
+    private void showSavedBusinesses() {
+        List<Business> favBusinesses = AllFavoriteBusinesses.getFavBusinesses();
+
+        Toast.makeText(this,favBusinesses.size()+" SIZE ",Toast.LENGTH_LONG).show();
+
+        Intent intent = new Intent(getBaseContext(), FavBusinessesActivity.class);
+
+        startActivity(intent, bundleAnimation);
+    }
+
     private void menuItemSelected(int position)
     {
         try {
