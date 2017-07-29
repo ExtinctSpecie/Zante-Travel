@@ -7,15 +7,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import extinctspecie.com.zantetravel.R;
+
 /**
  * Created by WorkSpace on 27-Jul-17.
  */
 
-public class MyDialogFragment extends DialogFragment
+public class AboutUsDialogFragment extends DialogFragment
 {
-    static MyDialogFragment newInstance (int dialogID)
+    public static AboutUsDialogFragment newInstance ()
     {
-        MyDialogFragment dialogFragment = new MyDialogFragment();
+        AboutUsDialogFragment dialogFragment = new AboutUsDialogFragment();
 
         return dialogFragment;
     }
@@ -28,6 +30,10 @@ public class MyDialogFragment extends DialogFragment
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+
+        View v = inflater.inflate(R.layout.fragment_dialog_about_us, container, false);
+
+        return v;
+
     }
 }

@@ -2,21 +2,26 @@ package extinctspecie.com.zantetravel.activities;
 
 
 import android.app.ActivityOptions;
-import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,16 +31,19 @@ import java.util.List;
 import extinctspecie.com.zantetravel.R;
 import extinctspecie.com.zantetravel.adapters.LVAdapterMainMenu;
 import extinctspecie.com.zantetravel.data.AllFavoriteBusinesses;
+import extinctspecie.com.zantetravel.fragments.AboutUsDialogFragment;
 import extinctspecie.com.zantetravel.helpers.TypeFaces;
 import extinctspecie.com.zantetravel.models.Business;
 import io.realm.Realm;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener , ShareActionProvider.OnShareTargetSelectedListener
+{
 
     String TAG = this.getClass().getSimpleName();
     HashMap<Integer,Integer> menuItems;
     String menuItemSelectedName = "";
     Bundle bundleAnimation;
+    private ShareActionProvider mShareActionProvider;
 
     static final int CUSTOM_DIALOG_ID_FOR_ABOUT_US = 1;
     static final int CUSTOM_DIALOG_ID_FOR_ABOUT_APP = 2;
@@ -86,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -115,13 +123,56 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.aboutZante:
             {
                 startAboutZanteAct();
+                break;
             }
             case R.id.savedBusinesses:
             {
                 showSavedBusinesses();
+                break;
             }
-
+            case R.id.aboutUs:
+            {
+                showAboutUsDialog();
+                break;
+            }
+            case R.id.shareApp:
+            {
+                shareApp();
+                break;
+            }
+            case R.id.help:
+            {
+                helpUser();
+                break;
+            }
         }
+    }
+
+    private void helpUser() {
+        
+    }
+
+    private void showAboutUsDialog() {
+
+        // DialogFragment.show() will take care of adding the fragment
+        // in a transaction.  We also want to remove any currently showing
+        // dialog, so make our own transaction and take care of that here.
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+        Fragment prev = getFragmentManager().findFragmentByTag("shownDialog");
+
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        // Create and show the dialog.
+        DialogFragment newFragment = AboutUsDialogFragment.newInstance();
+
+        newFragment.setCancelable(true);
+
+        newFragment.show(ft, "shownDialog");
+
     }
 
     private void showSavedBusinesses() {
@@ -184,8 +235,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         return true;
     }
-
-
+    @Override
+    public boolean onShareTargetSelected(ShareActionProvider source, Intent intent) {
+        Toast.makeText(this, intent.getComponent().toString(),
+                Toast.LENGTH_LONG).show();
+        return false;
+    }
+    // Call to update the share intent
+    private void shareApp() {
+        try {
+            Intent i = new Intent(Intent.ACTION_SEND);
+            i.setType("text/plain");
+            i.putExtra(Intent.EXTRA_SUBJECT, "My application name");
+            String sAux = "\nLet me recommend you this application\n\n";
+            sAux = sAux + "https://play.google.com/store/apps/details?id=Orion.Soft \n\n";
+            i.putExtra(Intent.EXTRA_TEXT, sAux);
+            startActivity(Intent.createChooser(i, "choose one"));
+        } catch(Exception e) {
+            //e.toString();
+        }
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -201,4 +270,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onResume();
         menuItemSelectedName = "";
     }
+
 }

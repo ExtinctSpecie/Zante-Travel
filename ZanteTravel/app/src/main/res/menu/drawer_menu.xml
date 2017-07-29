@@ -9,6 +9,7 @@
             android:title="@string/savedBusinessesStr" />
         <item
             android:id="@+id/shareApp"
+            android:actionProviderClass="android.widget.ShareActionProvider"
             android:icon="@drawable/info_icon"
             android:title="@string/shareAppStr" />
         <item
