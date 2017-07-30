@@ -124,19 +124,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     {
         switch (itemId)
         {
-            case R.id.aboutZante:
-            {
-                startAboutZanteAct();
-                break;
-            }
             case R.id.savedBusinesses:
             {
                 showSavedBusinesses();
-                break;
-            }
-            case R.id.aboutUs:
-            {
-                showAboutUsDialog();
                 break;
             }
             case R.id.shareApp:
@@ -144,19 +134,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 shareApp();
                 break;
             }
-            case R.id.help:
-            {
-                helpUser();
-                break;
-            }
             case R.id.rateApp:
             {
                 showRateDialog();
                 break;
             }
+            case R.id.aboutZante:
+            {
+                startAboutZanteAct();
+                break;
+            }
+            case R.id.aboutUs:
+            {
+                showAboutUsDialog();
+                break;
+            }
+            case R.id.help:
+            {
+                helpUser();
+                break;
+            }
             case R.id.exitApp:
             {
                 exitApp();
+                break;
+            }
+            default:
+            {
+                toastMessageShort("Something went wrong!");
                 break;
             }
         }
@@ -219,7 +224,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         else
         {
-
+            toastMessageShort("No Saved Items");
         }
     }
 
@@ -306,6 +311,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } catch(Exception e) {
             //e.toString();
         }
+    }
+    private void toastMessageLong(String str)
+    {
+        Toast.makeText(this,str,Toast.LENGTH_LONG).show();
+    }
+    private void toastMessageShort(String str)
+    {
+        Toast.makeText(this,str,Toast.LENGTH_SHORT).show();
     }
     @Override
     public void onBackPressed() {

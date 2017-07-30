@@ -24,4 +24,5 @@
     <string name="rateAppStr">Rate Us</string>
     <string name="helpStr">Help</string>
     <string name="noContentFoundStr">No Content Found</string>
+    <string name="searchStr">Search</string>
 </resources>

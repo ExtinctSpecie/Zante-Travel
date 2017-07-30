@@ -267,12 +267,10 @@ public class BusinessActivity extends AppCompatActivity {
 
             if(AllFavoriteBusinesses.businessAlreadySaved(businessID))
             {
-                Log.v("hello","business saved");
                 findViewById(R.id.btnFavorite).setBackground(getResources().getDrawable(R.drawable.heart_filled));
             }
             else
             {
-                Log.v("hello","business not saved");
                 findViewById(R.id.btnFavorite).setBackground(getResources().getDrawable(R.drawable.heart_empty));
             }
 

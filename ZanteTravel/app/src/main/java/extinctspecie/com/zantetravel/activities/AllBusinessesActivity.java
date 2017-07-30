@@ -56,6 +56,8 @@ public class AllBusinessesActivity extends AppCompatActivity {
     LinearLayout rvLoadingData;
     AlertDialog.Builder dialog;
     Bundle bundleAnimation;
+    Menu actionBarMenu;
+    SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,33 +117,31 @@ public class AllBusinessesActivity extends AppCompatActivity {
 
     public void populateViews()
     {
+            final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvAllBusinesses);
 
-        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvAllBusinesses);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+            rvAdapterBusinessesID = new RVAdapterBusinessesID(AllBusinesses.getBusinessesWithGID(businessGroupID), getApplicationContext());
 
-        rvAdapterBusinessesID = new RVAdapterBusinessesID(AllBusinesses.getBusinessesWithGID(businessGroupID), getApplicationContext());
+            rvAdapterBusinessesID.setClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-        rvAdapterBusinessesID.setClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                    //int position = recyclerView.indexOfChild(v);
+                    int position = recyclerView.getChildLayoutPosition(v);
 
-                //int position = recyclerView.indexOfChild(v);
-                int position = recyclerView.getChildLayoutPosition(v);
+                    Business business = rvAdapterBusinessesID.getBusiness(position);
+                    business.printSelf();
+                    Intent intent = new Intent(getBaseContext(), BusinessActivity.class);
+                    intent.putExtra("businessID", business.getId());
+                    startActivity(intent,bundleAnimation);
+                }
+            });
+            recyclerView.setAdapter(rvAdapterBusinessesID);
+            rvLoadingData.setVisibility(View.GONE);
 
-                Business business = rvAdapterBusinessesID.getBusiness(position);
-                business.printSelf();
-                Log.v("HELLO",position+"");
-                Intent intent = new Intent(getBaseContext(), BusinessActivity.class);
-                intent.putExtra("businessID", business.getId());
-                startActivity(intent,bundleAnimation);
-            }
-        });
-        recyclerView.setAdapter(rvAdapterBusinessesID);
-        rvLoadingData.setVisibility(View.GONE);
-
-        if(getIntent().getStringExtra("searchFor")!=null)
-            onQueryTextListener.onQueryTextChange(getIntent().getStringExtra("searchFor"));
+            if(getIntent().getStringExtra("searchFor")!=null)
+                onQueryTextListener.onQueryTextChange(getIntent().getStringExtra("searchFor"));
     }
 
     private void getBusinessesFromAPI(final boolean populateViesAfterDownload) {
@@ -175,14 +175,33 @@ public class AllBusinessesActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
 
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_menu, menu);
-        MenuItem item = menu.findItem(R.id.searchMenu);
-        SearchView searchView = (SearchView) item.getActionView();
+
+        actionBarMenu = menu;
+
+        final MenuItem item = menu.findItem(R.id.searchMenu);
+
+        searchView = (SearchView) item.getActionView();
 
         searchView.setOnQueryTextListener(onQueryTextListener);
+
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setItemsVisibility(menu, item, false);
+            }
+        });
+
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                setItemsVisibility(menu, item, true);
+                return false;
+            }
+        });
 
         if(getIntent().getStringExtra("searchFor") != null)
         {
@@ -194,6 +213,25 @@ public class AllBusinessesActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+        }
+        else if(item.getItemId() == R.id.searchText)
+        {
+            searchView.setIconified(false);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void setItemsVisibility(Menu menu, MenuItem exception, boolean visible) {
+        for (int i=0; i<menu.size(); ++i) {
+            MenuItem item = menu.getItem(i);
+            if (item != exception) item.setVisible(visible);
+        }
+    }
     //Search text Listener
     SearchView.OnQueryTextListener onQueryTextListener = new SearchView.OnQueryTextListener() {
         @Override
@@ -209,13 +247,6 @@ public class AllBusinessesActivity extends AppCompatActivity {
         }
     };
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     private void initSpinner() {
 
