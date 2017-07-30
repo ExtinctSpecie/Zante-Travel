@@ -71,7 +71,8 @@ public class AboutUsDialogFragment extends DialogFragment
         });
     }
 
-    private void loadHtmlToWebView(View view) {
+    private void loadHtmlToWebView(final View view) {
+
         ((WebView) view.findViewById(R.id.wvAboutTown)).loadData("<p align=\"center\">&nbsp;</p>\n" +
                 "<p align=\"center\">&nbsp;</p>\n" +
                 "<p align=\"center\"><span style=\"color: #2b7ed2;\"><span style=\"font-size: large;\"><strong>About Zakynthos</strong></span></span></p>\n" +
@@ -81,5 +82,8 @@ public class AboutUsDialogFragment extends DialogFragment
                 "<p align=\"left\">It is productive island agriculturally, supported mainly by the cultivation of <strong>olives</strong>, <strong>raisins</strong>, <strong>citrus</strong> <strong>fruits</strong>. Apart from this, the <strong>main</strong> <strong>source</strong> <strong>of</strong> local <strong>income</strong> is from the recently developed business of <strong>tourism</strong>. The <strong>island</strong> has a wealth of history as for many centuries it was the <strong>crossroads</strong> for <strong>numerous</strong> <strong>nations</strong> and <strong>cultures</strong>.</p>\n" +
                 "<h2><span style=\"color: #4b67a1;\">&nbsp;</span></h2>","text/html","UTF-8");
         ((WebView) view.findViewById(R.id.wvAboutTown)).getSettings().setTextZoom(80);
+        view.findViewById(R.id.pbDialogFragment).setVisibility(View.INVISIBLE);
+        view.findViewById(R.id.wvAboutTown).setVisibility(View.VISIBLE);
+
     }
 }
