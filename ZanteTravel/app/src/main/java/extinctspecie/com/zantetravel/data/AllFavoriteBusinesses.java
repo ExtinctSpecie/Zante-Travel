@@ -1,5 +1,7 @@
 package extinctspecie.com.zantetravel.data;
 
+import android.util.Log;
+
 import java.util.List;
 
 import extinctspecie.com.zantetravel.models.Business;
@@ -47,6 +49,8 @@ public class AllFavoriteBusinesses
             }
 
             realm.commitTransaction();
+
+            realm.close();
         }
         catch (RealmPrimaryKeyConstraintException e)
         {
@@ -82,12 +86,12 @@ public class AllFavoriteBusinesses
     {
         try
         {
+            List<Business> businesses;
             Realm realm = Realm.getDefaultInstance();
 
             RealmQuery<Business> basketQuery = realm.where(Business.class);
 
             RealmResults<FavoriteBusiness> favoriteBusinesses = realm.where(FavoriteBusiness.class).findAll();
-
 
             for(int i=0; i<favoriteBusinesses.size(); i++){
                 if(i==0)
@@ -95,8 +99,10 @@ public class AllFavoriteBusinesses
                 else
                     basketQuery.or().equalTo("id", favoriteBusinesses.get(i).getId());
             }
-
-            List<Business> businesses = realm.copyFromRealm(basketQuery.findAll());
+            if(favoriteBusinesses.size() > 0)
+                businesses = realm.copyFromRealm(basketQuery.findAll());
+            else
+                businesses = null;
 
             realm.close();
 

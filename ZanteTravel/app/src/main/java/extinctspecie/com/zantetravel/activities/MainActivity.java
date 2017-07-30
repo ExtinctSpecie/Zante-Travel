@@ -18,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -217,7 +218,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         List<Business> favBusinesses = AllFavoriteBusinesses.getFavBusinesses();
 
-        if(favBusinesses.size() > 0)
+        if(favBusinesses != null)
         {
             Intent intent = new Intent(getBaseContext(), FavBusinessesActivity.class);
             startActivity(intent, bundleAnimation);

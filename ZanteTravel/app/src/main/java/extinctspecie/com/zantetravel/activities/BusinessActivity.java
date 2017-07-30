@@ -8,12 +8,11 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.method.LinkMovementMethod;
-import android.util.Log;
+
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.ImageView;
+
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;

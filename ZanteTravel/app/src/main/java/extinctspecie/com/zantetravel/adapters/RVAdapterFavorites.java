@@ -42,8 +42,6 @@ public class RVAdapterFavorites extends RecyclerView.Adapter<RVAdapterFavorites.
 
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.business_rv_row, parent, false);
 
-        Log.v("HELLO","OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"+"");
-
         MyViewHolder viewHolder = new MyViewHolder(itemView);
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -67,8 +65,6 @@ public class RVAdapterFavorites extends RecyclerView.Adapter<RVAdapterFavorites.
         holder.type.setText(business.getType());
         holder.location.setText(business.getLocation());
         holder.shortDescription.setText(business.getShortDescription());
-
-        Log.v("HELLO",holder.name.getText()+"");
 
         if(business.getThumbnailURL() != null && !business.getThumbnailURL().isEmpty())
         {

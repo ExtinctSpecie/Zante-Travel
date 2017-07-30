@@ -1,7 +1,5 @@
 package extinctspecie.com.zantetravel.data;
 
-import android.util.Log;
-
 import java.util.List;
 
 import extinctspecie.com.zantetravel.models.Business;
