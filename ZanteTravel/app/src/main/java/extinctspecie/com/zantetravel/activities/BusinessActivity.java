@@ -2,6 +2,7 @@ package extinctspecie.com.zantetravel.activities;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -12,8 +13,10 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,13 +129,24 @@ public class BusinessActivity extends AppCompatActivity {
 
         if(AllFavoriteBusinesses.businessAlreadySaved(businessID))
         {
-            Log.v("HELLO","business already saved");
+            toastMessageShort("Removed " + getSupportActionBar().getTitle() + " from favorites");
             AllFavoriteBusinesses.removeFavorite(businessID);
+            findViewById(R.id.btnFavorite).setBackground(getResources().getDrawable(R.drawable.heart_empty));
         }
         else
         {
+            toastMessageShort("Added " + getSupportActionBar().getTitle() + " to favorites");
             AllFavoriteBusinesses.addFavorite(new FavoriteBusiness(businessID));
+            findViewById(R.id.btnFavorite).setBackground(getResources().getDrawable(R.drawable.heart_filled));
         }
+    }
+    private void toastMessageLong(String str)
+    {
+        Toast.makeText(this,str,Toast.LENGTH_LONG).show();
+    }
+    private void toastMessageShort(String str)
+    {
+        Toast.makeText(this,str,Toast.LENGTH_SHORT).show();
     }
 
     private void openBusinessLocation() {
@@ -250,6 +264,18 @@ public class BusinessActivity extends AppCompatActivity {
             ((TextView) findViewById(R.id.tvContactWebsite)).setText(business.getWebsite());
             ((CheckBox)findViewById(R.id.cbCreditCard)).setChecked(business.isCreditCards());
             ((CheckBox)findViewById(R.id.cbSummerOnly)).setChecked(business.isSummerOnly());
+
+            if(AllFavoriteBusinesses.businessAlreadySaved(businessID))
+            {
+                Log.v("hello","business saved");
+                findViewById(R.id.btnFavorite).setBackground(getResources().getDrawable(R.drawable.heart_filled));
+            }
+            else
+            {
+                Log.v("hello","business not saved");
+                findViewById(R.id.btnFavorite).setBackground(getResources().getDrawable(R.drawable.heart_empty));
+            }
+
         }
 
     }

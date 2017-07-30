@@ -3,7 +3,6 @@ package extinctspecie.com.zantetravel.activities;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import extinctspecie.com.zantetravel.R;
@@ -13,7 +12,7 @@ public class AboutTownActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about_town);
+        setContentView(R.layout.fragment_dialog_about_zante);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

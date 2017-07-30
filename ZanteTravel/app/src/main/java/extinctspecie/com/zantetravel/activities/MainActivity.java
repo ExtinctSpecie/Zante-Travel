@@ -5,7 +5,9 @@ import android.app.ActivityOptions;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -24,6 +26,8 @@ import android.widget.ListView;
 
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.kobakei.ratethisapp.RateThisApp;
 
 import java.util.HashMap;
 import java.util.List;
@@ -45,9 +49,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Bundle bundleAnimation;
     private ShareActionProvider mShareActionProvider;
 
-    static final int CUSTOM_DIALOG_ID_FOR_ABOUT_US = 1;
-    static final int CUSTOM_DIALOG_ID_FOR_ABOUT_APP = 2;
-    static final int CUSTOM_DIALOG_ID_FOR_HELP = 3;
+    public static final int CUSTOM_DIALOG_ID_FOR_ABOUT_US = 1;
+    public static final int CUSTOM_DIALOG_ID_FOR_ABOUT_APP = 2;
+    public static final int CUSTOM_DIALOG_ID_FOR_HELP = 3;
 
 
     @Override
@@ -145,11 +149,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 helpUser();
                 break;
             }
+            case R.id.rateApp:
+            {
+                showRateDialog();
+                break;
+            }
+            case R.id.exitApp:
+            {
+                exitApp();
+                break;
+            }
         }
     }
 
+    private void exitApp() {
+        finish();
+    }
+
+    private void showRateDialog() {
+        Uri uri = Uri.parse("market://details?id=" + "extinctspecie.com.zantetravel");
+        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+        // To count with Play market backstack, After pressing back button,
+        // to taken back to our application, we need to add following flags to intent.
+        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
+                Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        try {
+            startActivity(goToMarket);
+        } catch (ActivityNotFoundException e) {
+            startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("http://play.google.com/store/apps/details?id=" + "extinctspecie.com.zantetravel")));
+        }
+    }
     private void helpUser() {
-        
+
     }
 
     private void showAboutUsDialog() {
@@ -167,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ft.addToBackStack(null);
 
         // Create and show the dialog.
-        DialogFragment newFragment = AboutUsDialogFragment.newInstance();
+        DialogFragment newFragment = AboutUsDialogFragment.newInstance(CUSTOM_DIALOG_ID_FOR_ABOUT_US);
 
         newFragment.setCancelable(true);
 
@@ -176,13 +209,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void showSavedBusinesses() {
+
         List<Business> favBusinesses = AllFavoriteBusinesses.getFavBusinesses();
 
-        Toast.makeText(this,favBusinesses.size()+" SIZE ",Toast.LENGTH_LONG).show();
+        if(favBusinesses.size() > 0)
+        {
+            Intent intent = new Intent(getBaseContext(), FavBusinessesActivity.class);
+            startActivity(intent, bundleAnimation);
+        }
+        else
+        {
 
-        Intent intent = new Intent(getBaseContext(), FavBusinessesActivity.class);
-
-        startActivity(intent, bundleAnimation);
+        }
     }
 
     private void menuItemSelected(int position)
@@ -219,7 +257,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     private void startAboutZanteAct()
     {
-        startActivity(new Intent(getBaseContext(),AboutTownActivity.class) , bundleAnimation);
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+        Fragment prev = getFragmentManager().findFragmentByTag("shownDialog");
+
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        // Create and show the dialog.
+        DialogFragment newFragment = AboutUsDialogFragment.newInstance(CUSTOM_DIALOG_ID_FOR_ABOUT_APP);
+
+        newFragment.setCancelable(true);
+
+        newFragment.show(ft, "shownDialog");
     }
 
     @Override

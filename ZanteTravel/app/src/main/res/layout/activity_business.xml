@@ -28,10 +28,10 @@
                 android:layout_height="40dp"
                 android:layout_alignEnd="@id/vpGallery"
                 android:layout_alignRight="@id/vpGallery"
-                android:layout_marginRight="11dp"
-                android:layout_marginEnd="11dp"
-                android:layout_marginTop="11dp"
-                android:background="@drawable/beach_icon"/>
+                android:layout_marginRight="22dp"
+                android:layout_marginEnd="22dp"
+                android:layout_marginTop="22dp"
+                android:background="@drawable/heart_empty"/>
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tlHelperForVP"

@@ -5,16 +5,16 @@
 
         <item
             android:id="@+id/savedBusinesses"
-            android:icon="@drawable/info_icon"
+            android:icon="@drawable/heart_filled"
             android:title="@string/savedBusinessesStr" />
         <item
             android:id="@+id/shareApp"
             android:actionProviderClass="android.widget.ShareActionProvider"
-            android:icon="@drawable/info_icon"
+            android:icon="@drawable/share_icon"
             android:title="@string/shareAppStr" />
         <item
             android:id="@+id/rateApp"
-            android:icon="@drawable/info_icon"
+            android:icon="@drawable/star_icon"
             android:title="@string/rateAppStr" />
         <item
             android:id="@+id/aboutZante"
@@ -26,11 +26,11 @@
             android:title="@string/aboutUsStr" />
         <item
             android:id="@+id/help"
-            android:icon="@drawable/info_icon"
+            android:icon="@drawable/help_icon"
             android:title="@string/helpStr" />
         <item
             android:id="@+id/exitApp"
-            android:icon="@drawable/info_icon"
+            android:icon="@drawable/exit_icon"
             android:title="@string/exitAppStr" />
 
     </group>

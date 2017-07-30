@@ -23,4 +23,5 @@
     <string name="shareAppStr">Share</string>
     <string name="rateAppStr">Rate Us</string>
     <string name="helpStr">Help</string>
+    <string name="noContentFoundStr">No Content Found</string>
 </resources>
