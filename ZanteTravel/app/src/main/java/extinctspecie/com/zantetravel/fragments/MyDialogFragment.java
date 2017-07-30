@@ -1,6 +1,5 @@
 package extinctspecie.com.zantetravel.fragments;
 
-import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -15,19 +14,19 @@ import extinctspecie.com.zantetravel.activities.MainActivity;
  * Created by WorkSpace on 27-Jul-17.
  */
 
-public class AboutUsDialogFragment extends DialogFragment
+public class MyDialogFragment extends android.app.DialogFragment
 {
     int dialogID;
 
-    public static AboutUsDialogFragment newInstance (int dialogID)
+    public static MyDialogFragment newInstance (int dialogID)
     {
-        AboutUsDialogFragment dialogFragment = new AboutUsDialogFragment();
+        MyDialogFragment myDialogFragment = new MyDialogFragment();
 
         Bundle args = new Bundle();
         args.putInt("dialogID", dialogID);
-        dialogFragment.setArguments(args);
+        myDialogFragment.setArguments(args);
 
-        return dialogFragment;
+        return myDialogFragment;
     }
 
     @Override
