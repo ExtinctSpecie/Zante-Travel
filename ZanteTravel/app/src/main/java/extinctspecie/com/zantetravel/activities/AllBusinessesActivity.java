@@ -222,6 +222,7 @@ public class AllBusinessesActivity extends AppCompatActivity {
         else if(item.getItemId() == R.id.searchText)
         {
             searchView.setIconified(false);
+            searchView.requestFocusFromTouch();
         }
         return super.onOptionsItemSelected(item);
     }

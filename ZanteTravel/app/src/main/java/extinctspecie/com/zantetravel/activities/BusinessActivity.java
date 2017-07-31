@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
@@ -216,26 +217,63 @@ public class BusinessActivity extends AppCompatActivity {
 
     private void hideViewsNotNeeded()
     {
-        if(!isBusiness(business))
-        {
 
-            ( findViewById(R.id.tvContactHelper)).setVisibility(View.GONE);
+
+        if(business.getPhoneNumber().isEmpty()
+                || business.getPhoneNumber() == null
+                && business.getEmail().isEmpty()
+                || business.getEmail() == null
+                && business.getWebsite().isEmpty()
+                || business.getWebsite() == null)
+        {
+            (findViewById(R.id.tvContactHelper)).setVisibility(View.GONE);
+        }
+
+        if(business.getPhoneNumber().isEmpty() || business.getPhoneNumber() == null)
+        {
+            (findViewById(R.id.tvContactPhoneNumber)).setVisibility(View.GONE);
+        }
+        if(business.getEmail().isEmpty() || business.getEmail() == null)
+        {
+            ( findViewById(R.id.tvContactEmail)).setVisibility(View.GONE);
+        }
+        if(business.getWebsite().isEmpty() || business.getWebsite() == null)
+        {
+            ( findViewById(R.id.tvContactWebsite)).setVisibility(View.GONE);
+        }
+        if(business.getMapCoordinates().isEmpty() || business.getMapCoordinates() == null)
+        {
+            ( findViewById(R.id.tvContactEmail)).setVisibility(View.GONE);
+        }
+        if(business.getAddress().isEmpty() || business.getAddress() == null)
+        {
             ( findViewById(R.id.tvAddress)).setVisibility(View.GONE);
             ( findViewById(R.id.tvAddressHelper)).setVisibility(View.GONE);
+        }
+        if(business.getType().isEmpty() || business.getType() == null)
+        {
+            ( findViewById(R.id.tvType)).setVisibility(View.GONE);
+            ( findViewById(R.id.tvTypeHelper)).setVisibility(View.GONE);
+        }
+        if(business.getWorkingHours().isEmpty() || business.getWorkingHours() == null)
+        {
+            ( findViewById(R.id.tvWorkingHoursHelper)).setVisibility(View.GONE);
             ( findViewById(R.id.tvWorkingHours)).setVisibility(View.GONE);
-            ( findViewById(R.id.tvContactEmail)).setVisibility(View.GONE);
-            ( findViewById(R.id.tvContactWebsite)).setVisibility(View.GONE);
-            ( findViewById(R.id.tvContactPhoneNumber)).setVisibility(View.GONE);
+        }
+        if(business.getUsefulTip().isEmpty() || business.getUsefulTip() == null)
+        {
+            ( findViewById(R.id.tvUsefulTip)).setVisibility(View.GONE);
+            ( findViewById(R.id.tvUsefulTipHelper)).setVisibility(View.GONE);
+        }
+
+        if(!isBusiness(business))
+        {
             ( findViewById(R.id.tvExtraInfoHelper)).setVisibility(View.GONE);
             ( findViewById(R.id.cbSummerOnly)).setVisibility(View.GONE);
             ( findViewById(R.id.cbCreditCard)).setVisibility(View.GONE);
             ((TextView) findViewById(R.id.tvUsefulTipHelper)).setText("Find More");
-            ( findViewById(R.id.tvType)).setVisibility(View.GONE);
-            ( findViewById(R.id.tvTypeHelper)).setVisibility(View.GONE);
-            ( findViewById(R.id.tvWorkingHoursHelper)).setVisibility(View.GONE);
             ( findViewById(R.id.tvCreditCardsHelper)).setVisibility(View.GONE);
             ( findViewById(R.id.tvSummerOnlyHelper)).setVisibility(View.GONE);
-
             ((TextView) findViewById(R.id.tvUsefulTip)).setTextColor(getResources().getColor(R.color.DarkBlue));
             ( findViewById(R.id.tvUsefulTip)).setOnClickListener(findMore);
         }
@@ -257,13 +295,14 @@ public class BusinessActivity extends AppCompatActivity {
             ((TextView) findViewById(R.id.tvDescription)).setText(business.getLongDescription());
             ((TextView) findViewById(R.id.tvLocation)).setText(business.getLocation());
             ((TextView) findViewById(R.id.tvAddress)).setText(business.getAddress());
+            ((TextView) findViewById(R.id.tvType)).setText(business.getType());
             ((TextView) findViewById(R.id.tvWorkingHours)).setText(business.getWorkingHours());
             ((TextView) findViewById(R.id.tvContactPhoneNumber)).setText(business.getPhoneNumber());
             ((TextView) findViewById(R.id.tvContactEmail)).setText(business.getEmail());
             ((TextView) findViewById(R.id.tvContactWebsite)).setText(business.getWebsite());
             ((CheckBox)findViewById(R.id.cbCreditCard)).setChecked(business.isCreditCards());
             ((CheckBox)findViewById(R.id.cbSummerOnly)).setChecked(business.isSummerOnly());
-
+            Log.v("hello",business.getType());
             if(AllFavoriteBusinesses.businessAlreadySaved(businessID))
             {
                 findViewById(R.id.btnFavorite).setBackground(getResources().getDrawable(R.drawable.heart_filled));
