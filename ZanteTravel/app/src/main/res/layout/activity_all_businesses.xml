@@ -26,7 +26,7 @@
         android:id="@+id/searchRelativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/AntiqueWhite"
+        android:background="@color/White"
         android:padding="5dp">
         <Space
             android:layout_width="1dp"
@@ -50,6 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:backgroundTint="@color/Black"
             />
         <Space
             android:layout_width="0dp"

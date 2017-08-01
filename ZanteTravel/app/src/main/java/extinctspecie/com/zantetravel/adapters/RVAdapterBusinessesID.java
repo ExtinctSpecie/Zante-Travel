@@ -15,7 +15,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import extinctspecie.com.zantetravel.R;
 import extinctspecie.com.zantetravel.data.AllBusinesses;
@@ -34,12 +36,17 @@ public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusines
     private List<Business> businessListCopy;
     Context context;
     View.OnClickListener mClickListener;
+    private boolean canReset = false;
 
     public RVAdapterBusinessesID(List<Business> businesses , Context context ) {
 
         if(!businesses.isEmpty())
         {
+            long seed = System.nanoTime();
+
             this.businessList = businesses;
+
+            businessList.get(0).printSelf();
 
             this.businessListCopy = new ArrayList<>(businesses);
 
@@ -79,8 +86,6 @@ public class RVAdapterBusinessesID extends RecyclerView.Adapter<RVAdapterBusines
 
         if(business.getThumbnailURL() != null && !business.getThumbnailURL().isEmpty())
         {
-
-
             Picasso.with(context).load(business.getThumbnailURL()).networkPolicy(NetworkPolicy.OFFLINE).fit().into(holder.thumbnail, new Callback() {
                 @Override
                 public void onSuccess() {
