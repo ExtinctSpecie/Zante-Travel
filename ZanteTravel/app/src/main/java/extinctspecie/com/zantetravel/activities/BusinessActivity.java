@@ -2,8 +2,8 @@ package extinctspecie.com.zantetravel.activities;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -39,7 +39,7 @@ import retrofit2.Response;
 public class BusinessActivity extends AppCompatActivity {
 
     private int businessID;
-    private Business business ;
+    private Business business;
     private String TAG = this.getClass().getSimpleName();
     Bundle bundleAnimation;
     ProgressBar progressBar;
@@ -66,26 +66,17 @@ public class BusinessActivity extends AppCompatActivity {
 
     private void initGallery() {
 
-        if(AllImages.getImagesOfBusinessID(businessID) != null && !AllImages.getImagesOfBusinessID(businessID).isEmpty())
-        {
+        if (AllImages.getImagesOfBusinessID(businessID) != null && !AllImages.getImagesOfBusinessID(businessID).isEmpty()) {
             populateViewPagerWithImages();
-            if(Information.isInternetAvailable(this))
-            {
+            if (Information.isInternetAvailable(this)) {
                 getGalleryFromAPI(false);
-            }
-            else
-            {
+            } else {
                 stopProgressBar();
             }
-        }
-        else
-        {
-            if(Information.isInternetAvailable(this))
-            {
+        } else {
+            if (Information.isInternetAvailable(this)) {
                 getGalleryFromAPI(true);
-            }
-            else
-            {
+            } else {
                 stopProgressBar();
             }
         }
@@ -119,48 +110,48 @@ public class BusinessActivity extends AppCompatActivity {
         (findViewById(R.id.btnFavorite)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveBusiness();
+                saveBusiness(v);
             }
         });
 
     }
 
-    private void saveBusiness() {
+    private void saveBusiness(View view) {
 
-        if(AllFavoriteBusinesses.businessAlreadySaved(businessID))
-        {
-            toastMessageShort("Removed " + getSupportActionBar().getTitle() + " from favorites");
+        if (AllFavoriteBusinesses.businessAlreadySaved(businessID)) {
+            snackBarShort("Removed " + getSupportActionBar().getTitle() + " from favorites", view);
             AllFavoriteBusinesses.removeFavorite(businessID);
             findViewById(R.id.btnFavorite).setBackground(getResources().getDrawable(R.drawable.heart_empty));
-        }
-        else
-        {
-            toastMessageShort("Added " + getSupportActionBar().getTitle() + " to favorites");
+        } else {
+            snackBarShort("Added " + getSupportActionBar().getTitle() + " to favorites", view);
             AllFavoriteBusinesses.addFavorite(new FavoriteBusiness(businessID));
             findViewById(R.id.btnFavorite).setBackground(getResources().getDrawable(R.drawable.heart_filled));
         }
     }
-    private void toastMessageLong(String str)
-    {
-        Toast.makeText(this,str,Toast.LENGTH_LONG).show();
+
+    private void snackBarShort(String str, View view) {
+        Snackbar snackbar = Snackbar
+                .make(view, str, Snackbar.LENGTH_SHORT);
+
+        snackbar.show();
     }
-    private void toastMessageShort(String str)
-    {
-        Toast.makeText(this,str,Toast.LENGTH_SHORT).show();
+
+    private void toastMessageLong(String str) {
+        Toast.makeText(this, str, Toast.LENGTH_LONG).show();
+    }
+
+    private void toastMessageShort(String str) {
+        Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
     }
 
     private void openBusinessLocation() {
         float latitude = -1;
         float longitude = -1;
-        if(!business.isPremium())
-        {
-            if(business.getCoordinates() != null)
-            {
+        if (!business.isPremium()) {
+            if (business.getCoordinates() != null) {
                 latitude = business.getCoordinates().getLatitude();
                 longitude = business.getCoordinates().getLongitude();
-            }
-            else
-            {
+            } else {
                 //Split string into longitude and altitude
                 String strCoordinates[] = business.getMapCoordinates().split(",");
 
@@ -179,10 +170,8 @@ public class BusinessActivity extends AppCompatActivity {
 
             String uri = String.format(Locale.ENGLISH, "geo:%f,%f?z=17&q=%f,%f", latitude, longitude, latitude, longitude);
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-            startActivity(intent,bundleAnimation);
-        }
-        else
-        {
+            startActivity(intent, bundleAnimation);
+        } else {
             (findViewById(R.id.btnBusinessLocation)).setActivated(false);
         }
 
@@ -193,93 +182,82 @@ public class BusinessActivity extends AppCompatActivity {
         String message = "Greetings , \n";
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("message/rfc822");
-        intent.putExtra(Intent.EXTRA_EMAIL,new String[]{((TextView)findViewById(R.id.tvContactEmail)).getText().toString()});
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{((TextView) findViewById(R.id.tvContactEmail)).getText().toString()});
         intent.putExtra(Intent.EXTRA_SUBJECT, subject);
         intent.putExtra(Intent.EXTRA_TEXT, message);
         Intent mailer = Intent.createChooser(intent, null);
-        startActivity(mailer,bundleAnimation);
+        startActivity(mailer, bundleAnimation);
     }
 
     private void openBusinessWebsite() {
-        String url = ((TextView)findViewById(R.id.tvContactWebsite)).getText().toString();
+        String url = ((TextView) findViewById(R.id.tvContactWebsite)).getText().toString();
 
         if (!url.startsWith("http://") && !url.startsWith("https://"))
             url = "http://" + url;
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        startActivity(browserIntent,bundleAnimation);
+        startActivity(browserIntent, bundleAnimation);
     }
 
     private void phoneCallBusiness() {
-        String phoneNumber = ((TextView)findViewById(R.id.tvContactPhoneNumber)).getText().toString();
+        String phoneNumber = ((TextView) findViewById(R.id.tvContactPhoneNumber)).getText().toString();
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber));
-        startActivity(intent,bundleAnimation);
+        startActivity(intent, bundleAnimation);
     }
 
-    private void hideViewsNotNeeded()
-    {
+    private void hideViewsNotNeeded() {
 
 
-        if(business.getPhoneNumber().isEmpty()
+        if (business.getPhoneNumber().isEmpty()
                 || business.getPhoneNumber() == null
                 && business.getEmail().isEmpty()
                 || business.getEmail() == null
                 && business.getWebsite().isEmpty()
-                || business.getWebsite() == null)
-        {
+                || business.getWebsite() == null) {
             (findViewById(R.id.tvContactHelper)).setVisibility(View.GONE);
         }
 
-        if(business.getPhoneNumber().isEmpty() || business.getPhoneNumber() == null)
-        {
+        if (business.getPhoneNumber().isEmpty() || business.getPhoneNumber() == null) {
             (findViewById(R.id.tvContactPhoneNumber)).setVisibility(View.GONE);
         }
-        if(business.getEmail().isEmpty() || business.getEmail() == null)
-        {
-            ( findViewById(R.id.tvContactEmail)).setVisibility(View.GONE);
+        if (business.getEmail().isEmpty() || business.getEmail() == null) {
+            (findViewById(R.id.tvContactEmail)).setVisibility(View.GONE);
         }
-        if(business.getWebsite().isEmpty() || business.getWebsite() == null)
-        {
-            ( findViewById(R.id.tvContactWebsite)).setVisibility(View.GONE);
+        if (business.getWebsite().isEmpty() || business.getWebsite() == null) {
+            (findViewById(R.id.tvContactWebsite)).setVisibility(View.GONE);
         }
-        if(business.getMapCoordinates().isEmpty() || business.getMapCoordinates() == null)
-        {
-            ( findViewById(R.id.tvContactEmail)).setVisibility(View.GONE);
+        if (business.getMapCoordinates().isEmpty() || business.getMapCoordinates() == null) {
+            (findViewById(R.id.tvContactEmail)).setVisibility(View.GONE);
         }
-        if(business.getAddress().isEmpty() || business.getAddress() == null)
-        {
-            ( findViewById(R.id.tvAddress)).setVisibility(View.GONE);
-            ( findViewById(R.id.tvAddressHelper)).setVisibility(View.GONE);
+        if (business.getAddress().isEmpty() || business.getAddress() == null) {
+            (findViewById(R.id.tvAddress)).setVisibility(View.GONE);
+            (findViewById(R.id.tvAddressHelper)).setVisibility(View.GONE);
         }
-        if(business.getType().isEmpty() || business.getType() == null)
-        {
-            ( findViewById(R.id.tvType)).setVisibility(View.GONE);
-            ( findViewById(R.id.tvTypeHelper)).setVisibility(View.GONE);
+        if (business.getType().isEmpty() || business.getType() == null) {
+            (findViewById(R.id.tvType)).setVisibility(View.GONE);
+            (findViewById(R.id.tvTypeHelper)).setVisibility(View.GONE);
         }
-        if(business.getWorkingHours().isEmpty() || business.getWorkingHours() == null)
-        {
-            ( findViewById(R.id.tvWorkingHoursHelper)).setVisibility(View.GONE);
-            ( findViewById(R.id.tvWorkingHours)).setVisibility(View.GONE);
+        if (business.getWorkingHours().isEmpty() || business.getWorkingHours() == null) {
+            (findViewById(R.id.tvWorkingHoursHelper)).setVisibility(View.GONE);
+            (findViewById(R.id.tvWorkingHours)).setVisibility(View.GONE);
         }
-        if(business.getUsefulTip().isEmpty() || business.getUsefulTip() == null)
-        {
-            ( findViewById(R.id.tvUsefulTip)).setVisibility(View.GONE);
-            ( findViewById(R.id.tvUsefulTipHelper)).setVisibility(View.GONE);
+        if (business.getUsefulTip().isEmpty() || business.getUsefulTip() == null) {
+            (findViewById(R.id.tvUsefulTip)).setVisibility(View.GONE);
+            (findViewById(R.id.tvUsefulTipHelper)).setVisibility(View.GONE);
         }
 
-        if(!isBusiness(business))
-        {
-            ( findViewById(R.id.tvExtraInfoHelper)).setVisibility(View.GONE);
-            ( findViewById(R.id.cbSummerOnly)).setVisibility(View.GONE);
-            ( findViewById(R.id.cbCreditCard)).setVisibility(View.GONE);
+        if (!isBusiness(business)) {
+            (findViewById(R.id.tvExtraInfoHelper)).setVisibility(View.GONE);
+            (findViewById(R.id.cbSummerOnly)).setVisibility(View.GONE);
+            (findViewById(R.id.cbCreditCard)).setVisibility(View.GONE);
             ((TextView) findViewById(R.id.tvUsefulTipHelper)).setText("Find More");
-            ( findViewById(R.id.tvCreditCardsHelper)).setVisibility(View.GONE);
-            ( findViewById(R.id.tvSummerOnlyHelper)).setVisibility(View.GONE);
+            (findViewById(R.id.tvCreditCardsHelper)).setVisibility(View.GONE);
+            (findViewById(R.id.tvSummerOnlyHelper)).setVisibility(View.GONE);
             ((TextView) findViewById(R.id.tvUsefulTip)).setTextColor(getResources().getColor(R.color.DarkBlue));
-            ( findViewById(R.id.tvUsefulTip)).setOnClickListener(findMore);
+            (findViewById(R.id.tvUsefulTip)).setOnClickListener(findMore);
         }
     }
-    private boolean isBusiness(Business b)
-    {
+
+    private boolean isBusiness(Business b) {
         return !(b.getEmail().isEmpty()
                 && b.getPhoneNumber().isEmpty()
                 && b.getWebsite().isEmpty()
@@ -288,8 +266,7 @@ public class BusinessActivity extends AppCompatActivity {
 
     private void populateViewsWithData() {
         business.printSelf();
-        if(business != null)
-        {
+        if (business != null) {
             hideViewsNotNeeded();
             ((TextView) findViewById(R.id.tvUsefulTip)).setText(business.getUsefulTip());
             ((TextView) findViewById(R.id.tvDescription)).setText(business.getLongDescription());
@@ -300,51 +277,45 @@ public class BusinessActivity extends AppCompatActivity {
             ((TextView) findViewById(R.id.tvContactPhoneNumber)).setText(business.getPhoneNumber());
             ((TextView) findViewById(R.id.tvContactEmail)).setText(business.getEmail());
             ((TextView) findViewById(R.id.tvContactWebsite)).setText(business.getWebsite());
-            ((CheckBox)findViewById(R.id.cbCreditCard)).setChecked(business.isCreditCards());
-            ((CheckBox)findViewById(R.id.cbSummerOnly)).setChecked(business.isSummerOnly());
-            Log.v("hello",business.getType());
-            if(AllFavoriteBusinesses.businessAlreadySaved(businessID))
-            {
+            ((CheckBox) findViewById(R.id.cbCreditCard)).setChecked(business.isCreditCards());
+            ((CheckBox) findViewById(R.id.cbSummerOnly)).setChecked(business.isSummerOnly());
+            Log.v("hello", business.getType());
+            if (AllFavoriteBusinesses.businessAlreadySaved(businessID)) {
                 findViewById(R.id.btnFavorite).setBackground(getResources().getDrawable(R.drawable.heart_filled));
-            }
-            else
-            {
+            } else {
                 findViewById(R.id.btnFavorite).setBackground(getResources().getDrawable(R.drawable.heart_empty));
             }
 
         }
 
     }
-    View.OnClickListener findMore = new View.OnClickListener()
-    {
+
+    View.OnClickListener findMore = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(getBaseContext(), AllBusinessesActivity.class);
             //ID 9 is for Other on menu
-            intent.putExtra("groupID",9);
-            intent.putExtra("groupName","Other");
-            intent.putExtra("searchFor",getSupportActionBar().getTitle());
-            startActivity(intent,bundleAnimation);
+            intent.putExtra("groupID", 9);
+            intent.putExtra("groupName", "Other");
+            intent.putExtra("searchFor", getSupportActionBar().getTitle());
+            startActivity(intent, bundleAnimation);
         }
     };
-    private void getGalleryFromAPI(final boolean populateViewsAfterDownload) {
 
+    private void getGalleryFromAPI(final boolean populateViewsAfterDownload) {
 
 
         API.Factory.getInstance().getImagesOfBusinessWithID(businessID).enqueue(new Callback<List<Image>>() {
             @Override
             public void onResponse(Call<List<Image>> call, Response<List<Image>> response) {
 
-                if(!response.body().isEmpty())
-                {
+                if (!response.body().isEmpty()) {
                     AllImages.addImages(response.body());
 
-                    if(populateViewsAfterDownload)
+                    if (populateViewsAfterDownload)
                         populateViewPagerWithImages();
 
-                }
-                else
-                {
+                } else {
                     stopProgressBar();
                 }
             }
@@ -362,17 +333,16 @@ public class BusinessActivity extends AppCompatActivity {
 
         List<String> gallery = new ArrayList<>();
 
-        for(int i = 0; i < images.size(); i++) {
+        for (int i = 0; i < images.size(); i++) {
             gallery.add(images.get(i).getImageURL());
         }
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.vpGallery);
-        PABusinessGallery paBusinessGallery = new PABusinessGallery(getApplicationContext(),gallery);
+        PABusinessGallery paBusinessGallery = new PABusinessGallery(getApplicationContext(), gallery);
 
         viewPager.setAdapter(paBusinessGallery);
 
-        if(images.size() > 1)
-        {
+        if (images.size() > 1) {
             TabLayout tabLayout = (TabLayout) findViewById(R.id.tlHelperForVP);
             tabLayout.setupWithViewPager(viewPager, true);
         }
@@ -382,32 +352,28 @@ public class BusinessActivity extends AppCompatActivity {
 
     private void initVariables() {
 
-        bundleAnimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.animator.trans_right_in,R.animator.trans_left_out).toBundle();
-        progressBar = (ProgressBar)findViewById(R.id.pbBusinessGallery);
-        business = AllBusinesses.getBusinessWithID(getIntent().getIntExtra("businessID",0));
+        bundleAnimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.animator.trans_right_in, R.animator.trans_left_out).toBundle();
+        progressBar = (ProgressBar) findViewById(R.id.pbBusinessGallery);
+        business = AllBusinesses.getBusinessWithID(getIntent().getIntExtra("businessID", 0));
         businessID = business.getId();
 
     }
 
-    private void stopProgressBar()
-    {
-        if(progressBar != null)
-        {
+    private void stopProgressBar() {
+        if (progressBar != null) {
             progressBar.setVisibility(View.GONE);
         }
     }
-    private void startProgressBar()
-    {
-        if(progressBar != null)
-        {
+
+    private void startProgressBar() {
+        if (progressBar != null) {
             progressBar.setVisibility(View.VISIBLE);
         }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home)
-        {
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
         }
         return super.onOptionsItemSelected(item);
@@ -416,7 +382,7 @@ public class BusinessActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(R.anim.left_in,R.anim.right_out);
+        overridePendingTransition(R.anim.left_in, R.anim.right_out);
     }
 
     @Override

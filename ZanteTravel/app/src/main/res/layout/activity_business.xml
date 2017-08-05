@@ -13,23 +13,23 @@
 
         <RelativeLayout
             android:id="@+id/rlGalleryHelper"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/White">
             <android.support.v4.view.ViewPager
                 android:id="@+id/vpGallery"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
+                android:layout_height="240dp"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="11dp"/>
+                android:layout_centerHorizontal="true"/>
             <Button
                 android:id="@+id/btnFavorite"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignEnd="@id/vpGallery"
-                android:layout_alignRight="@id/vpGallery"
-                android:layout_marginRight="22dp"
-                android:layout_marginEnd="22dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignStart="@id/vpGallery"
+                android:layout_alignLeft="@id/vpGallery"
+                android:layout_marginLeft="22dp"
+                android:layout_marginStart="22dp"
                 android:layout_marginTop="22dp"
                 android:background="@drawable/heart_empty"/>
 
@@ -49,6 +49,26 @@
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
                 android:visibility="visible" />
+            <ImageView
+                android:id="@+id/ivLocationHelper"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignBottom="@+id/vpGallery"
+                android:layout_marginStart="30dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/location_available"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/ivLocationHelper"
+                android:layout_toEndOf="@+id/ivLocationHelper"
+                android:layout_alignBottom="@+id/vpGallery"
+                android:layout_marginBottom="25dp"
+                android:textStyle="bold"
+                android:textColor="@color/White"
+                android:text="Hellooo"/>
         </RelativeLayout>
 
 
@@ -71,7 +91,7 @@
                 android:id="@+id/btnBusinessCall"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/phone_icon"
+                android:background="@drawable/call_available"
                 android:textAllCaps="false" />
 
             <Space
@@ -84,7 +104,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:textAllCaps="false"
-                android:background="@drawable/mail_icon" />
+                android:background="@drawable/email_available" />
 
             <Space
                 android:layout_width="30dp"
@@ -96,7 +116,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:textAllCaps="false"
-                android:background="@drawable/web_icon"/>
+                android:background="@drawable/website_available"/>
 
             <Space
                 android:layout_width="30dp"
@@ -108,7 +128,7 @@
                 android:id="@+id/btnBusinessLocation"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/location_pin_icon"
+                android:background="@drawable/location_available"
                 android:textAllCaps="false"
 
                 />

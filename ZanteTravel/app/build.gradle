@@ -60,4 +60,6 @@ dependencies {
 
     /// opens images to full screen
     compile 'com.bogdwellers:pinchtozoom:0.1'
+
+
 }
