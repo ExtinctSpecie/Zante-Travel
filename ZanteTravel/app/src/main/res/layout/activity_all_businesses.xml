@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/drawer_header_background"
+    android:background="@color/colorPrimary"
     tools:context="extinctspecie.com.zantetravel.activities.AllBusinessesActivity">
 
 
@@ -26,7 +26,7 @@
         android:id="@+id/searchRelativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/White"
+        android:background="@color/myGreen"
         android:padding="5dp">
         <Space
             android:layout_width="1dp"
@@ -40,7 +40,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:text="Sort By : "
-            android:textColor="@color/Gray"/>
+            android:textColor="@color/White"/>
         <Space
             android:layout_width="1dp"
             android:layout_height="1dp"
@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:backgroundTint="@color/Black"
+            android:backgroundTint="@color/White"
             />
         <Space
             android:layout_width="0dp"

@@ -125,7 +125,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void drawerItemSelected()
     {
-        Log.v("HIII","HIII");
         if(myItem != null)
         {
             switch (myItem.getItemId())
@@ -270,7 +269,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     private void showAboutZanteDialog()
     {
-        Log.v("HELLO","HELLLO");
         FragmentTransaction ft = getFragmentManager().beginTransaction();
 
         Fragment prev = getFragmentManager().findFragmentByTag("shownDialog");

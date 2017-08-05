@@ -28,6 +28,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -188,9 +189,10 @@ public class AllBusinessesActivity extends AppCompatActivity {
 
         searchView.setOnQueryTextListener(onQueryTextListener);
 
-        searchView.setOnSearchClickListener(new View.OnClickListener() {
+        searchView.setOnSearchClickListener(new SearchView.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 setItemsVisibility(menu, item, false);
             }
         });
@@ -222,7 +224,6 @@ public class AllBusinessesActivity extends AppCompatActivity {
         else if(item.getItemId() == R.id.searchText)
         {
             searchView.setIconified(false);
-            searchView.requestFocusFromTouch();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -232,6 +233,9 @@ public class AllBusinessesActivity extends AppCompatActivity {
             MenuItem item = menu.getItem(i);
             if (item != exception) item.setVisible(visible);
         }
+
+        Log.v("Hello","hello");
+        searchView.requestFocusFromTouch();
     }
     //Search text Listener
     SearchView.OnQueryTextListener onQueryTextListener = new SearchView.OnQueryTextListener() {
@@ -251,10 +255,11 @@ public class AllBusinessesActivity extends AppCompatActivity {
 
     private void initSpinner() {
 
-        Spinner spinner = (Spinner) findViewById(R.id.spinnerSortByList);
+        final Spinner spinner = (Spinner) findViewById(R.id.spinnerSortByList);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.sortByList, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(R.layout.my_spinner_item);
+
         spinner.setAdapter(adapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -262,7 +267,11 @@ public class AllBusinessesActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 String methodName = getMethodName(parent.getItemAtPosition(position).toString());
+                TextView textView;
+                textView = ((TextView) spinner.getSelectedView());
 
+                if(textView!=null)
+                   textView.setTextColor(getResources().getColor(R.color.White));
                 selectSortingMethod(methodName);
             }
 
