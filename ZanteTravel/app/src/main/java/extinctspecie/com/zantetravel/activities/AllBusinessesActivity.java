@@ -233,8 +233,6 @@ public class AllBusinessesActivity extends AppCompatActivity {
             MenuItem item = menu.getItem(i);
             if (item != exception) item.setVisible(visible);
         }
-
-        Log.v("Hello","hello");
         searchView.requestFocusFromTouch();
     }
     //Search text Listener
@@ -257,21 +255,17 @@ public class AllBusinessesActivity extends AppCompatActivity {
 
         final Spinner spinner = (Spinner) findViewById(R.id.spinnerSortByList);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.sortByList, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(R.layout.my_spinner_item);
+                R.array.sortByList, R.layout.my_spinner_item);
 
         spinner.setAdapter(adapter);
+
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 String methodName = getMethodName(parent.getItemAtPosition(position).toString());
-                TextView textView;
-                textView = ((TextView) spinner.getSelectedView());
 
-                if(textView!=null)
-                   textView.setTextColor(getResources().getColor(R.color.White));
                 selectSortingMethod(methodName);
             }
 

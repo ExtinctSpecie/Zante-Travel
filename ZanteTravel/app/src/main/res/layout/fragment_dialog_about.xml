@@ -17,9 +17,9 @@
         android:background="@drawable/close_icon"
         />
     <WebView
-        android:id="@+id/wvAboutTown"
+        android:id="@+id/wvAbout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:scrollbars="none"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"

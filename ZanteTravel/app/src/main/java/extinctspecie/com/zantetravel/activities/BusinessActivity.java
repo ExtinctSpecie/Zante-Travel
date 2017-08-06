@@ -8,8 +8,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
@@ -46,13 +44,15 @@ public class BusinessActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_business);
 
         initVariables();
 
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         getSupportActionBar().setTitle(business.getName());
@@ -269,6 +269,7 @@ public class BusinessActivity extends AppCompatActivity {
         if (business != null) {
             hideViewsNotNeeded();
             ((TextView) findViewById(R.id.tvUsefulTip)).setText(business.getUsefulTip());
+            ((TextView) findViewById(R.id.tvFlowingLocation)).setText(business.getLocation());
             ((TextView) findViewById(R.id.tvDescription)).setText(business.getLongDescription());
             ((TextView) findViewById(R.id.tvLocation)).setText(business.getLocation());
             ((TextView) findViewById(R.id.tvAddress)).setText(business.getAddress());
@@ -279,7 +280,6 @@ public class BusinessActivity extends AppCompatActivity {
             ((TextView) findViewById(R.id.tvContactWebsite)).setText(business.getWebsite());
             ((CheckBox) findViewById(R.id.cbCreditCard)).setChecked(business.isCreditCards());
             ((CheckBox) findViewById(R.id.cbSummerOnly)).setChecked(business.isSummerOnly());
-            Log.v("hello", business.getType());
             if (AllFavoriteBusinesses.businessAlreadySaved(businessID)) {
                 findViewById(R.id.btnFavorite).setBackground(getResources().getDrawable(R.drawable.heart_filled));
             } else {

@@ -7,7 +7,7 @@
     android:elevation="5dp"
     android:foreground="?android:attr/selectableItemBackground"
     android:orientation="vertical"
-    app:cardCornerRadius="4dp">
+    app:cardCornerRadius="5dp">
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -21,11 +21,45 @@
 
             <ImageView
                 android:id="@+id/ivBusinessThumbnail"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
                 android:layout_margin="5dp"
                 android:layout_weight="0.5"
                 app:srcCompat="@drawable/attraction_icon" />
+            <ImageView
+                android:id="@+id/ivLocationPinHelper"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/location_white"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginStart="20dp" />
+            <TextView
+                android:id="@+id/tvBusinessLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/ivLocationPinHelper"
+                android:layout_toRightOf="@id/ivLocationPinHelper"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:text="Kalamaki"
+                android:textSize="15sp"
+                android:textColor="@color/White"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvBusinessName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/ivBusinessThumbnail"
+                android:gravity="center"
+                android:text="To Steki"
+                android:textColor="@color/White"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_margin="20dp"/>
 
             <TextView
                 android:id="@+id/tvDistanceToUser"
@@ -45,108 +79,54 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:layout_toEndOf="@id/ivBusinessThumbnail"
-                android:layout_toRightOf="@+id/ivBusinessThumbnail">
+                android:layout_below="@+id/ivBusinessThumbnail">
 
-                <TextView
-                    android:id="@+id/tvBusinessName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:text="To Steki"
-                    android:textColor="@color/Black"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/tvBusinessTypeHelper"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tvBusinessName"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginTop="5dp"
-                    android:text="Type"
-                    android:textColor="@color/Black"
-                    android:textSize="12sp" />
+                <ImageView
+                    android:id="@+id/ivGreenDot"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:background="@drawable/green_dot"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="2.5dp"
+                    android:layout_marginLeft="20dp"/>
 
                 <TextView
                     android:id="@+id/tvBusinessType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvBusinessTypeHelper"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
+                    android:layout_marginLeft="35dp"
+                    android:layout_marginStart="35dp"
+                    android:layout_marginEnd="35dp"
+                    android:layout_marginRight="35dp"
                     android:maxLength="128"
-                    android:text="Mediteterian Cousine/Fish/dsfafdasdas fasdasfsdfgdsgsdgs "
+                    android:text="Mediteterian Cousine | Fish/dsfafdasdas fasdasfsdf gdsgsdgs "
                     android:textAllCaps="false"
-                    android:textSize="10sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvBusinessLocationHelper"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tvBusinessType"
-                    android:layout_centerHorizontal="true"
-                    android:layout_margin="5dp"
-                    android:text="Location"
                     android:textColor="@color/Black"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/tvBusinessLocation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvBusinessLocationHelper"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginRight="5dp"
-                    android:gravity="center"
-                    android:maxLength="64"
-                    android:text="Location: Kalamakifsdfs dfdsfsdfsdfsdfs dfsdfsdfsdfsd"
-                    android:textAllCaps="false"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:textStyle="bold" />
+
+
             </RelativeLayout>
         </RelativeLayout>
-
 
         <RelativeLayout
             android:id="@+id/rlBusinessInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/rlBusinessHeader"
-            android:layout_centerHorizontal="true"
+            android:layout_marginEnd="35dp"
+            android:layout_marginRight="35dp"
             android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginStart="5dp">
-
-            <TextView
-                android:id="@+id/tvShortDescriptionHelper"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="Short Description"
-                android:textColor="@color/Black"
-                android:textSize="12sp" />
+            android:layout_marginLeft="35dp"
+            android:layout_marginStart="35dp">
 
             <TextView
                 android:id="@+id/tvShortdescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvShortDescriptionHelper"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"
                 android:text="Some short descriptiod fg fd gdsf gfd gfd gfd gfd gsdf gfd gs fd gsfdgfd nfdasfsdfdsd"
-                android:textSize="10sp" />
+                android:textSize="12sp" />
         </RelativeLayout>
     </RelativeLayout>
 </android.support.v7.widget.CardView>

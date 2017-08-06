@@ -40,7 +40,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:text="Sort By : "
-            android:textColor="@color/White"/>
+            android:textColor="@color/Black"/>
         <Space
             android:layout_width="1dp"
             android:layout_height="1dp"
@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:backgroundTint="@color/White"
+            android:backgroundTint="@color/Black"
             />
         <Space
             android:layout_width="0dp"

@@ -18,7 +18,7 @@
             android:title="@string/rateAppStr" />
         <item
             android:id="@+id/aboutZante"
-            android:icon="@drawable/info_icon"
+            android:icon="@drawable/about_zante_icon"
             android:title="@string/aboutZanteStr" />
         <item
             android:id="@+id/aboutUs"
@@ -30,7 +30,7 @@
             android:title="@string/helpStr" />
         <item
             android:id="@+id/exitApp"
-            android:icon="@drawable/exit_icon"
+            android:icon="@drawable/exit_app"
             android:title="@string/exitAppStr" />
 
     </group>
