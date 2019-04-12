@@ -121,11 +121,11 @@ public class BusinessActivity extends AppCompatActivity {
         if (AllFavoriteBusinesses.businessAlreadySaved(businessID)) {
             snackBarShort("Removed " + getSupportActionBar().getTitle() + " from favorites", view);
             AllFavoriteBusinesses.removeFavorite(businessID);
-            findViewById(R.id.btnFavorite).setBackground(getResources().getDrawable(R.drawable.heart_empty));
+            findViewById(R.id.btnFavorite).setBackground(getResources().getDrawable(R.drawable.ic_favorite_border_white_24dp));
         } else {
             snackBarShort("Added " + getSupportActionBar().getTitle() + " to favorites", view);
             AllFavoriteBusinesses.addFavorite(new FavoriteBusiness(businessID));
-            findViewById(R.id.btnFavorite).setBackground(getResources().getDrawable(R.drawable.heart_filled));
+            findViewById(R.id.btnFavorite).setBackground(getResources().getDrawable(R.drawable.ic_favorite_red_24dp));
         }
     }
 
@@ -281,9 +281,9 @@ public class BusinessActivity extends AppCompatActivity {
             ((CheckBox) findViewById(R.id.cbCreditCard)).setChecked(business.isCreditCards());
             ((CheckBox) findViewById(R.id.cbSummerOnly)).setChecked(business.isSummerOnly());
             if (AllFavoriteBusinesses.businessAlreadySaved(businessID)) {
-                findViewById(R.id.btnFavorite).setBackground(getResources().getDrawable(R.drawable.heart_filled));
+                findViewById(R.id.btnFavorite).setBackground(getResources().getDrawable(R.drawable.ic_favorite_red_24dp));
             } else {
-                findViewById(R.id.btnFavorite).setBackground(getResources().getDrawable(R.drawable.heart_empty));
+                findViewById(R.id.btnFavorite).setBackground(getResources().getDrawable(R.drawable.ic_favorite_border_white_24dp));
             }
 
         }

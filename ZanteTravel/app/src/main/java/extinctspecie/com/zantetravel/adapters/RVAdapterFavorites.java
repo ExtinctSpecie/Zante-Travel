@@ -69,22 +69,22 @@ public class RVAdapterFavorites extends RecyclerView.Adapter<RVAdapterFavorites.
         if(business.getThumbnailURL() != null && !business.getThumbnailURL().isEmpty())
         {
 
-            Picasso.with(context).load(business.getThumbnailURL()).networkPolicy(NetworkPolicy.OFFLINE).fit().into(holder.thumbnail, new Callback() {
+            Picasso.get().load(business.getThumbnailURL()).networkPolicy(NetworkPolicy.OFFLINE).fit().into(holder.thumbnail, new Callback() {
                 @Override
                 public void onSuccess() {
                     Log.v("Picasso","Offline thumbnails loaded");
                 }
 
                 @Override
-                public void onError() {
-                    Picasso.with(context).load(business.getThumbnailURL()).fit().into(holder.thumbnail, new Callback() {
+                public void onError(Exception e) {
+                    Picasso.get().load(business.getThumbnailURL()).fit().into(holder.thumbnail, new Callback() {
                         @Override
                         public void onSuccess() {
 
                         }
 
                         @Override
-                        public void onError() {
+                        public void onError(Exception e) {
                             Log.v("Picasso","Could not fetch image");
                         }
                     });

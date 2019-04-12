@@ -56,22 +56,22 @@ public class PABusinessGallery extends PagerAdapter
         if(items.get(position) != null && !items.get(position).isEmpty())
         {
 
-            Picasso.with(context).load(items.get(position)).networkPolicy(NetworkPolicy.OFFLINE).fit().into(imageView, new Callback() {
+            Picasso.get().load(items.get(position)).networkPolicy(NetworkPolicy.OFFLINE).fit().into(imageView, new Callback() {
                 @Override
                 public void onSuccess() {
                     Log.v("Picasso","Offline Image loaded loaded");
                 }
 
                 @Override
-                public void onError() {
-                    Picasso.with(context).load(items.get(position)).fit().into(imageView, new Callback() {
+                public void onError(Exception e) {
+                    Picasso.get().load(items.get(position)).fit().into(imageView, new Callback() {
                         @Override
                         public void onSuccess() {
 
                         }
 
                         @Override
-                        public void onError() {
+                        public void onError(Exception e) {
                             Log.v("Picasso","Could not fetch image for gallery");
                         }
                     });
